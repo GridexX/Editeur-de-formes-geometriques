@@ -7,8 +7,8 @@ using namespace std;
 
 #include "Ellipse.hpp"
 
-Ellipse::Ellipse(ulong _couleur, uint _x, uint _y, uint _demiLargeur, uint _demiHauteur)
- : Forme(_couleur,_x,_y), demiLargeur(_demiLongueur), demiLongeur(_demiLongueur)
+Ellipse::Ellipse(ulong _couleur, uint _x, uint _y, uint _demiLargeur, uint _demiLongueur)
+ : Forme(_couleur,_x,_y), demiLargeur(_demiLargeur), demiLongueur(_demiLongueur)
 {}
 
 Ellipse::Ellipse(const Ellipse &orig)
