@@ -11,7 +11,7 @@ class Cercle : public Forme {
         private :
             uint rayon; ///< Le rayon (Représente la moitié du diamètre du cercle en pixel)
 public :
-    /** Constructeur de la classe carré.
+    /** Constructeur de la classe cercle.
     * @param couleur correspond à la couleur du cercle (donnée de la classe Forme). 
     * @param y correspond a la coordonnée y du point d'ancrage du cercle (donnée de la classe Forme).
     * @param x correspond a la coordonnée x du point d'ancrage du cercle (donnée de la classe Forme).
