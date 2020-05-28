@@ -13,7 +13,8 @@ class Cercle : public Forme {
 public :
     /** Constructeur de la classe carré.
     * @param couleur correspond à la couleur du cercle (donnée de la classe Forme). 
-    * @param y @param x correspond aux coordonnées x et y du point d'ancrage du cercle (donnée de la classe Forme).
+    * @param y correspond a la coordonnée y du point d'ancrage du cercle (donnée de la classe Forme).
+    * @param x correspond a la coordonnée x du point d'ancrage du cercle (donnée de la classe Forme).
     * @param rayon Le rayon du cercle. 
     */
     Cercle(ulong _couleur, uint _x, uint _y, uint _rayon);

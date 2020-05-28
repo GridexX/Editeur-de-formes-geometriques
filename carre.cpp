@@ -39,7 +39,7 @@ double Carre::perimetre() const
 
 ostream& Carre::ecrire(ostream& os) const
 {
-    os<<"Carrre";
+    os<<"Carre";
     Forme::ecrire(os);
     os<<""<<cote;
     return os;
