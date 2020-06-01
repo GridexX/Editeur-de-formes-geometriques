@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include "Triangle.hpp"
+#include "triangle.hpp"
 
 Triangle::Triangle(ulong _couleur, uint _x, uint _y, uint _base, uint _hauteur)
  : Forme(_couleur,_x,_y), base(_base), hauteur(_hauteur)

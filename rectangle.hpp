@@ -3,7 +3,7 @@
 #ifndef RECTANGLE_HPP
 #define RECTANGLE_HPP
 
-#include "Forme.hpp"
+#include "forme.hpp"
 
 class Rectangle : public Forme {
       private :
