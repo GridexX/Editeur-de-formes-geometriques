@@ -3,7 +3,7 @@
 #ifndef FORME_HPP
 #define FORME_HPP
 
-#include "Point.hpp"
+#include "point.hpp"
 
  
 class Forme {

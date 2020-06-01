@@ -1,11 +1,13 @@
 //Cercle.cpp
 
 #include <iostream>
+#define _USE_MATH_DEFINES
 #include <cmath>
+
 
 using namespace std;
 
-#include "Cercle.hpp"
+#include "cercle.hpp"
 
 Cercle::Cercle(ulong _couleur, uint _x, uint _y, uint _rayon)
  : Forme(_couleur,_x,_y), rayon(_rayon)

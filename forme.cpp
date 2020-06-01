@@ -56,9 +56,9 @@ is>>mot;
 
 if(mot=="Rectangle")
        return new Rectangle(is);
-     else if(mot=="Ellipse")
- return new Ellipse(is);
-     else
+    else if(mot=="Ellipse")
+        return new Ellipse(is);
+    else
         throw runtime_error("Type de forme inconnue rencontré lors du chargement !");
 }
 

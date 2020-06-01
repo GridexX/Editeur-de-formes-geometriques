@@ -3,7 +3,7 @@
 #ifndef TRIANGLE_HPP
 #define TRIANGLE_HPP
 
-#include "Forme.hpp"
+#include "forme.hpp"
 
 class Triangle : public Forme {
     private :

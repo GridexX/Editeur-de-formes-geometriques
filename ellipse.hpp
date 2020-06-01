@@ -3,7 +3,7 @@
 #ifndef ELLIPSE_HPP
 #define ELLIPSE_HPP
 
-#include "Forme.hpp"
+#include "forme.hpp"
 
 class Ellipse : public Forme {
         private :
