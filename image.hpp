@@ -3,7 +3,7 @@
 #ifndef IMAGE_HPP
 #define IMAGE_HPP
 
-#include "Forme.hpp"
+#include "forme.hpp"
 
 class Image : public Forme {
     private :

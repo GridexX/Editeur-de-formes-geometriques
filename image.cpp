@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "Image.hpp"
+#include "image.hpp"
 
 Image::Image(ulong _couleur, uint _x, uint _y, uint _largeur, uint _longueur, const char *_nomFichier)
  : Forme(_couleur,_x,_y), largeur(_largeur), longueur(_longueur), nomFichier(_nomFichier)
@@ -28,5 +28,5 @@ Image::~Image()
 void Image::dessiner(EZWindow &w, bool isActive) const
 {
     Forme::dessiner(w, isActive);
-    nomFichier::EZImage(longueur, largeur);
+    (*nomFichier)::EZImage(longueur, largeur);
 }

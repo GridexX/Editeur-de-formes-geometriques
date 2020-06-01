@@ -3,7 +3,7 @@
 #ifndef FORMES_HPP
 #define FORMES_HPP
 
-#include "Forme.hpp"
+#include "forme.hpp"
 
 typedef unsigned int uint;
 

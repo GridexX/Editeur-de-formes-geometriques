@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "Forme.hpp"
+#include "forme.hpp"
 
 Forme::Forme(ulong _couleur, uint _x, uint _y)
 : couleur(_couleur), ancre(_x, _y)
@@ -44,10 +44,10 @@ ostream& Forme::ecrire(ostream& os) const
 // Pour la prochaine fonction, on a besoin de rajouter les déclarations des classes
 // correspondantes... C'est l'inévitable défaut de cette conception relativement
 // simple.
-#include "Rectangle.hpp"
-#include "Carre.hpp"
-#include "Ellipse.hpp"
-#include "Cercle.hpp"
+#include "rectangle.hpp"
+#include "carre.hpp"
+#include "ellipse.hpp"
+#include "cercle.hpp"
 
 Forme* Forme::charger(istream& is)
 {

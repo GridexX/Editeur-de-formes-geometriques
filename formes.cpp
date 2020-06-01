@@ -8,7 +8,7 @@ using namespace std;
 
 #include "ez-draw++.hpp"
 
-#include "Formes.hpp"
+#include "formes.hpp"
 
 Formes::Formes(unsigned int taille)
 :maxformes(taille),nbformes(0),formes(nullptr)
