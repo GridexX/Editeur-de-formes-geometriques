@@ -22,9 +22,9 @@ class Triangle : public Forme {
         inline void setLargeur(uint _base) { base=_base; }
         inline void setHauteur(uint _hauteur) { hauteur = _hauteur; }
         void dessiner(EZWindow &w, bool isActive) const override;
-        double perimetre() const;
+        double perimetre() const override;
 
         protected:
-        virtual ostream& ecrire(ostream& os) const;
+        ostream& ecrire(ostream& os) const override;
 };
 #endif

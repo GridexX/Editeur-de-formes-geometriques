@@ -21,10 +21,10 @@ class Carre : public Forme {
 
         inline void setCote(uint _cote) { cote=_cote;}
         void dessiner(EZWindow &w, bool isActive) const override;
-        double perimetre() const;
+        double perimetre() const override;
 
         protected:
-        virtual ostream& ecrire(ostream& os) const;
+        ostream& ecrire(ostream& os) const override;
 };
 
 #endif

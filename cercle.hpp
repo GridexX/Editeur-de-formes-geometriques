@@ -52,14 +52,14 @@ public :
     /** Fonction perimetre de la classe Cercle.
     * @return Le périmètre du Cercle.
     */
-    double perimetre() const; 
+    double perimetre() const override; 
 
 protected :
     /** Fonction ecrire de la classe Cercle.
     * @param os Le flux de sortie sur lequel afficher les informations.
     * @return Le flux de sortie modifié contenant les informations sur les données membres de la classe.
     */
-    virtual ostream& ecrire(ostream& os) const;
+    ostream& ecrire(ostream& os) const override;
 };
 
 #endif

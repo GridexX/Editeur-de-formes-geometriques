@@ -21,9 +21,9 @@ public :
     inline void setDemiLargeur(uint _demiLargeur) {demiLargeur=_demiLargeur;}
     inline void setDemiLongueur(uint _demiLongueur) {demiLongueur=_demiLongueur;}
     void dessiner(EZWindow &w, bool isActive) const override;
-    double perimetre() const; 
+    double perimetre() const override; 
 
 protected :
-    virtual ostream& ecrire(ostream& os) const;
+    ostream& ecrire(ostream& os) const override;
 };
 #endif

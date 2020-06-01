@@ -24,10 +24,10 @@ inline uint getLargeur() const { return largeur; }
 inline void setLongueur(uint _longueur) { longueur = _longueur; }
 inline void setLargeur(uint _largeur) { largeur=_largeur; }
 void dessiner(EZWindow &w, bool isActive) const override;
-double perimetre() const;
+double perimetre() const override;
 
 protected:
-virtual ostream& ecrire(ostream& os) const;
+ostream& ecrire(ostream& os) const override;
 };
 
 #endif
