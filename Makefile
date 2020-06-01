@@ -13,15 +13,17 @@ LIBS     = -lX11 -lXext
 RM       = rm -f
 EXE      =
 
-OBJECTS= Point.o Forme.o Rectangle.o Formes.o
-OBJECTS+= Ellipse.o Carre.o Cercle.o
+OBJECTS= point.o forme.o rectangle.o formes.o
+OBJECTS+= ellipse.o carre.o cercle.o
+OBJECTS+= triangle.o
 OBJECTS+= MyWindow.o main.o ez-draw++.o
+
 
 .PHONY:: all clean distclean
 
 # Rajoutez vos executables C++ a la fin de EXECSPP =
 #
-EXECSPP = Formes$(EXE)
+EXECSPP = formes$(EXE)
 
 all :: $(EXECSPP)
 
@@ -30,7 +32,7 @@ all :: $(EXECSPP)
 	$(CXX) -c $(CXXFLAGS) $*.cpp
 
 
-Formes$(EXE) : $(OBJECTS)
+formes$(EXE) : $(OBJECTS)
 	$(CXX) -o $@ $^ $(LIBS)
 
 depends :
