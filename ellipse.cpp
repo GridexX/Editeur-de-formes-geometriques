@@ -32,7 +32,7 @@ void Ellipse::dessiner(EZWindow &w, bool isActive) const
         getAncre().getX(),
         getAncre().getY(),
         getAncre().getX()+demiLargeur,
-        getAncre().getY()+demiLongueur,
+        getAncre().getY()+demiLongueur
     );
 }
 

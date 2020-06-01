@@ -33,7 +33,7 @@ void Cercle::dessiner(EZWindow &w, bool isActive) const
         getAncre().getX(),
         getAncre().getY(),
         getAncre().getX()+rayon,
-        getAncre().getY()+rayon,
+        getAncre().getY()+rayon
     );
 }
 

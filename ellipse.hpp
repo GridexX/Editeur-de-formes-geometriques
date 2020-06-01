@@ -25,4 +25,5 @@ public :
 
 protected :
     virtual ostream& ecrire(ostream& os) const;
-}
+};
+#endif
