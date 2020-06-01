@@ -1,11 +1,12 @@
 //Ellipse.cpp
 
 #include <iostream>
+#define _USE_MATH_DEFINES
 #include <cmath>
 
 using namespace std;
 
-#include "Ellipse.hpp"
+#include "ellipse.hpp"
 
 Ellipse::Ellipse(ulong _couleur, uint _x, uint _y, uint _demiLargeur, uint _demiLongueur)
  : Forme(_couleur,_x,_y), demiLargeur(_demiLargeur), demiLongueur(_demiLongueur)

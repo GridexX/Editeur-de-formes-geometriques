@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "Carre.hpp"
+#include "carre.hpp"
 
 Carre::Carre(ulong _couleur, uint _x, uint _y, uint _cote)
 : Forme(_couleur,_x,_y), cote(_cote)

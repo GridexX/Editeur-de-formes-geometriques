@@ -1,9 +1,9 @@
 
 
-#ifndef Cercle_HPP
-#define Cercle_HPP
+#ifndef CERCLE_HPP
+#define CERCLE_HPP
 
-#include "Forme.hpp"
+#include "forme.hpp"
 
 /** La classe cercle **/
 

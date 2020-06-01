@@ -1,9 +1,9 @@
 // Point.cpp
 
-#include "Point.hpp"
+#include "point.hpp"
 
 
-Point::Point (uint _x,uint _y)
+Point::Point(uint _x,uint _y)
 :x(_x),y(_y)
 {}
 

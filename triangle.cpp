@@ -1,6 +1,5 @@
 //Triangle.cpp
 
-// Triangle.cpp
 
 #include <iostream>
 
