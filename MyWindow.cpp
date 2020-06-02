@@ -15,6 +15,8 @@ using namespace std;
 #include "cercle.hpp"
 #include "rectangle.hpp"
 #include "carre.hpp"
+#include "triangle.hpp"
+#include "image.hpp"
 
 
 MyWindow::MyWindow(int w, int h,const char *name)
@@ -103,14 +105,17 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
            << "e : crée une ellipse" << endl
            << "s : crée un carré" << endl
            << "c : crée un cercle" << endl
-//           << "t : crée un triangle" << endl
+           << "t : crée un triangle" << endl
+           << "i : crée une image" << endl
            ;
       break;
      case EZKeySym::r: formes.ajouter(new Rectangle(ez_black,getWidth()/2-25,getHeight()/2-25,getWidth()/2+25,getHeight()/2+25)); break;
      case EZKeySym::e: formes.ajouter(new Ellipse(ez_black,getWidth()/2-25,getHeight()/2-15,50,30)); break;
      case EZKeySym::s: formes.ajouter(new Carre(ez_black,getWidth()/2-25,getHeight()/2-25,50)); break;
      case EZKeySym::c: formes.ajouter(new Cercle(ez_black,getWidth()/2-25,getHeight()/2-25,25)); break;
-//     case EZKeySym::t: formes.ajouter(new Triangle(ez\_black,getWidth()/2,getHeight()/2-50,getWidth()/2-25,getHeight()/2-30,getWidth()/2+25,getHeight()/2-30)); break;
+     case EZKeySym::i: formes.ajouter(new Image(ez_black,getWidth()/2-25,getHeight()/2-25,1,"gridexx.png")); break;
+     //Faudra rajouter ce constructeur pour le triangle 
+     //case EZKeySym::t: formes.ajouter(new Triangle(ez_black,getWidth()/2,getHeight()/2-50,getWidth()/2-25,getHeight()/2-30,getWidth()/2+25,getHeight()/2-30)); break;
      default:
       break;
     }

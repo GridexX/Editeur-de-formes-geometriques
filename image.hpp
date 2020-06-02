@@ -7,24 +7,22 @@
 
 class Image : public Forme {
     private :
-        char * nomFichier;
-        uint longueur;
-        uint largeur;
+        EZImage image;
+        uint ratio;
+        
     
     public :
-        Image(ulong _couleur, uint _x, uint _y, uint _largeur, uint _longueur, const char *_nomFichier);
+        Image(ulong _couleur, uint _x, uint _y, uint ratio, char *_nomFichier);
         Image(const Image& orig);
         Image(istream& is);
         ~Image();
 
-        inline uint getLargeur() const { return largeur; }
-        inline uint getlongueur() const { return longueur; }
+        inline uint getRation() const { return ratio; }
 
-        inline void setLargeur(uint _largeur) { largeur=_largeur; }
-        inline void setlongueur(uint _longueur) { longueur = _longueur; }
+
+        inline void setLargeur(uint _ratio) { ratio=_ratio; }
         void dessiner(EZWindow &w, bool isActive) const override;
-        double perimetre() const;
-
+        double perimetre() const override; 
         protected:
         virtual ostream& ecrire(ostream& os) const; 
 };

@@ -14,8 +14,8 @@ RM       = rm -f
 EXE      =
 
 OBJECTS= point.o forme.o rectangle.o formes.o
-OBJECTS+= ellipse.o carre.o cercle.o
-OBJECTS+= triangle.o
+OBJECTS+= ellipse.o carre.o cercle.o triangle.o
+OBJECTS+= image.o
 OBJECTS+= MyWindow.o main.o ez-draw++.o
 
 
