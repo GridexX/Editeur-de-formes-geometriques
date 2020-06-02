@@ -26,6 +26,7 @@ void Point::dessiner (EZWindow& w, bool isActive) const
        w.setColor(ez_red);
     else
        w.setColor(ez_black);
+  w.setThick(3);
   w.drawRectangle(x-taille, y-taille, x+taille, y+taille);
 }
 

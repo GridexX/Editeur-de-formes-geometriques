@@ -26,6 +26,7 @@ void Forme::dessiner(EZWindow &w, bool active) const
 {
     ancre.dessiner(w,active);
     w.setColor(couleur);
+    w.setThick(epaisseur);
 }
 
 // fonction non membre

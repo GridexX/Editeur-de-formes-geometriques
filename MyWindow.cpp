@@ -33,6 +33,7 @@ void MyWindow::expose()
  if(pforme!=nullptr) pforme->dessiner(*this,true);
  setColor(ez_black);
  drawText(EZAlign::TL,3,3,"h : affiche l'aide sur la console");
+ setDoubleBuffer(true); // pour éviter le scintillement de l'image
 }
 
 void MyWindow::buttonPress(int mouse_x,int mouse_y,int button)
@@ -85,14 +86,17 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
      case EZKeySym::_5: if(pforme) pforme->setCouleur(ez_yellow);  break;
      case EZKeySym::_6: if(pforme) pforme->setCouleur(ez_cyan);    break;
      case EZKeySym::_7: if(pforme) pforme->setCouleur(ez_magenta); break;
+
+     case EZKeySym::plus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()+1); break;
+     case EZKeySym::minus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()-1); break;
      case EZKeySym::h:
       cout << "q : quitter" << endl
            << "h : cette aide" << endl
            << "E : ecrire la liste des formes sur la console" << endl
            << "S : sauve la liste des formes sur disque" << endl
            << "C : charge la liste des formes depuis le disque" << endl
-//           << "+ : augmente l'épaisseur"    << endl
-//           << "- : diminue l'épaisseur"     << endl
+           << "+ : augmente l'épaisseur"    << endl
+           << "- : diminue l'épaisseur"     << endl
            << "0 : met en noir la forme"    << endl
            << "1 : met en gris la forme"    << endl
            << "2 : met en rouge la forme"   << endl
