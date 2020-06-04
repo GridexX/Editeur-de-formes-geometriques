@@ -26,10 +26,11 @@ public :
 
     inline void setCouleur(ulong _couleur) { couleur=_couleur; }
     inline void setAncre(uint x,uint y) { ancre.setXY(x,y) ; }
+    inline void setAncre(uint _taille) {ancre.setTaille(_taille);}
     inline void setEpaisseur(uint _epaisseur) { epaisseur=_epaisseur; }
 
     inline bool isOver(uint x, uint y) const { return ancre.isOver(x,y); }
-    virtual void dessiner(EZWindow& w, bool active=false) const ;
+    virtual void dessiner(EZWindow& w, bool active=false) const;
     virtual double perimetre() const = 0;
     friend ostream& operator<<(ostream& os, const Forme& f);
     static Forme* charger(istream& is);

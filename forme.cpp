@@ -29,6 +29,7 @@ void Forme::dessiner(EZWindow &w, bool active) const
     w.setThick(epaisseur);
 }
 
+
 // fonction non membre
 ostream& operator<<(ostream& os, const Forme& f)
 {
