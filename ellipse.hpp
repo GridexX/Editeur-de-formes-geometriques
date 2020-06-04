@@ -2,7 +2,9 @@
 
 #ifndef ELLIPSE_HPP
 #define ELLIPSE_HPP
-
+#ifndef M_PI
+   #define M_PI 3.14159265358979323846
+#endif
 #include "forme.hpp"
 
 class Ellipse : public Forme {
