@@ -6,7 +6,7 @@ using namespace std;
 
 #include "image.hpp"
 
-Image::Image(ulong _couleur, uint _x, uint _y, uint _ratio, char *_nomFichier)
+Image::Image(ulong _couleur, uint _x, uint _y, double _ratio, const char *_nomFichier)
  : Forme(_couleur,_x,_y), ratio(_ratio), image(_nomFichier)
 {}
 

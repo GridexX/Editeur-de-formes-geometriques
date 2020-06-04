@@ -8,11 +8,11 @@
 class Image : public Forme {
     private :
         EZImage image;
-        uint ratio;
+        double ratio;
         int opacite=10; // pourcentage (0=transparent / 100=opaque)
     
     public :
-        Image(ulong _couleur, uint _x, uint _y, uint ratio, char * _nomFichier);
+        Image(ulong _couleur, uint _x, uint _y, double _ratio, const char * _nomFichier);
         Image(const Image& orig);
         Image(istream& is);
         ~Image();
