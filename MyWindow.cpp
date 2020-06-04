@@ -91,7 +91,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
      case EZKeySym::minus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()-1); break;
      case EZKeySym::h:
       cout 
-           << "---------------------------AIDE-------------------------" << endl
+           << endl << "---------------------------AIDE-------------------------" << endl
            << "q : quitter" << endl
            << "h : cette aide" << endl
            << "E : ecrire la liste des formes sur la console" << endl
