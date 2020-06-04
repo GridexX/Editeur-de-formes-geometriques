@@ -90,7 +90,9 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
      case EZKeySym::plus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur()); break;
      case EZKeySym::minus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()-1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur()); break;
      case EZKeySym::h:
-      cout << "q : quitter" << endl
+      cout 
+           << endl << "---------------------------AIDE-------------------------" << endl
+           << "q : quitter" << endl
            << "h : cette aide" << endl
            << "E : ecrire la liste des formes sur la console" << endl
            << "S : sauve la liste des formes sur disque" << endl
@@ -111,6 +113,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
            << "c : crée un cercle" << endl
            << "t : crée un triangle" << endl
            << "i : crée une image" << endl
+           << "--------------------------------------------------------" << endl
            ;
       break;
      case EZKeySym::r: formes.ajouter(new Rectangle(ez_black,getWidth()/2-25,getHeight()/2-25,getWidth()/2+25,getHeight()/2+25)); break;
