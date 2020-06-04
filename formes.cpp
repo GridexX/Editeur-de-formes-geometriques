@@ -71,7 +71,7 @@ void Formes::charger(istream& is)
 {
     uint nbf;
     is >>  nbf;
-    for(int i=0; i<nbf; i++)
+    for(uint i=0; i<nbf; i++)
     ajouter(Forme::charger(is));
 }
 
