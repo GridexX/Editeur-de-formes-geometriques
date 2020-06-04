@@ -9,7 +9,9 @@ Point::Point(uint _x,uint _y)
 
 Point::Point(const Point& orig)
 :Point(orig.x,orig.y)  // /!\ Délégation de construction ! ;)
-{}
+{
+
+}
 
 Point::Point(istream &is)
 :x(0),y(0)
@@ -28,6 +30,7 @@ void Point::dessiner (EZWindow& w, bool isActive) const
        w.setColor(ez_black);
   w.setThick(3);
   w.drawRectangle(x-taille, y-taille, x+taille, y+taille);
+  
 }
 
 ostream& operator<<(ostream& os, const Point& p)
@@ -38,6 +41,7 @@ ostream& operator<<(ostream& os, const Point& p)
 
 istream& operator>>(istream& is, Point& p)
 {
+
     is >> p.x >> p.y;
     return is;
 }

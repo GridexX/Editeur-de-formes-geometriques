@@ -9,18 +9,20 @@ class Image : public Forme {
     private :
         EZImage image;
         uint ratio;
-        
+        int opacite=10; // pourcentage (0=transparent / 100=opaque)
     
     public :
-        Image(ulong _couleur, uint _x, uint _y, uint ratio, char *_nomFichier);
+        Image(ulong _couleur, uint _x, uint _y, uint ratio, char * _nomFichier);
         Image(const Image& orig);
         Image(istream& is);
         ~Image();
 
-        inline uint getRation() const { return ratio; }
+        inline uint getRatio() const { return ratio; }
+        inline uint getOpacite() const { return opacite; }
 
+        inline void setRatio(uint _ratio) { ratio=_ratio; }
+        inline void setOpacite(int _opacite) { opacite=_opacite; }
 
-        inline void setLargeur(uint _ratio) { ratio=_ratio; }
         void dessiner(EZWindow &w, bool isActive) const override;
         double perimetre() const override; 
         protected:

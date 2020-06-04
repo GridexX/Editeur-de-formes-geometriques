@@ -15,7 +15,8 @@ typedef unsigned long int ulong;
 class Point {
     
 private :
-       static const uint taille = 3; // Membre de classe !
+       //static const uint taille = 3; // Membre de classe !
+       uint taille = 3;
        uint x,y; 
        
 public :
@@ -26,6 +27,10 @@ public :
        
        inline uint getX() const{ return x; }
        inline uint getY() const { return y; }
+
+       //ajout de setters et getters pour adapter la taille du point en fonction de l'épaisseur de la forme
+       inline uint getTaille() const { return taille;}
+       inline void setTaille(uint _taille) { taille=_taille; }
        
        inline void setXY(uint _x, uint _y) {x=_x; y=_y;}
        inline bool isOver(uint _x, uint _y) const { return ( x-taille <= _x && _x <= x+taille )&& (y-taille <= _y && _y <= y+taille ); }
