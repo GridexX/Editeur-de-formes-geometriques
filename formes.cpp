@@ -75,4 +75,31 @@ void Formes::charger(istream& is)
     ajouter(Forme::charger(is));
 }
 
+void Formes::supprimer(Forme *forme)
+{
+ 
+    uint i=0;
+    uint indForme;
+    bool trouve=false;
+    while(formes[i] != forme || i<nbformes){
+        i++;
+        if(formes[i] == forme)
+            trouve=true;
+            
+    }
+    indForme=i;
+    if(trouve){
+        Forme **tabFormes = new Forme * [maxformes];
 
+        for (uint i=0; i<nbformes; ++i){
+            if( formes[i] != forme  )
+                tabFormes[i] = formes[i];
+            
+        }
+        formes[indForme]->~Forme();
+        delete [] formes;
+        formes=tabFormes;
+        nbformes--;
+    }
+
+}
