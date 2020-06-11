@@ -3,10 +3,10 @@
 #ifndef MYWINDOW_HPP
 #define MYWINDOW_HPP
 
-#include "formes.hpp"
+#include "calques.hpp"
 
 class MyWindow : public EZWindow {
-  Formes formes;
+  Calques calques;
   Forme  *pforme;
  public:
   MyWindow(int w, int h,const char *name);
@@ -16,6 +16,7 @@ class MyWindow : public EZWindow {
   void buttonPress(int mouse_x,int mouse_y,int button);
   void motionNotify(int mouse_x,int mouse_y,int button);
   void buttonRelease(int mouse_x,int mouse_y,int button);
+  void listeCalques();
 };
 
 #endif

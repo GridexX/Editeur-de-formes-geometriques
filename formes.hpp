@@ -15,7 +15,11 @@ class Formes {
 public:
   Formes(uint taille=200);
   ~Formes();
+
+  inline uint getFormes() { return nbformes; }
+
   void ajouter(Forme *forme);
+  void supprimer(Forme *forme);
   Forme *isOver(uint _x,uint _y);
   void dessiner(EZWindow& w) const;
   friend ostream&  operator<<(ostream&  os, const Formes& formes);

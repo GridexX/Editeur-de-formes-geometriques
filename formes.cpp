@@ -75,31 +75,66 @@ void Formes::charger(istream& is)
     ajouter(Forme::charger(is));
 }
 
+
 void Formes::supprimer(Forme *forme)
 {
- 
     uint i=0;
     uint indForme;
     bool trouve=false;
-    while(formes[i] != forme || i<nbformes){
-        i++;
-        if(formes[i] == forme)
+    while(!trouve && i<nbformes){
+        if(formes[i] == forme){
             trouve=true;
-            
+            indForme=i;
+        }
+
+        i++; 
     }
-    indForme=i;
+    
+    uint j=0;
     if(trouve){
         Forme **tabFormes = new Forme * [maxformes];
-
         for (uint i=0; i<nbformes; ++i){
             if( formes[i] != forme  )
-                tabFormes[i] = formes[i];
+                tabFormes[j++] = formes[i];
             
         }
+
         formes[indForme]->~Forme();
         delete [] formes;
         formes=tabFormes;
-        nbformes--;
+        --nbformes;
+
     }
 
-}
+} 
+/*
+void Formes::supprimer(Forme *f){
+
+    uint y=0;
+    bool trouve=false;
+    for (uint i=0; i<nbformes; i++) //cherche quel forme correspond dans la liste
+    {
+        if (formes[i]==f)
+        {
+            y=i;
+            trouve=true;
+        }
+    }
+    if (trouve)
+    {
+        Forme ** temp = new Forme*[maxformes];
+        uint j=0;
+        for (uint i=0; i<nbformes; i++)
+        {
+            if (i!=y)
+            {
+                temp[j]=formes[i];
+                j++;
+            }
+        }
+        formes[y]->~Forme();
+        delete [] formes;
+        formes=temp;
+        nbformes--;
+    }
+} */

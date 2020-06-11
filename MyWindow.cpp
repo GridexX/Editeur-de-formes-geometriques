@@ -17,10 +17,11 @@ using namespace std;
 #include "carre.hpp"
 #include "triangle.hpp"
 #include "image.hpp"
+#include "calques.hpp"
 
 
 MyWindow::MyWindow(int w, int h,const char *name)
- : EZWindow(w,h,name),formes(200),pforme(nullptr)
+ : EZWindow(w,h,name),calques(20),pforme(nullptr)
 {
 }
 
@@ -29,22 +30,27 @@ MyWindow::~MyWindow()
 
 void MyWindow::expose()
 {
- formes.dessiner(*this);
- if(pforme!=nullptr) pforme->dessiner(*this,true);
- setColor(ez_black);
- drawText(EZAlign::TL,3,3,"h : affiche l'aide sur la console");
- setDoubleBuffer(true); // pour éviter le scintillement de l'image
+  calques.dessiner(*this);
+  if(pforme!=nullptr) pforme->dessiner(*this,true);
+  setColor(ez_black);
+  drawText(EZAlign::TL,3,3,"h : affiche l'aide sur la console");
+  setDoubleBuffer(true); // pour éviter le scintillement de l'image
 }
 
 void MyWindow::buttonPress(int mouse_x,int mouse_y,int button)
 {
- if(button==1)
-   pforme = formes.isOver(mouse_x,mouse_y);
+cout << "5";
+  if(button==1){
+    cout <<"4";
+    pforme = calques.isOver(mouse_x,mouse_y);
+    cout<<"6";
+  }
 }
 
 // Deplacement de la souris :
 void MyWindow::motionNotify(int mouse_x,int mouse_y,int button)
 {
+  cout << "7";
  if(button == 1 && pforme != nullptr) // Si on clique sur l'ancre d'une forme
    pforme->setAncre(mouse_x,mouse_y); // on la bouge.
  sendExpose();
@@ -52,6 +58,7 @@ void MyWindow::motionNotify(int mouse_x,int mouse_y,int button)
 
 void MyWindow::buttonRelease(int mouse_x,int mouse_y,int button)
 {
+  cout<<"8";
  if(button == 1 && pforme != nullptr) // Si on clique sur l'ancre d'une forme
    pforme->setAncre(mouse_x,mouse_y);
  sendExpose();
@@ -64,18 +71,18 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
      case EZKeySym::Escape:
      case EZKeySym::q :       EZDraw::quit (); break;
      case EZKeySym::E:
-      cout << formes;
+      cout << calques;
       break;
      case EZKeySym::S:
       {
        ofstream f("formes.txt");
-       formes.sauver(f);
+       //calques.sauver(f);
       }
       break;
      case EZKeySym::C:
       {
        ifstream f("formes.txt");
-       formes.charger(f);
+       //calques.charger(f);
       }
       break;
      case EZKeySym::_0: if(pforme) pforme->setCouleur(ez_black);   break;
@@ -89,6 +96,14 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
 
      case EZKeySym::plus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur()); break;
      case EZKeySym::minus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()-1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur()); break;
+     case EZKeySym::Delete: if(pforme) calques.supprimerForme(pforme); break;
+     //appui des touches pour les calques :
+     case EZKeySym::y: calques.creerCalque(); break;
+     case EZKeySym::Left: calques.monterCalque(); break;
+     case EZKeySym::Right: calques.descendreCalque(); break;
+     case EZKeySym::Up: calques.setCalqueSelec(calques.getCalqueSelect()+1); break;
+     case EZKeySym::Down: calques.setCalqueSelec(calques.getCalqueSelect()-1); break;
+     case EZKeySym::a:  calques.setCalqueVisible( !calques.getCalqueVisible()); break;
      case EZKeySym::h:
       cout 
            << endl << "---------------------------AIDE-------------------------" << endl
@@ -113,18 +128,47 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
            << "c : crée un cercle" << endl
            << "t : crée un triangle" << endl
            << "i : crée une image" << endl
-           << "--------------------------------------------------------" << endl
+           << "Suppr : supprime la forme" << endl
+           << "--------------------------------------------------------" << endl << endl
+           << "------------------------CALQUES-------------------------" << endl
+           << "y : crée un nouveau calque" << endl
+           << "d : supprime le calque selectionné" << endl
+           << "a : affiche / masquer le calque sélectionné" << endl
+           << "← : monte le calque selectionné" << endl
+           << "→ : descends le calque selectionné" << endl
+           << "↑ : sélectionne le calque au dessus" << endl 
+           << "↓ : sélectionne le calque en dessous" << endl
+           
            ;
+
       break;
-     case EZKeySym::r: formes.ajouter(new Rectangle(ez_black,getWidth()/2-25,getHeight()/2-25,getWidth()/2+25,getHeight()/2+25)); break;
-     case EZKeySym::e: formes.ajouter(new Ellipse(ez_black,getWidth()/2-25,getHeight()/2-15,50,30)); break;
-     case EZKeySym::s: formes.ajouter(new Carre(ez_black,getWidth()/2-25,getHeight()/2-25,50)); break;
-     case EZKeySym::c: formes.ajouter(new Cercle(ez_black,getWidth()/2-25,getHeight()/2-25,25)); break;
-     case EZKeySym::i: formes.ajouter(new Image(ez_black,getWidth()/2-25,getHeight()/2-25,0.1,"gridexx.png")); break;
+     case EZKeySym::r: calques.ajouterForme(new Rectangle(ez_black,getWidth()/2-25,getHeight()/2-25,getWidth()/2+25,getHeight()/2+25)); break;
+     case EZKeySym::e: calques.ajouterForme(new Ellipse(ez_black,getWidth()/2-25,getHeight()/2-15,50,30)); break;
+     case EZKeySym::s: calques.ajouterForme(new Carre(ez_black,getWidth()/2-25,getHeight()/2-25,50)); break;
+     case EZKeySym::c: calques.ajouterForme(new Cercle(ez_black,getWidth()/2-25,getHeight()/2-25,25)); break;
+     case EZKeySym::i: calques.ajouterForme(new Image(ez_black,getWidth()/2-25,getHeight()/2-25,0.1,"gridexx.png")); break;
      //Faudra rajouter ce constructeur pour le triangle 
      //case EZKeySym::t: formes.ajouter(new Triangle(ez_black,getWidth()/2,getHeight()/2-50,getWidth()/2-25,getHeight()/2-30,getWidth()/2+25,getHeight()/2-30)); break;
      default:
       break;
     }
  sendExpose();
+ listeCalques();
+}
+
+//affichage dans la console des calques
+void MyWindow::listeCalques(){
+    cout << "------------LISTE CALQUES-----------------------" << endl;
+    for(uint i=0; i<calques.getNbCalques(); ++i){
+        cout << "Calque " << i << "[";
+        if(i==calques.getCalqueSelect())
+            cout << "✓";
+        cout << "]";
+        if(calques.getCalqueVisible(i))
+            cout << " Visible" << endl;
+        else
+            cout << " Caché" << endl;
+    }
+    cout << "--------------------------------------------------"<<endl;
+
 }

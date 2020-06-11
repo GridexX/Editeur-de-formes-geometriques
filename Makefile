@@ -16,7 +16,7 @@ EXE      = .exe
 
 OBJECTS= point.o forme.o rectangle.o formes.o
 OBJECTS+= ellipse.o carre.o cercle.o triangle.o
-OBJECTS+= image.o
+OBJECTS+= image.o calques.o
 OBJECTS+= MyWindow.o main.o ez-draw++.o
 
 
