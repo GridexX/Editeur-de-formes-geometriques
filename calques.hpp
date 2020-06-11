@@ -28,8 +28,9 @@ class Calques { //herite de formes
         inline uint getNbCalques() { return nbcalques; }
         inline bool getCalqueVisible() { return listeCalque[calqueSelec].second; }
         inline bool getCalqueVisible(uint numCalque) { return listeCalque[numCalque].second; }
+        inline uint getNbForme(uint numCalque) { return listeCalque[numCalque].first->getFormes();}
 
-        inline void setCalqueSelec(uint _calqueSelec) { calqueSelec=_calqueSelec; }
+        inline void setCalqueSelec(uint _calqueSelec) { if(_calqueSelec>=0 && _calqueSelec<nbcalques) calqueSelec=_calqueSelec; }
         inline void setCalqueVisible(bool _isVisible) { listeCalque[calqueSelec].second = _isVisible; }
 
         void creerCalque();

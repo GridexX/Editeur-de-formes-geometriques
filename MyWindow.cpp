@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-
 using namespace std;
 
 #include "ez-draw++.hpp"
@@ -43,7 +42,7 @@ cout << "5";
   if(button==1){
     cout <<"4";
     pforme = calques.isOver(mouse_x,mouse_y);
-    cout<<"6";
+    cout<<"6" ;
   }
 }
 
@@ -99,8 +98,8 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
      case EZKeySym::Delete: if(pforme) calques.supprimerForme(pforme); break;
      //appui des touches pour les calques :
      case EZKeySym::y: calques.creerCalque(); break;
-     case EZKeySym::Left: calques.monterCalque(); break;
-     case EZKeySym::Right: calques.descendreCalque(); break;
+     case EZKeySym::Left: calques.monterCalque(); cout << "Calque monté avec succès"<<endl; break; 
+     case EZKeySym::Right: calques.descendreCalque(); cout << "Calque descendu avec succès"<<endl; break;
      case EZKeySym::Up: calques.setCalqueSelec(calques.getCalqueSelect()+1); break;
      case EZKeySym::Down: calques.setCalqueSelec(calques.getCalqueSelect()-1); break;
      case EZKeySym::a:  calques.setCalqueVisible( !calques.getCalqueVisible()); break;
@@ -159,15 +158,17 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
 //affichage dans la console des calques
 void MyWindow::listeCalques(){
     cout << "------------LISTE CALQUES-----------------------" << endl;
-    for(uint i=0; i<calques.getNbCalques(); ++i){
-        cout << "Calque " << i << "[";
+    for(int i=calques.getNbCalques()-1; i>-1; --i){
+        cout << "Calque " << i+1 << "[";
         if(i==calques.getCalqueSelect())
             cout << "✓";
         cout << "]";
         if(calques.getCalqueVisible(i))
-            cout << " Visible" << endl;
+            cout << " Visible ";
         else
-            cout << " Caché" << endl;
+            cout << " Caché ";
+
+        cout << "("<<calques.getNbForme(i)<<" Formes)"<< endl;
     }
     cout << "--------------------------------------------------"<<endl;
 

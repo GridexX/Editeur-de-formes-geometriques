@@ -17,7 +17,6 @@ public:
   ~Formes();
 
   inline uint getFormes() { return nbformes; }
-
   void ajouter(Forme *forme);
   void supprimer(Forme *forme);
   Forme *isOver(uint _x,uint _y);

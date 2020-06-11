@@ -48,7 +48,7 @@ void Calques::supprimerCalque() //modif
 
 void Calques::monterCalque()
 {
-    if(calqueSelec < maxcalques && nbcalques > 1){
+    if(calqueSelec < nbcalques && nbcalques > 1){
         calqAndBool tPaire = listeCalque[calqueSelec+1];
         listeCalque[calqueSelec+1] = listeCalque[calqueSelec];
         listeCalque[calqueSelec] = tPaire;
@@ -89,7 +89,7 @@ void Calques::dessiner(EZWindow &w) const
 }
 
 Forme *Calques::isOver(uint _x, uint _y)
-{
+{/*
     cout << "3";
     for ( uint i=0; i<nbcalques; ++i){
         cout << "3.1"; 
@@ -99,7 +99,8 @@ Forme *Calques::isOver(uint _x, uint _y)
         }
 
     }
-    cout << "4";
+    cout << "4";*/
+    return listeCalque[calqueSelec].first->isOver(_x,_y);
 }
 
 void Calques::supprimerForme(Forme *f)
@@ -116,6 +117,7 @@ ostream& operator<<(ostream& os, const Calques &calques)
         for ( uint j=0 ; j<calques.nbcalques ; ++j )
             os << "test";
     }
+    return os;
 }
 
 void Calques::sauver(ostream &os) const
