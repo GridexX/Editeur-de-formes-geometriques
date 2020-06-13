@@ -50,6 +50,7 @@ ostream& Forme::ecrire(ostream& os) const
 #include "carre.hpp"
 #include "ellipse.hpp"
 #include "cercle.hpp"
+#include "image.hpp"
 
 Forme* Forme::charger(istream& is)
 {
@@ -64,6 +65,8 @@ if(mot=="Rectangle")
         return new Carre(is);
     else if(mot=="Cercle")
         return new Cercle(is);
+    else if(mot=="Image")
+        return new Image(is);
     //rajouter Polygone ici
     else
         throw runtime_error("Type de forme inconnue rencontré lors du chargement !");

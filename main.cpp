@@ -8,10 +8,11 @@ using namespace std;
 
 int main()
 {
- EZDraw ezDraw;
- MyWindow myWindow(800,500,"Des formes");
-
- ezDraw.mainLoop();
+    EZDraw ezDraw;
+    MyWindow myWindow(800,500,"Des formes");
+    const int i=1;
+    ezDraw.mainLoop();
+   
 
  return 0;
 }
