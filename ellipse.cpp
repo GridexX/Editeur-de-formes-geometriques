@@ -28,12 +28,20 @@ Ellipse::~Ellipse()
 void Ellipse::dessiner(EZWindow &w, bool isActive) const
 {
     Forme::dessiner(w, isActive);
-    w.drawCircle(
-        getAncre().getX(),
-        getAncre().getY(),
-        getAncre().getX()+demiLargeur,
-        getAncre().getY()+demiLongueur
-    );
+    if ( Forme::getFilled() )
+        w.fillCircle(
+            getAncre().getX(),
+            getAncre().getY(),
+            getAncre().getX()+demiLargeur,
+            getAncre().getY()+demiLongueur
+        );
+    else
+        w.drawCircle(
+            getAncre().getX(),
+            getAncre().getY(),
+            getAncre().getX()+demiLargeur,
+            getAncre().getY()+demiLongueur
+        );
 }
 
 double Ellipse::perimetre() const
@@ -41,8 +49,8 @@ double Ellipse::perimetre() const
 
 ostream& Ellipse::ecrire(ostream &os) const
 {
-    os<<"Ellipse";
+    os<<"Ellipse ";
     Forme::ecrire(os);
-    os<<""<<demiLargeur<<""<<demiLongueur;
+    os<<" "<<demiLargeur<<" "<<demiLongueur;
     return os;
 }

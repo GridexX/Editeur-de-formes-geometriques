@@ -4,24 +4,52 @@
 #ifndef CALQUE_HPP
 #define CALQUE_HPP
 
+#include <vector>
+#include <utility>
+
 #include "formes.hpp"
 
-class Calques {
+typedef std::vector< std::pair<Formes *,bool>> vecFormes;
+typedef std::pair<Formes *, bool> calqAndBool;
+
+class Calques { //herite de formes
     private :
-        Formes * listeCalque;
-        bool isActive; 
-        uint maxcalques;
-        uint nbcalques;
+        vecFormes listeCalque;
+        size_t maxcalques;
+        uint nbcalques=0;
+        uint calqueSelec=0;
     
     public :
-        Calques(uint taille=200);
+        Calques(size_t taille=20);
         
         ~Calques();
 
-        Forme getFormes() const;
+        inline uint getCalqueSelec() { return calqueSelec; }
+        inline uint getNbCalques() { return nbcalques; }
+        inline bool getCalqueVisible() { return listeCalque[calqueSelec].second; }
+        inline bool getCalqueVisible(uint numCalque) { return listeCalque[numCalque].second; }
+        inline uint getNbForme(uint numCalque) { return listeCalque[numCalque].first->getFormes();}
 
-        void ajouter(Formes *calque);
+        inline void setCalqueSelec(uint _calqueSelec) { if(_calqueSelec>=0 && _calqueSelec<nbcalques) calqueSelec=_calqueSelec; }
+        inline void setCalqueVisible(bool _isVisible) { listeCalque[calqueSelec].second = _isVisible; }
+
+        void creerCalque();
+        void creerCalque(uint _nbcalques);
+        void supprimerCalque();
+        void monterCalque();
+        void descendreCalque();
+        void ajouterForme(Forme *forme);
+        void supprimerForme(Forme * forme);
+        void fusionner();
+        void swapFormeCalque(Forme * forme, uint dest);
+
         void dessiner(EZWindow &w) const;
+
+        Forme *isOver(uint _x, uint y);
+
+        friend ostream& operator<<(ostream& os, const Calques & calques);
+        void sauver(ostream& os) const;
+        void charger(istream& is);
         
 }; 
 

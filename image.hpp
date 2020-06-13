@@ -7,21 +7,21 @@
 
 class Image : public Forme {
     private :
-        EZImage image;
-        uint ratio;
-        int opacite=10; // pourcentage (0=transparent / 100=opaque)
+        EZImage image, *pimage;
+        double ratio;
+        bool estTransparente=true;
     
     public :
-        Image(ulong _couleur, uint _x, uint _y, uint ratio, char * _nomFichier);
+        Image(ulong _couleur, uint _x, uint _y, double _ratio, const char * _nomFichier);
         Image(const Image& orig);
         Image(istream& is);
         ~Image();
 
-        inline uint getRatio() const { return ratio; }
-        inline uint getOpacite() const { return opacite; }
+        inline double getRatio() const { return ratio; }
+        inline bool getTransparence() const { return estTransparente; }
 
-        inline void setRatio(uint _ratio) { ratio=_ratio; }
-        inline void setOpacite(int _opacite) { opacite=_opacite; }
+        inline void setRatio(double _ratio) { ratio=_ratio; delete pimage; pimage=image.scale(ratio); }
+        inline void setTransparence(bool _estTransparente) { estTransparente=_estTransparente; pimage->setAlpha(estTransparente); }
 
         void dessiner(EZWindow &w, bool isActive) const override;
         double perimetre() const override; 

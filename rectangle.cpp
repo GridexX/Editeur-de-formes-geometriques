@@ -14,28 +14,36 @@ Rectangle::Rectangle(const Rectangle& orig)
  : Forme(orig),largeur(orig.largeur), longueur(orig.longueur)
 {}
 
-Rectangle::Rectangle(istream& is)
- : Forme(is),largeur(0),longueur(0)
-{
- is >> largeur >> longueur;
-}
-
 Rectangle::~Rectangle()
 {}
 
 void Rectangle::dessiner(EZWindow &w, bool isActive) const
 {
     Forme::dessiner(w, isActive);
-    w.drawRectangle(
-        getAncre().getX(),
-        getAncre().getY(),
-        getAncre().getX()+largeur,
-        getAncre().getY()+longueur
-    );
+    if( Forme::getFilled() )
+        w.fillRectangle(
+            getAncre().getX(),
+            getAncre().getY(),
+            getAncre().getX()+largeur,
+            getAncre().getY()+longueur
+        );
+    else
+        w.drawRectangle(
+            getAncre().getX(),
+            getAncre().getY(),
+            getAncre().getX()+largeur,
+            getAncre().getY()+longueur
+        );
 }
 
 double Rectangle::perimetre() const
 { return 2*largeur+2*longueur; }
+
+Rectangle::Rectangle(istream& is)
+ : Forme(is),largeur(0),longueur(0)
+{
+    is >> largeur >> longueur;
+}
 
 ostream& Rectangle::ecrire(ostream& os) const
 {

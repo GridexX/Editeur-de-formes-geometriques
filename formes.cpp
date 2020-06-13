@@ -56,7 +56,7 @@ os << a // Juste et simple
 ostream& operator<<(ostream& os, const Formes& formes)
 {
     for(uint i=0; i<formes.nbformes;++i)
-os << *formes.formes[i];
+        os << *formes.formes[i];
 return os;
 }
 
@@ -72,7 +72,68 @@ void Formes::charger(istream& is)
     uint nbf;
     is >>  nbf;
     for(uint i=0; i<nbf; i++)
-    ajouter(Forme::charger(is));
+        ajouter(Forme::charger(is));
 }
 
 
+void Formes::supprimer(Forme *forme)
+{
+    uint i=0;
+    uint indForme;
+    bool trouve=false;
+    while(!trouve && i<nbformes){   //On parcourt le tableau de formes jusqu'à ce qu'on obtienne la bonne et on sauvegarde l'indice
+        if(formes[i] == forme){
+            trouve=true;
+            indForme=i;
+        }
+        i++; 
+    }
+    
+    uint j=0;
+    if(trouve){
+        Forme **tabFormes = new Forme * [maxformes];    //On crée un nouveau tableau de forme et on le remplit avec toutes celles d'avant sauf celle à supprimer
+        for (uint i=0; i<nbformes; ++i){
+            if( formes[i] != forme  )
+                tabFormes[j++] = formes[i];
+            
+        }
+
+        formes[indForme]->~Forme(); //On détruit la forme et on reset le tableau
+        delete [] formes;
+        formes=tabFormes;
+        --nbformes;
+
+    }
+
+} 
+/*
+void Formes::supprimer(Forme *f){
+
+    uint y=0;
+    bool trouve=false;
+    for (uint i=0; i<nbformes; i++) //cherche quel forme correspond dans la liste
+    {
+        if (formes[i]==f)
+        {
+            y=i;
+            trouve=true;
+        }
+    }
+    if (trouve)
+    {
+        Forme ** temp = new Forme*[maxformes];
+        uint j=0;
+        for (uint i=0; i<nbformes; i++)
+        {
+            if (i!=y)
+            {
+                temp[j]=formes[i];
+                j++;
+            }
+        }
+        formes[y]->~Forme();
+        delete [] formes;
+        formes=temp;
+        nbformes--;
+    }
+} */
