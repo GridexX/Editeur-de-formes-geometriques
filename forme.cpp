@@ -16,7 +16,7 @@ Forme::Forme(const Forme& orig)
 Forme::Forme(istream& is)
  :couleur(ez_black),ancre(0,0),selected(false)
 {
- is >> couleur >> ancre;
+ is >> couleur >> ancre >> epaisseur >> isFilled;
 }
 
 Forme::~Forme()
@@ -33,13 +33,13 @@ void Forme::dessiner(EZWindow &w, bool active) const
 // fonction non membre
 ostream& operator<<(ostream& os, const Forme& f)
 {
- f.ecrire(os);
- return os;
+    f.ecrire(os);
+    return os;
 }
 
 ostream& Forme::ecrire(ostream& os) const
 {
-    os<<couleur<<" "<<ancre;
+    os<<couleur<<" "<<ancre<<" "<<epaisseur<<" "<<isFilled;
     return os;
 }
 
@@ -64,6 +64,7 @@ if(mot=="Rectangle")
         return new Carre(is);
     else if(mot=="Cercle")
         return new Cercle(is);
+    //rajouter Polygone ici
     else
         throw runtime_error("Type de forme inconnue rencontré lors du chargement !");
 }

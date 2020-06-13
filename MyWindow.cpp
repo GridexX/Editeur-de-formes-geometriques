@@ -131,6 +131,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             << "C : charge la liste des formes depuis le disque" << endl
             << "+ : augmente l'épaisseur"    << endl
             << "- : diminue l'épaisseur"     << endl
+            << "o : switch entre le contour et le remplissage" <<endl
             << "0 : met en noir la forme"    << endl
             << "1 : met en gris la forme"    << endl
             << "2 : met en rouge la forme"   << endl

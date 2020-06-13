@@ -14,12 +14,6 @@ Rectangle::Rectangle(const Rectangle& orig)
  : Forme(orig),largeur(orig.largeur), longueur(orig.longueur)
 {}
 
-Rectangle::Rectangle(istream& is)
- : Forme(is),largeur(0),longueur(0)
-{
- is >> largeur >> longueur;
-}
-
 Rectangle::~Rectangle()
 {}
 
@@ -44,6 +38,12 @@ void Rectangle::dessiner(EZWindow &w, bool isActive) const
 
 double Rectangle::perimetre() const
 { return 2*largeur+2*longueur; }
+
+Rectangle::Rectangle(istream& is)
+ : Forme(is),largeur(0),longueur(0)
+{
+    is >> largeur >> longueur;
+}
 
 ostream& Rectangle::ecrire(ostream& os) const
 {
