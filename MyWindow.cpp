@@ -17,6 +17,7 @@ using namespace std;
 #include "image.hpp"
 #include "calques.hpp"
 
+static const unsigned int delay = 300;
 
 MyWindow::MyWindow(int w, int h,const char *name)
  : EZWindow(w,h,name),calques(20),pforme(nullptr)
@@ -53,6 +54,49 @@ void MyWindow::buttonRelease(int mouse_x,int mouse_y,int button)
   if(button == 1 && pforme != nullptr) // Si on clique sur l'ancre d'une forme
     pforme->setAncre(mouse_x,mouse_y);
   sendExpose();
+}
+
+void MyWindow::animationRainbow()
+{
+  if((pforme->getCouleur()!=ez_cyan) && (pforme->getCouleur()!=ez_blue) && (pforme->getCouleur()!=ez_magenta) && (pforme->getCouleur()!=ez_red) && (pforme->getCouleur()!=ez_yellow) && (pforme->getCouleur()!=ez_green)){
+    pforme->setCouleur(ez_cyan);
+  }
+  else if(pforme->getCouleur()==ez_cyan) pforme->setCouleur(ez_blue);
+  else if(pforme->getCouleur()==ez_blue) pforme->setCouleur(ez_magenta);
+  else if(pforme->getCouleur()==ez_magenta) pforme->setCouleur(ez_red);    
+  else if(pforme->getCouleur()==ez_red) pforme->setCouleur(ez_yellow);    
+  else if(pforme->getCouleur()==ez_yellow) pforme->setCouleur(ez_green);    
+  else if(pforme->getCouleur()==ez_green) pforme->setCouleur(ez_cyan);    
+}
+
+void MyWindow::animationBlink()
+{
+  if(pforme->getEpaisseur()<=1) pforme->setEpaisseur(3);
+  else if(pforme->getEpaisseur()==3) pforme->setEpaisseur(1);
+}
+
+void MyWindow::timerNotify() // declenchee a chaque fois que le timer est ecoule.
+{
+  if(pforme->getAnimation()==1) animationRainbow();
+  if(pforme->getAnimation()==2) animationBlink();
+  sendExpose();
+  startTimer(delay);  
+}
+
+void MyWindow::switchAnimation()
+{
+  if(pforme){
+    uint anim = pforme->getAnimation();
+    anim = (anim + 1) % 3;
+    pforme->setAnimation(anim);
+  }  
+}
+
+void MyWindow::animation()
+{
+  if(pforme){
+    startTimer(delay);
+  }  
 }
 
 void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee ou relachee
@@ -121,6 +165,8 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::f: calques.fusionner(); break;
       case EZKeySym::w: calques.swapFormeCalque(pforme,calques.getCalqueSelec()+1); break;
       case EZKeySym::x: calques.swapFormeCalque(pforme,calques.getCalqueSelec()-1); break;
+      case EZKeySym::n: animation(); break;
+      case EZKeySym::l: switchAnimation(); break;
       case EZKeySym::h:
       cout 
             << endl << "---------------------------AIDE-------------------------" << endl
@@ -147,8 +193,10 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             << "t : crée un triangle" << endl
             << "i : crée une image" << endl
             << "t : ajouter/supprimer la tranparence de l'image" << endl
-            << "ù : agrandit la forme" << endl
+            << "ù : agrandit la forme" << endl                      
             << "* : rapetisse la forme" << endl
+            << "n : animer la forme" << endl
+            << "l : changer d'animation" << endl
             << "Suppr : supprime la forme" << endl
             
             << "--------------------------------------------------------" << endl << endl
