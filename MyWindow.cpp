@@ -169,7 +169,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::e: calques.ajouterForme(new Ellipse(ez_black,getWidth()/2-25,getHeight()/2-15,50,30)); break;
       case EZKeySym::s: calques.ajouterForme(new Carre(ez_black,getWidth()/2-25,getHeight()/2-25,50)); break;
       case EZKeySym::c: calques.ajouterForme(new Cercle(ez_black,getWidth()/2-25,getHeight()/2-25,25)); break;
-      case EZKeySym::i: calques.ajouterForme(new Image(ez_black,getWidth()/2-25,getHeight()/2-25,1.0,"Fallout_logo.png")); break;
+      case EZKeySym::i: calques.ajouterForme(new Image(ez_black,getWidth()/2-25,getHeight()/2-25,"Fallout_logo.png",1,true)); break;
       //Faudra rajouter ce constructeur pour le triangle 
       //case EZKeySym::t: formes.ajouter(new Triangle(ez_black,getWidth()/2,getHeight()/2-50,getWidth()/2-25,getHeight()/2-30,getWidth()/2+25,getHeight()/2-30)); break;
       default: break;

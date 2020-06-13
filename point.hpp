@@ -37,6 +37,8 @@ public :
        void dessiner(EZWindow& w, bool isActive=false) const;
        friend ostream& operator<<(ostream& os, const Point& p);
        friend istream& operator>>(istream& is, Point& p);
+       friend uint getY();
+       friend uint getX();
 };
 
 // a <= b <= c se traduit en C++ préférentiellement par : (a <= b && b <= c)
