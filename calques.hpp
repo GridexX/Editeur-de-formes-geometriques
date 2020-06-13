@@ -24,7 +24,7 @@ class Calques { //herite de formes
         
         ~Calques();
 
-        inline uint getCalqueSelect() { return calqueSelec; }
+        inline uint getCalqueSelec() { return calqueSelec; }
         inline uint getNbCalques() { return nbcalques; }
         inline bool getCalqueVisible() { return listeCalque[calqueSelec].second; }
         inline bool getCalqueVisible(uint numCalque) { return listeCalque[numCalque].second; }
@@ -39,7 +39,8 @@ class Calques { //herite de formes
         void monterCalque();
         void descendreCalque();
         void ajouterForme(Forme *forme);
-        void supprimerForme(Forme * forme); // A voir si besoin
+        void supprimerForme(Forme * forme);
+        void fusionner();
         void swapFormeCalque(Forme * forme, uint dest);
 
         void dessiner(EZWindow &w) const;

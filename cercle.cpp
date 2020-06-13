@@ -29,12 +29,20 @@ Cercle::~Cercle()
 void Cercle::dessiner(EZWindow &w, bool isActive) const
 {
     Forme::dessiner(w, isActive);
-    w.drawCircle(
-        getAncre().getX(),
-        getAncre().getY(),
-        getAncre().getX()+rayon,
-        getAncre().getY()+rayon
-    );
+    if( Forme::getFilled() )
+        w.fillCircle(
+            getAncre().getX(),
+            getAncre().getY(),
+            getAncre().getX()+rayon,
+            getAncre().getY()+rayon
+        );
+    else
+        w.drawCircle(
+            getAncre().getX(),
+            getAncre().getY(),
+            getAncre().getX()+rayon,
+            getAncre().getY()+rayon
+        );
 }
 
 double Cercle::perimetre() const
@@ -42,8 +50,8 @@ double Cercle::perimetre() const
 
 ostream& Cercle::ecrire(ostream &os) const
 {
-    os<<"Cercle";
+    os<<"Cercle ";
     Forme::ecrire(os);
-    os<<""<<rayon;
+    os<<" "<<rayon;
     return os;
 }

@@ -26,12 +26,20 @@ Carre::~Carre()
 void Carre::dessiner(EZWindow &w, bool isActive) const
 {
     Forme::dessiner(w, isActive);
-    w.drawRectangle(
-        getAncre().getX(),
-        getAncre().getY(),
-        getAncre().getX()+cote,
-        getAncre().getY()+cote
-    );
+    if( Forme::getFilled() )
+        w.fillRectangle(
+            getAncre().getX(),
+            getAncre().getY(),
+            getAncre().getX()+cote,
+            getAncre().getY()+cote
+        );
+    else
+        w.drawRectangle(
+            getAncre().getX(),
+            getAncre().getY(),
+            getAncre().getX()+cote,
+            getAncre().getY()+cote
+        );
 }
 
 double Carre::perimetre() const
@@ -39,8 +47,8 @@ double Carre::perimetre() const
 
 ostream& Carre::ecrire(ostream& os) const
 {
-    os<<"Carre";
+    os<<"Carre ";
     Forme::ecrire(os);
-    os<<""<<cote;
+    os<<" "<<cote;
     return os;
 }

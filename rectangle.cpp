@@ -26,12 +26,20 @@ Rectangle::~Rectangle()
 void Rectangle::dessiner(EZWindow &w, bool isActive) const
 {
     Forme::dessiner(w, isActive);
-    w.drawRectangle(
-        getAncre().getX(),
-        getAncre().getY(),
-        getAncre().getX()+largeur,
-        getAncre().getY()+longueur
-    );
+    if( Forme::getFilled() )
+        w.fillRectangle(
+            getAncre().getX(),
+            getAncre().getY(),
+            getAncre().getX()+largeur,
+            getAncre().getY()+longueur
+        );
+    else
+        w.drawRectangle(
+            getAncre().getX(),
+            getAncre().getY(),
+            getAncre().getX()+largeur,
+            getAncre().getY()+longueur
+        );
 }
 
 double Rectangle::perimetre() const

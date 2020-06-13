@@ -74,12 +74,24 @@ void Calques::ajouterForme( Forme *forme )
     listeCalque[calqueSelec].second=true;
 }
 
-/*
-void Calques::swapFormeCalque(Forme *forme, uint orig, uint dest)
+
+void Calques::swapFormeCalque(Forme *forme, uint dest)
 {
-    Forme *pForme = forme;
-    listeCalque[orig].first
-} */
+    //si il n'y a pas de calque déjà crée au dessus, on en crée 1
+/*
+    if(calqueSelec==nbcalques && calqueSelec<maxcalques-1){
+        Forme *forme =new
+        supprimerForme(forme);
+        creerCalque();
+        calqueSelec++;
+        ajouterForme(forme);
+    }*/
+    
+    
+}
+
+void Calques::fusionner()
+{}
 
 void Calques::dessiner(EZWindow &w) const
 {
@@ -89,17 +101,7 @@ void Calques::dessiner(EZWindow &w) const
 }
 
 Forme *Calques::isOver(uint _x, uint _y)
-{/*
-    cout << "3";
-    for ( uint i=0; i<nbcalques; ++i){
-        cout << "3.1"; 
-        if( listeCalque[i].first->isOver(_x,_y) != nullptr){
-            return listeCalque[i].first->isOver(_x,_y);
-        cout <<"3.2";
-        }
-
-    }
-    cout << "4";*/
+{
     return listeCalque[calqueSelec].first->isOver(_x,_y);
 }
 
@@ -122,17 +124,17 @@ ostream& operator<<(ostream& os, const Calques &calques)
 
 void Calques::sauver(ostream &os) const
 {
-    os << nbcalques << endl;
-    os << *this;
+    listeCalque[calqueSelec].first->sauver(os);
 }
 
-/*
+
 void Calques::charger(istream &is)
-{
+{ /*
     uint nbc;
     is >> nbc;
     for(uint i=0 ; i<nbc ; ++i)
         ajouter( Formes::charger(is) );
-        for ( uint j=0 ; j<calques.getCalque(i).getFormes() ; j )
+        for ( uint j=0 ; j<calques.getCalque(i).getFormes() ; j ) */
 
-} */
+    listeCalque[calqueSelec].first->charger(is);
+} 
