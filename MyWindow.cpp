@@ -17,7 +17,7 @@ using namespace std;
 #include "image.hpp"
 #include "calques.hpp"
 
-static const unsigned int delay = 300;
+static const unsigned int delay = 150;
 
 MyWindow::MyWindow(int w, int h,const char *name)
  : EZWindow(w,h,name),calques(20),pforme(nullptr)
@@ -75,10 +75,16 @@ void MyWindow::animationBlink()
   else if(pforme->getEpaisseur()==3) pforme->setEpaisseur(1);
 }
 
+void MyWindow::animationBounce()
+{
+  if(pforme) pforme->setEpaisseur(EZDraw::random(20));
+}
+
 void MyWindow::timerNotify() // declenchee a chaque fois que le timer est ecoule.
 {
   if(pforme->getAnimation()==1) animationRainbow();
   if(pforme->getAnimation()==2) animationBlink();
+  if(pforme->getAnimation()==3) animationBounce();
   sendExpose();
   startTimer(delay);  
 }
@@ -86,16 +92,10 @@ void MyWindow::timerNotify() // declenchee a chaque fois que le timer est ecoule
 void MyWindow::switchAnimation()
 {
   if(pforme){
-    uint anim = pforme->getAnimation();
-    anim = (anim + 1) % 3;
-    pforme->setAnimation(anim);
-  }  
-}
-
-void MyWindow::animation()
-{
-  if(pforme){
     startTimer(delay);
+    uint anim = pforme->getAnimation();
+    anim = (anim + 1) % 4;
+    pforme->setAnimation(anim);
   }  
 }
 
@@ -165,8 +165,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::f: calques.fusionner(); break;
       case EZKeySym::w: calques.swapFormeCalque(pforme,calques.getCalqueSelec()+1); break;
       case EZKeySym::x: calques.swapFormeCalque(pforme,calques.getCalqueSelec()-1); break;
-      case EZKeySym::n: animation(); break;
-      case EZKeySym::l: switchAnimation(); break;
+      case EZKeySym::n: switchAnimation(); break;
       case EZKeySym::h:
       cout 
             << endl << "---------------------------AIDE-------------------------" << endl
@@ -195,8 +194,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             << "t : ajouter/supprimer la tranparence de l'image" << endl
             << "ù : agrandit la forme" << endl                      
             << "* : rapetisse la forme" << endl
-            << "n : animer la forme" << endl
-            << "l : changer d'animation" << endl
+            << "n : changer d'animation" << endl
             << "Suppr : supprime la forme" << endl
             
             << "--------------------------------------------------------" << endl << endl

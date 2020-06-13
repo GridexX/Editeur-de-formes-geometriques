@@ -17,10 +17,10 @@ class MyWindow : public EZWindow {
   void motionNotify(int mouse_x,int mouse_y,int button);
   void buttonRelease(int mouse_x,int mouse_y,int button);
   void listeCalques();
-  void animation();
   void switchAnimation();
   void animationRainbow();
   void animationBlink();
+  void animationBounce();
   void timerNotify();
 };
 
