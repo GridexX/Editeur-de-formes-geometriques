@@ -17,7 +17,7 @@ using namespace std;
 #include "image.hpp"
 #include "calques.hpp"
 
-static const unsigned int delay = 150;
+static const unsigned int delay = 100;
 
 MyWindow::MyWindow(int w, int h,const char *name)
  : EZWindow(w,h,name),calques(20),pforme(nullptr)
@@ -78,20 +78,18 @@ void MyWindow::animationRainbow()
 
 void MyWindow::animationBlink()
 {
-  pforme->setCouleur(pforme->getAnimationCouleur());
-  if(pforme->getEpaisseur()==pforme->getAnimationEpaisseur()) pforme->setEpaisseur(pforme->getAnimationEpaisseur()*2);
-  else pforme->setEpaisseur(pforme->getAnimationEpaisseur());
+  if(pforme->getCouleur()==ez_white) pforme->setCouleur(pforme->getAnimationCouleur());
+  else pforme->setCouleur(ez_white);
 }
 
 void MyWindow::animationBounce()
 {
   pforme->setCouleur(pforme->getAnimationCouleur());
-  if(pforme) pforme->setEpaisseur(EZDraw::random(20));
+  if(pforme) pforme->setEpaisseur(EZDraw::random(pforme->getEpaisseur()*2)+1);
 }
 
 void MyWindow::timerNotify() // declenchee a chaque fois que le timer est ecoule.
 {
-  cout << endl << pforme->getAnimation() << endl;
   if(pforme->getAnimation()==0) animationReset();
   else{
     if(pforme->getAnimation()==1) animationRainbow();
@@ -99,8 +97,7 @@ void MyWindow::timerNotify() // declenchee a chaque fois que le timer est ecoule
     if(pforme->getAnimation()==3) animationBounce();
     sendExpose();
     startTimer(delay);  
-  } 
-  
+  }   
 }
 
 void MyWindow::switchAnimation()
