@@ -79,8 +79,8 @@ void MyWindow::animationRainbow()
 void MyWindow::animationBlink()
 {
   pforme->setCouleur(pforme->getAnimationCouleur());
-  if(pforme->getEpaisseur()<=1) pforme->setEpaisseur(3);
-  else if(pforme->getEpaisseur()==3) pforme->setEpaisseur(1);
+  if(pforme->getEpaisseur()==pforme->getAnimationEpaisseur()) pforme->setEpaisseur(pforme->getAnimationEpaisseur()*2);
+  else pforme->setEpaisseur(pforme->getAnimationEpaisseur());
 }
 
 void MyWindow::animationBounce()
@@ -134,17 +134,19 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
         ifstream f("formes.txt");
         calques.charger(f);
       } break;
-      case EZKeySym::_0: if(pforme) pforme->setCouleur(ez_black);   break;
-      case EZKeySym::_1: if(pforme) pforme->setCouleur(ez_grey);    break;
-      case EZKeySym::_2: if(pforme) pforme->setCouleur(ez_red);     break;
-      case EZKeySym::_3: if(pforme) pforme->setCouleur(ez_green);   break;
-      case EZKeySym::_4: if(pforme) pforme->setCouleur(ez_blue);    break;
-      case EZKeySym::_5: if(pforme) pforme->setCouleur(ez_yellow);  break;
-      case EZKeySym::_6: if(pforme) pforme->setCouleur(ez_cyan);    break;
-      case EZKeySym::_7: if(pforme) pforme->setCouleur(ez_magenta); break;
+      case EZKeySym::_0: if(pforme) pforme->setCouleur(ez_black); pforme->setAnimationCouleur(ez_black);   break;
+      case EZKeySym::_1: if(pforme) pforme->setCouleur(ez_grey); pforme->setAnimationCouleur(ez_grey);    break;
+      case EZKeySym::_2: if(pforme) pforme->setCouleur(ez_red); pforme->setAnimationCouleur(ez_red);     break;
+      case EZKeySym::_3: if(pforme) pforme->setCouleur(ez_green); pforme->setAnimationCouleur(ez_green);   break;
+      case EZKeySym::_4: if(pforme) pforme->setCouleur(ez_blue); pforme->setAnimationCouleur(ez_blue);    break;
+      case EZKeySym::_5: if(pforme) pforme->setCouleur(ez_yellow); pforme->setAnimationCouleur(ez_yellow);  break;
+      case EZKeySym::_6: if(pforme) pforme->setCouleur(ez_cyan); pforme->setAnimationCouleur(ez_cyan);    break;
+      case EZKeySym::_7: if(pforme) pforme->setCouleur(ez_magenta); pforme->setAnimationCouleur(ez_magenta); break;
 
-      case EZKeySym::plus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur());  break;
-      case EZKeySym::minus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()-1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur()); break;
+      case EZKeySym::j: if(pforme) pforme->setEpaisseur(0);  break;
+
+      case EZKeySym::plus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()+1); pforme->setAnimationEpaisseur(pforme->getEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur());  break;
+      case EZKeySym::minus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()-1); pforme->setAnimationEpaisseur(pforme->getEpaisseur()-1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur()); break;
       case EZKeySym::o: if(pforme) pforme->setFilled(! pforme->getFilled()); break;
       case EZKeySym::Delete: if(pforme) calques.supprimerForme(pforme);      break;
       case EZKeySym::ugrave: {
