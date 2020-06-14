@@ -15,13 +15,13 @@ Calques::Calques(size_t taille)
 
 Calques::~Calques()
 {
-    for(uint i=0; i<nbcalques; ++i){
+    for(int i=0; i<nbcalques; ++i){
         delete listeCalque[i].first;
     }
     nbcalques=0;
 }
 
-void Calques::creerCalque(uint _nbcalques)
+void Calques::creerCalque(int _nbcalques)
 {
     listeCalque[_nbcalques].first = new Formes;
     listeCalque[_nbcalques].second = true;
@@ -95,7 +95,7 @@ void Calques::fusionner()
 
 void Calques::dessiner(EZWindow &w) const
 {
-    for ( uint i=0; i<nbcalques; ++i)
+    for ( int i=0; i<nbcalques; ++i)
         if ( listeCalque[i].second == true )
             listeCalque[i].first->dessiner(w);
 }
@@ -107,16 +107,16 @@ Forme *Calques::isOver(uint _x, uint _y)
 
 void Calques::supprimerForme(Forme *f)
 {
-    for ( uint i=0; i<nbcalques; ++i)
+    for ( int i=0; i<nbcalques; ++i)
         listeCalque[i].first->supprimer(f);
 }
 
 ostream& operator<<(ostream& os, const Calques &calques)
 {
-    for(uint i=0; i<calques.nbcalques; ++i)
+    for(int i=0; i<calques.nbcalques; ++i)
     {
         os << "Calque n°" << i+1 << endl;
-        for ( uint j=0 ; j<calques.nbcalques ; ++j )
+        for ( int j=0 ; j<calques.nbcalques ; ++j )
             os << "test";
     }
     return os;
@@ -132,9 +132,9 @@ void Calques::charger(istream &is)
 { /*
     uint nbc;
     is >> nbc;
-    for(uint i=0 ; i<nbc ; ++i)
+    for(int i=0 ; i<nbc ; ++i)
         ajouter( Formes::charger(is) );
-        for ( uint j=0 ; j<calques.getCalque(i).getFormes() ; j ) */
+        for ( int j=0 ; j<calques.getCalque(i).getFormes() ; j ) */
 
     listeCalque[calqueSelec].first->charger(is);
 } 

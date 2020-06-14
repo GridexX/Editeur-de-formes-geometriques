@@ -15,26 +15,26 @@ typedef std::pair<Formes *, bool> calqAndBool;
 class Calques { //herite de formes
     private :
         vecFormes listeCalque;
-        size_t maxcalques;
-        uint nbcalques=0;
-        uint calqueSelec=0;
+        int maxcalques;
+        int nbcalques=0;
+        int calqueSelec=0;
     
     public :
         Calques(size_t taille=20);
         
         ~Calques();
 
-        inline uint getCalqueSelec() { return calqueSelec; }
-        inline uint getNbCalques() { return nbcalques; }
+        inline int getCalqueSelec() { return calqueSelec; }
+        inline int getNbCalques() { return nbcalques; }
         inline bool getCalqueVisible() { return listeCalque[calqueSelec].second; }
-        inline bool getCalqueVisible(uint numCalque) { return listeCalque[numCalque].second; }
-        inline uint getNbForme(uint numCalque) { return listeCalque[numCalque].first->getFormes();}
+        inline bool getCalqueVisible(int numCalque) { return listeCalque[numCalque].second; }
+        inline int getNbForme(int numCalque) { return listeCalque[numCalque].first->getFormes();}
 
-        inline void setCalqueSelec(uint _calqueSelec) { if(_calqueSelec>=0 && _calqueSelec<nbcalques) calqueSelec=_calqueSelec; }
+        inline void setCalqueSelec(int _calqueSelec) { if(_calqueSelec>=0 && _calqueSelec<nbcalques) calqueSelec=_calqueSelec; }
         inline void setCalqueVisible(bool _isVisible) { listeCalque[calqueSelec].second = _isVisible; }
 
         void creerCalque();
-        void creerCalque(uint _nbcalques);
+        void creerCalque(int _nbcalques);
         void supprimerCalque();
         void monterCalque();
         void descendreCalque();

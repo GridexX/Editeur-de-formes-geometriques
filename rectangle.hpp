@@ -7,8 +7,8 @@
 
 class Rectangle : public Forme {
       private :
-        uint longueur;
         uint largeur;
+        uint longueur;
         
 
 public:

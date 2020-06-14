@@ -16,12 +16,26 @@ using namespace std;
 #include "triangle.hpp"
 #include "image.hpp"
 #include "calques.hpp"
+#include "polygone.hpp"
 
-static const unsigned int delay = 100;
+static unsigned int delay = 200;
 
 MyWindow::MyWindow(int w, int h,const char *name)
  : EZWindow(w,h,name),calques(20),pforme(nullptr)
-{}
+{
+  #ifdef ADVANCED_FACTORY
+ if(needInitialization) // Ne faire l'initialisation que la première fois qu'une MyWindow est construite.
+  {
+   needInitialization=false;
+   Forme::register_factory_function<Rectangle>("Rectangle");
+   Forme::register_factory_function<Ellipse>("Ellipse");
+   Forme::register_factory_function<Carre>("Carre");
+   Forme::register_factory_function<Cercle>("Cercle");
+   Forme::register_factory_function<Polygone>("Polygone");
+   Forme::print_registered_factory_functions(cout);
+  }
+#endif
+}
 
 MyWindow::~MyWindow()
 {}
@@ -46,6 +60,11 @@ void MyWindow::motionNotify(int mouse_x,int mouse_y,int button)
 {
   if(button == 1 && pforme != nullptr) // Si on clique sur l'ancre d'une forme
     pforme->setAncre(mouse_x,mouse_y); // on la bouge.
+  Forme * poly = pforme;
+  poly = dynamic_cast<Polygone*>(poly);
+  if(poly!=nullptr) {
+    for()
+  }
   sendExpose();
 }
 
@@ -140,7 +159,8 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::_6: if(pforme) pforme->setCouleur(ez_cyan); pforme->setAnimationCouleur(ez_cyan);    break;
       case EZKeySym::_7: if(pforme) pforme->setCouleur(ez_magenta); pforme->setAnimationCouleur(ez_magenta); break;
 
-      case EZKeySym::j: if(pforme) pforme->setEpaisseur(0);  break;
+      case EZKeySym::F1: if (delay <= 975) delay += 25; break;
+      case EZKeySym::F2: if (delay >= 50) delay -= 25; break;
 
       case EZKeySym::plus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()+1); pforme->setAnimationEpaisseur(pforme->getEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur());  break;
       case EZKeySym::minus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()-1); pforme->setAnimationEpaisseur(pforme->getEpaisseur()-1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur()); break;
@@ -229,6 +249,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::r: calques.ajouterForme(new Rectangle(ez_black,getWidth()/2-25,getHeight()/2-25,getWidth()/2+25,getHeight()/2+25)); break;
       case EZKeySym::e: calques.ajouterForme(new Ellipse(ez_black,getWidth()/2-25,getHeight()/2-15,50,30)); break;
       case EZKeySym::s: calques.ajouterForme(new Carre(ez_black,getWidth()/2-25,getHeight()/2-25,50)); break;
+      case EZKeySym::p: calques.ajouterForme(new Polygone(ez_black,getWidth()/2-25,getHeight()/2-25,50,6)); break;
       case EZKeySym::c: calques.ajouterForme(new Cercle(ez_black,getWidth()/2-25,getHeight()/2-25,25)); break;
       case EZKeySym::i: calques.ajouterForme(new Image(ez_black,getWidth()/2-25,getHeight()/2-25,"Fallout_logo.png",1,true)); break;
       //Faudra rajouter ce constructeur pour le triangle 

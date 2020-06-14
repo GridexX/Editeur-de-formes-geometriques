@@ -10,8 +10,8 @@ class Forme {
     
 private :
     ulong couleur;
+    Point ancre;    
     ulong animation_couleur;
-    Point ancre;
     bool selected;
     uint epaisseur=1;
     uint animation_epaisseur=1;
