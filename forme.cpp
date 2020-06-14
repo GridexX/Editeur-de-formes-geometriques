@@ -6,7 +6,7 @@ using namespace std;
 #include "forme.hpp"
 
 Forme::Forme(ulong _couleur, uint _x, uint _y)
-: couleur(_couleur), ancre(_x, _y)
+: couleur(_couleur), ancre(_x, _y), animation_couleur(_couleur)
 {}
 
 Forme::Forme(const Forme& orig)

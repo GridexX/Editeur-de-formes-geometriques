@@ -56,8 +56,15 @@ void MyWindow::buttonRelease(int mouse_x,int mouse_y,int button)
   sendExpose();
 }
 
+void MyWindow::animationReset()
+{
+  pforme->setCouleur(pforme->getAnimationCouleur());
+  pforme->setEpaisseur(pforme->getAnimationEpaisseur());
+}
+
 void MyWindow::animationRainbow()
 {
+  pforme->setEpaisseur(pforme->getAnimationEpaisseur());
   if((pforme->getCouleur()!=ez_cyan) && (pforme->getCouleur()!=ez_blue) && (pforme->getCouleur()!=ez_magenta) && (pforme->getCouleur()!=ez_red) && (pforme->getCouleur()!=ez_yellow) && (pforme->getCouleur()!=ez_green)){
     pforme->setCouleur(ez_cyan);
   }
@@ -71,27 +78,36 @@ void MyWindow::animationRainbow()
 
 void MyWindow::animationBlink()
 {
+  pforme->setCouleur(pforme->getAnimationCouleur());
   if(pforme->getEpaisseur()<=1) pforme->setEpaisseur(3);
   else if(pforme->getEpaisseur()==3) pforme->setEpaisseur(1);
 }
 
 void MyWindow::animationBounce()
 {
+  pforme->setCouleur(pforme->getAnimationCouleur());
   if(pforme) pforme->setEpaisseur(EZDraw::random(20));
 }
 
 void MyWindow::timerNotify() // declenchee a chaque fois que le timer est ecoule.
 {
-  if(pforme->getAnimation()==1) animationRainbow();
-  if(pforme->getAnimation()==2) animationBlink();
-  if(pforme->getAnimation()==3) animationBounce();
-  sendExpose();
-  startTimer(delay);  
+  cout << endl << pforme->getAnimation() << endl;
+  if(pforme->getAnimation()==0) animationReset();
+  else{
+    if(pforme->getAnimation()==1) animationRainbow();
+    if(pforme->getAnimation()==2) animationBlink();
+    if(pforme->getAnimation()==3) animationBounce();
+    sendExpose();
+    startTimer(delay);  
+  } 
+  
 }
 
 void MyWindow::switchAnimation()
 {
   if(pforme){
+    pforme->setCouleur(pforme->getAnimationCouleur());
+    pforme->setEpaisseur(pforme->getAnimationEpaisseur());
     startTimer(delay);
     uint anim = pforme->getAnimation();
     anim = (anim + 1) % 4;

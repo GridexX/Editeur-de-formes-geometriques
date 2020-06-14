@@ -21,6 +21,7 @@ class MyWindow : public EZWindow {
   void animationRainbow();
   void animationBlink();
   void animationBounce();
+  void animationReset();
   void timerNotify();
 };
 
