@@ -168,6 +168,10 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
         calques.charger(c);
       } break;
 
+      //modification du délai pour l'animation
+      case EZKeySym::F3: if (delay <= 975) delay += 25; break;
+      case EZKeySym::F4: if (delay >= 50) delay -= 25; break;
+
       case EZKeySym::_0: if(pforme) pforme->setCouleur(ez_black);   break;
       case EZKeySym::_1: if(pforme) pforme->setCouleur(ez_grey);    break;
       case EZKeySym::_2: if(pforme) pforme->setCouleur(ez_red);     break;
