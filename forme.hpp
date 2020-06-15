@@ -27,8 +27,8 @@ public :
     inline bool getFilled() const { return isFilled; }
 
     inline void setCouleur(ulong _couleur) { couleur=_couleur; }
-    inline void setAncre(uint x,uint y) { ancre.setXY(x,y) ; }
-    inline void setAncre(uint _taille) {ancre.setTaille(_taille);}
+    inline void setAncre(uint x,uint y) { ancre.setXY(x,y); }
+    inline void setAncre(uint _taille) { ancre.setTaille(_taille); }
     inline void setEpaisseur(uint _epaisseur) { epaisseur=_epaisseur; }
     inline void setFilled(bool _isFilled) { isFilled=_isFilled; }
 
