@@ -6,7 +6,7 @@ using namespace std;
 #include "polygone.hpp"
 
 Polygone::Polygone(ulong _couleur, uint _x, uint _y, uint _rayon, uint _nbpoints)
-: Forme(_couleur,_x,_y),rayon(_rayon), nbpoints(_nbpoints), points(nullptr), isRegular(true)
+: Forme(_couleur,_x,_y),rayon(_rayon), nbpoints(_nbpoints), points(nullptr)
 {
     points = new Point*[nbpoints];
     for(uint i=0; i<nbpoints; i++)
@@ -25,10 +25,10 @@ Polygone::Polygone(const Polygone& orig)
 }
 
 Polygone::Polygone(istream &is)
- :Forme(is), rayon(0), nbpoints(0), points(nullptr), isRegular(true)
+ :Forme(is), rayon(0), nbpoints(0), points(nullptr)
 {
     uint x,y;
-    is >> rayon >> nbpoints >> isRegular;
+    is >> rayon >> nbpoints;
     points = new Point*[nbpoints];
     for(uint i = 0; i < nbpoints; i++)
     {
@@ -62,7 +62,7 @@ ostream& Polygone::ecrire(ostream& os) const
 {
     os<<"Polygone ";
     Forme::ecrire(os);
-    os<<" "<<rayon<<" "<<nbpoints<<" "<<isRegular<<" ";
+    os<<" "<<rayon<<" "<<nbpoints<<" ";
     os << *this;
     return os;
 }

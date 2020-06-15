@@ -90,16 +90,7 @@ void MyWindow::motionNotify(int mouse_x,int mouse_y,int button)
     pforme->setAncre(mouse_x,mouse_y);
     Polygone * poly;
     poly = dynamic_cast<Polygone*>(pforme);
-    if(poly!=nullptr && poly->getIsRegular()) 
-    {
-      for(uint i = 0; i < poly->getNbpoints(); i++)
-      {
-        Point * p = new Point(mouse_x+poly->getRayon()*cos(i*(360/poly->getNbpoints())*PI/180.0),mouse_y+poly->getRayon()*sin(i*(360/poly->getNbpoints())*PI/180.0));
-        poly->setPoint(p, i);      
-      }
-    } 
-    if(poly!=nullptr && !poly->getIsRegular()) 
-    {
+    if(poly!=nullptr) {
       diff_x = poly->getAncre().getX() - ancre_x;
       diff_y = poly->getAncre().getY() - ancre_y;
       for(uint i = 0; i < poly->getNbpoints(); i++)
@@ -118,7 +109,6 @@ void MyWindow::motionNotify(int mouse_x,int mouse_y,int button)
     if(poly!=nullptr){
       Point * p = new Point(mouse_x, mouse_y);
       poly->setPoint(p, point);
-      poly->setIsRegular(false);
     } 
   }
   sendExpose();

@@ -10,7 +10,6 @@ class Polygone : public Forme {
         uint rayon;
         uint nbpoints;
         Point ** points;
-        bool isRegular;
         
 
     public :
@@ -22,8 +21,6 @@ class Polygone : public Forme {
         inline Point * getPoint(uint numero) {if((numero >= 0) && (numero < nbpoints)) return points[numero];}
         inline uint getNbpoints() { return nbpoints;}
         inline uint getRayon() { return rayon;}
-        inline bool getIsRegular() { return isRegular;}
-        inline void setIsRegular(bool regular) { isRegular = regular;}
         inline void setRayon(uint _rayon) { rayon=_rayon;}
         void dessiner(EZWindow &w, bool isActive) const override;
         double perimetre() const override;
