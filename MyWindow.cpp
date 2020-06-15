@@ -21,7 +21,7 @@ using namespace std;
 static unsigned int delay = 200;
 
 MyWindow::MyWindow(int w, int h,const char *name)
- : EZWindow(w,h,name),calques(20),pforme(nullptr)
+ : EZWindow(w,h,name),calques(20),pforme(nullptr),point(-1), ancre_x(0), ancre_y(0), diff_x(0), diff_y(0)
 {
   #ifdef ADVANCED_FACTORY
  if(needInitialization) // Ne faire l'initialisation que la première fois qu'une MyWindow est construite.
@@ -51,8 +51,36 @@ void MyWindow::expose()
 
 void MyWindow::buttonPress(int mouse_x,int mouse_y,int button)
 {
-  if(button==1)
-    pforme = calques.isOver(mouse_x,mouse_y);
+  if(button==1){
+     pforme = calques.isOver(mouse_x,mouse_y);
+    if(pforme)
+    {
+    Polygone * poly;
+    poly = dynamic_cast<Polygone*>(pforme);
+    if(poly!=nullptr) 
+      {
+        ancre_x = poly->getAncre().getX();
+        ancre_y = poly->getAncre().getY();
+      }
+    }
+  }    
+  else if (button==3){
+    if(pforme)
+    {
+      Polygone * poly;
+      poly = dynamic_cast<Polygone*>(pforme);
+      if(poly!=nullptr) 
+      {
+        ancre_x = poly->getAncre().getX();
+        ancre_y = poly->getAncre().getY();
+        point=-1;
+        for(uint i = 0; i < poly->getNbpoints(); i++)
+        {
+          if(poly->getPoint(i)->isOver(mouse_x, mouse_y)) point = i;
+        }
+      }
+    }
+  }
 }
 
 // Deplacement de la souris :
@@ -62,14 +90,36 @@ void MyWindow::motionNotify(int mouse_x,int mouse_y,int button)
     pforme->setAncre(mouse_x,mouse_y);
     Polygone * poly;
     poly = dynamic_cast<Polygone*>(pforme);
-    if(poly!=nullptr) 
+    if(poly!=nullptr && poly->getIsRegular()) 
     {
       for(uint i = 0; i < poly->getNbpoints(); i++)
       {
         Point * p = new Point(mouse_x+poly->getRayon()*cos(i*(360/poly->getNbpoints())*PI/180.0),mouse_y+poly->getRayon()*sin(i*(360/poly->getNbpoints())*PI/180.0));
         poly->setPoint(p, i);      
       }
-    } // on la bouge.
+    } 
+    if(poly!=nullptr && !poly->getIsRegular()) 
+    {
+      diff_x = poly->getAncre().getX() - ancre_x;
+      diff_y = poly->getAncre().getY() - ancre_y;
+      for(uint i = 0; i < poly->getNbpoints(); i++)
+      {
+        Point * p = new Point(poly->getPoint(i)->getX()+diff_x,poly->getPoint(i)->getY()+diff_y);
+        poly->setPoint(p, i);      
+      }
+      ancre_x = poly->getAncre().getX();
+      ancre_y = poly->getAncre().getY();
+    }// on la bouge.
+  }
+  if(button!=3) point = -1;
+  if(button == 3 && pforme != nullptr && point > -1){
+    Polygone * poly;
+    poly = dynamic_cast<Polygone*>(pforme);
+    if(poly!=nullptr){
+      Point * p = new Point(mouse_x, mouse_y);
+      poly->setPoint(p, point);
+      poly->setIsRegular(false);
+    } 
   }
   sendExpose();
 }

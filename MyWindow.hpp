@@ -8,6 +8,9 @@
 class MyWindow : public EZWindow {
   Calques calques;
   Forme  *pforme;
+  int point;
+  uint ancre_x, ancre_y;
+  int diff_x, diff_y;
  public:
   MyWindow(int w, int h,const char *name);
   ~MyWindow();
