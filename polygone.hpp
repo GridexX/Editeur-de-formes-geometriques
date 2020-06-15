@@ -26,6 +26,7 @@ class Polygone : public Forme {
         double perimetre() const override;
 
         void setPoint(Point * p, uint numero);
+        friend ostream&  operator<<(ostream&  os, const Polygone& poly);
 
         protected:
         ostream& ecrire(ostream& os) const override;

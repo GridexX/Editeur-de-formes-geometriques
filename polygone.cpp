@@ -25,7 +25,7 @@ Polygone::Polygone(const Polygone& orig)
 }
 
 Polygone::Polygone(istream &is)
-: Forme(is), rayon(0)
+: Forme(is), rayon(0), nbpoints(0)
 {
     is >> rayon >> nbpoints;
 }
@@ -45,11 +45,19 @@ void Polygone::dessiner(EZWindow &w, bool isActive) const
     }        
 }
 
+ostream& operator<<(ostream& os, const Polygone& poly)
+{
+    for(uint i=0; i < poly.nbpoints; ++i)
+        os << *poly.points[i];
+    return os;
+}
+
 ostream& Polygone::ecrire(ostream& os) const
 {
     os<<"Polygone ";
     Forme::ecrire(os);
     os<<" "<<rayon<<" "<<nbpoints;
+    os << *this;
     return os;
 }
 
@@ -63,4 +71,4 @@ void Polygone::setPoint(Point * p, uint numero)
     points[numero]=p;
 }
 
-//void setPoint(Point p, uint numero){}
+

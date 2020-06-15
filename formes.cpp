@@ -84,8 +84,7 @@ void Formes::supprimer(Forme *forme)
             indForme=i;
         }
         i++; 
-    }
-    
+    }    
     
     if(trouve){
         uint j=0;
@@ -99,7 +98,5 @@ void Formes::supprimer(Forme *forme)
         delete [] formes;
         formes=tabFormes;
         --nbformes;
-
     }
-
 } 

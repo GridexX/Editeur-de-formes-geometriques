@@ -269,7 +269,23 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::r: calques.ajouterForme(new Rectangle(ez_black,getWidth()/2-25,getHeight()/2-25,getWidth()/2+25,getHeight()/2+25)); break;
       case EZKeySym::e: calques.ajouterForme(new Ellipse(ez_black,getWidth()/2-25,getHeight()/2-15,50,30)); break;
       case EZKeySym::s: calques.ajouterForme(new Carre(ez_black,getWidth()/2-25,getHeight()/2-25,50)); break;
-      case EZKeySym::p: calques.ajouterForme(new Polygone(ez_black,getWidth()/2-25,getHeight()/2-25,50,6)); break;
+      case EZKeySym::p: {
+        uint nbpoints, rayon;
+        cout << endl << "Vous êtes sur le point de créer un Polygone : "
+             << endl << "Choisir le nombre de côtés : " ;
+        cin >> nbpoints;
+        while(nbpoints<=2){
+          cout << "Erreur !, choisir un nombre de côtés > 2 : " ;
+          cin >> nbpoints;
+        }
+        cout << endl << "Choisir le rayon : ";
+        cin >> rayon;
+        while(rayon<0){
+          cout << "Erreur !, choisir un rayon positif : " ;
+          cin >> rayon;
+        }
+        calques.ajouterForme(new Polygone(ez_black,getWidth()/2-25,getHeight()/2-25,rayon,nbpoints)); break;
+      }
       case EZKeySym::c: calques.ajouterForme(new Cercle(ez_black,getWidth()/2-25,getHeight()/2-25,25)); break;
       case EZKeySym::i: calques.ajouterForme(new Image(ez_black,getWidth()/2-25,getHeight()/2-25,"Fallout_logo.png",1,true)); break;
       //Faudra rajouter ce constructeur pour le triangle 
