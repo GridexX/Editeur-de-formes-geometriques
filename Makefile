@@ -9,13 +9,13 @@ CXX=g++
 endif
 CFLAGS   = -g -Wall -pedantic -O2
 #Pour windows test -g -Wall -O0 -D_WIN32
-CXXFLAGS = $(CFLAGS) -std=c++11
+CXXFLAGS = $(CFLAGS) -std=c++17
 LIBS     = -lX11 -lXext
 RM       = rm -f
 EXE      = .exe
 
 OBJECTS= point.o forme.o rectangle.o formes.o
-OBJECTS+= ellipse.o carre.o cercle.o triangle.o
+OBJECTS+= ellipse.o carre.o cercle.o triangle.o polygone.o
 OBJECTS+= image.o calques.o
 OBJECTS+= MyWindow.o main.o ez-draw++.o
 
