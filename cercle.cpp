@@ -1,9 +1,8 @@
 //Cercle.cpp
 
 #include <iostream>
-#define _USE_MATH_DEFINES
+#define PI 3.14159265358979323846
 #include <cmath>
-
 
 using namespace std;
 
@@ -33,20 +32,20 @@ void Cercle::dessiner(EZWindow &w, bool isActive) const
         w.fillCircle(
             getAncre().getX(),
             getAncre().getY(),
-            getAncre().getX()+rayon,
-            getAncre().getY()+rayon
+            getAncre().getX()+rayon*2,
+            getAncre().getY()+rayon*2
         );
     else
         w.drawCircle(
             getAncre().getX(),
             getAncre().getY(),
-            getAncre().getX()+rayon,
-            getAncre().getY()+rayon
+            getAncre().getX()+rayon*2,
+            getAncre().getY()+rayon*2
         );
 }
 
 double Cercle::perimetre() const
-{return 2*M_PI*rayon;}
+{return 2*PI*rayon;}
 
 ostream& Cercle::ecrire(ostream &os) const
 {
