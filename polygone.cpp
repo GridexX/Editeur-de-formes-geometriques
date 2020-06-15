@@ -1,8 +1,6 @@
 //Polygone.cpp
 
 #include <iostream>
-#include <cmath>
-#define _USE_MATH_DEFINES
 using namespace std;
 
 #include "polygone.hpp"
@@ -58,6 +56,11 @@ ostream& Polygone::ecrire(ostream& os) const
 double Polygone::perimetre() const
 {
     return 2.3;
+}
+
+void Polygone::setPoint(Point * p, uint numero)
+{
+    points[numero]=p;
 }
 
 //void setPoint(Point p, uint numero){}

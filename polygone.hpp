@@ -1,8 +1,7 @@
 #ifndef POLYGONE_HPP
 #define POLYGONE_HPP
-#ifndef PI
-   #define PI 3.14159265358979323846
-#endif
+#define PI 3.14159265358979323846
+#include <cmath>
 #include "forme.hpp"
 
 
@@ -19,13 +18,14 @@ class Polygone : public Forme {
         Polygone(istream &is);
         ~Polygone();
 
-        //inline Point * getPoint(uint numero) return points[numero]->get;
-        
+        inline Point * getPoint(uint numero) {if((numero >= 0) && (numero < nbpoints)) return points[numero];}
+        inline uint getNbpoints() { return nbpoints;}
+        inline uint getRayon() { return rayon;}
         inline void setRayon(uint _rayon) { rayon=_rayon;}
         void dessiner(EZWindow &w, bool isActive) const override;
         double perimetre() const override;
 
-        //void setPoint(Point * p, uint numero);
+        void setPoint(Point * p, uint numero);
 
         protected:
         ostream& ecrire(ostream& os) const override;

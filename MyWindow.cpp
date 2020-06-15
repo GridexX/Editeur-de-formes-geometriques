@@ -58,12 +58,18 @@ void MyWindow::buttonPress(int mouse_x,int mouse_y,int button)
 // Deplacement de la souris :
 void MyWindow::motionNotify(int mouse_x,int mouse_y,int button)
 {
-  if(button == 1 && pforme != nullptr) // Si on clique sur l'ancre d'une forme
-    pforme->setAncre(mouse_x,mouse_y); // on la bouge.
-  Forme * poly = pforme;
-  poly = dynamic_cast<Polygone*>(poly);
-  if(poly!=nullptr) {
-    //for()
+  if(button == 1 && pforme != nullptr){ // Si on clique sur l'ancre d'une forme
+    pforme->setAncre(mouse_x,mouse_y);
+    Polygone * poly;
+    poly = dynamic_cast<Polygone*>(pforme);
+    if(poly!=nullptr) 
+    {
+      for(uint i = 0; i < poly->getNbpoints(); i++)
+      {
+        Point * p = new Point(mouse_x+poly->getRayon()*cos(i*(360/poly->getNbpoints())*PI/180.0),mouse_y+poly->getRayon()*sin(i*(360/poly->getNbpoints())*PI/180.0));
+        poly->setPoint(p, i);      
+      }
+    } // on la bouge.
   }
   sendExpose();
 }
