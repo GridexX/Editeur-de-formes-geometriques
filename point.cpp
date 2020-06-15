@@ -35,7 +35,7 @@ void Point::dessiner (EZWindow& w, bool isActive) const
 
 ostream& operator<<(ostream& os, const Point& p)
 {
-    os << p.x <<" " <<  p.y << endl;
+    os << p.x <<" " <<  p.y;
     return os;
 }
 

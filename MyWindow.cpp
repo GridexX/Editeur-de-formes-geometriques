@@ -67,13 +67,25 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::S:
       {
         ofstream f("formes.txt");
-        calques.sauver(f);
+        calques.sauverCalque(f);
       } break;
       case EZKeySym::C:
       {
         ifstream f("formes.txt");
-        calques.charger(f);
+        calques.chargerCalque(f);
       } break;
+
+      case EZKeySym::F1:
+      {
+        ofstream c("calques.txt");
+        calques.sauver(c);
+      } break;
+      case EZKeySym::F2:
+      {
+        ifstream c("calques.txt");
+        calques.charger(c);
+      } break;
+
       case EZKeySym::_0: if(pforme) pforme->setCouleur(ez_black);   break;
       case EZKeySym::_1: if(pforme) pforme->setCouleur(ez_grey);    break;
       case EZKeySym::_2: if(pforme) pforme->setCouleur(ez_red);     break;
@@ -113,15 +125,16 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
 
       //appui des touches pour les calques :
       case EZKeySym::y: calques.creerCalque(); break;
-      case EZKeySym::Left: calques.monterCalque(); cout << "Calque monté avec succès"<<endl; break; 
-      case EZKeySym::Right: calques.descendreCalque(); cout << "Calque descendu avec succès"<<endl; break;
+      case EZKeySym::Left: calques.monterCalque(); break; 
+      case EZKeySym::Right: calques.descendreCalque(); break;
       case EZKeySym::Up: calques.setCalqueSelec(calques.getCalqueSelec()+1); break;
       case EZKeySym::Down: calques.setCalqueSelec(calques.getCalqueSelec()-1); break;
-      case EZKeySym::a:  calques.setCalqueVisible( !calques.getCalqueVisible()); break;
+      case EZKeySym::a:  calques.setCalqueVisible( !calques.getCalqueVisible(calques.getCalqueSelec())); break;
+      case EZKeySym::d: calques.supprimerCalque(calques.getCalqueSelec()); break;
       case EZKeySym::f: calques.fusionner(); break;
-      case EZKeySym::w: calques.swapFormeCalque(pforme,calques.getCalqueSelec()+1); break;
-      case EZKeySym::x: calques.swapFormeCalque(pforme,calques.getCalqueSelec()-1); break;
-      case EZKeySym::h:
+      case EZKeySym::w: if(pforme) calques.swapFormeCalque(pforme,calques.getCalqueSelec()+1); break;
+      case EZKeySym::x: if(pforme) calques.swapFormeCalque(pforme,calques.getCalqueSelec()-1); break;
+      case EZKeySym::h: 
       cout 
             << endl << "---------------------------AIDE-------------------------" << endl
             << "q : quitter" << endl
@@ -194,5 +207,6 @@ void MyWindow::listeCalques(){
         cout << "("<<calques.getNbForme(i)<<" Formes)"<< endl;
     }
     cout << "--------------------------------------------------"<<endl;
+    //cout << calques.getNbCalques() << " , select :" << calques.getCalqueSelec() << endl;
 
 }

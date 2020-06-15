@@ -18,9 +18,12 @@ Formes::Formes(unsigned int taille)
 
 Formes::~Formes()
 {
-for(uint i=0;i<nbformes;i++)
-delete formes[i];
-delete [] formes;
+    cout << "Nb :" << nbformes<< endl;
+    for(uint i=0;i<nbformes;i++){
+        cout << "Boucle ind:"<<i<<endl;
+        delete formes[i];
+    }
+    delete [] formes;
 }
 
 void Formes::ajouter(Forme *f)
@@ -46,12 +49,6 @@ Forme* Formes::isOver(uint _x,uint _y)
             return formes[i];
    return nullptr;
 }
-
-/* Rappel :
-a.operator<<(os) // Faux avec l'implantation que nous avons faite (en fonction non-membre).
-operator<<(os,a); // Juste et compliqué
-os << a // Juste et simple
-*/
 
 ostream& operator<<(ostream& os, const Formes& formes)
 {
@@ -89,13 +86,13 @@ void Formes::supprimer(Forme *forme)
         i++; 
     }
     
-    uint j=0;
+    
     if(trouve){
+        uint j=0;
         Forme **tabFormes = new Forme * [maxformes];    //On crée un nouveau tableau de forme et on le remplit avec toutes celles d'avant sauf celle à supprimer
         for (uint i=0; i<nbformes; ++i){
             if( formes[i] != forme  )
-                tabFormes[j++] = formes[i];
-            
+                tabFormes[j++] = formes[i];    
         }
 
         formes[indForme]->~Forme(); //On détruit la forme et on reset le tableau
@@ -106,34 +103,3 @@ void Formes::supprimer(Forme *forme)
     }
 
 } 
-/*
-void Formes::supprimer(Forme *f){
-
-    uint y=0;
-    bool trouve=false;
-    for (uint i=0; i<nbformes; i++) //cherche quel forme correspond dans la liste
-    {
-        if (formes[i]==f)
-        {
-            y=i;
-            trouve=true;
-        }
-    }
-    if (trouve)
-    {
-        Forme ** temp = new Forme*[maxformes];
-        uint j=0;
-        for (uint i=0; i<nbformes; i++)
-        {
-            if (i!=y)
-            {
-                temp[j]=formes[i];
-                j++;
-            }
-        }
-        formes[y]->~Forme();
-        delete [] formes;
-        formes=temp;
-        nbformes--;
-    }
-} */
