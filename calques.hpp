@@ -16,9 +16,9 @@ typedef std::pair<Formes *, bool> calqAndBool;
 class Calques { //herite de formes
     private :
         vecFormes listeCalque;
-        size_t maxcalques;
-        uint nbcalques=0;
-        uint calqueSelec=0;
+        int maxcalques;
+        int nbcalques=0;
+        int calqueSelec=0;
     
     public :
         Calques(size_t taille=20);

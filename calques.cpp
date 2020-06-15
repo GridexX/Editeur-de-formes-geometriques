@@ -15,12 +15,22 @@ Calques::Calques(size_t taille)
 
 Calques::~Calques()
 {
+<<<<<<< HEAD
     for(uint i=0; i<nbcalques; ++i)
         listeCalque.clear();
     nbcalques=0;
 }
 
 void Calques::creerCalque(uint numCalque)
+=======
+    for(int i=0; i<nbcalques; ++i){
+        delete listeCalque[i].first;
+    }
+    nbcalques=0;
+}
+
+void Calques::creerCalque(int _nbcalques)
+>>>>>>> 8ad0624f27901133c66c6c0c043b283b9ceb0efb
 {
     //calqAndBool nvCalq;
     //nvCalq.first=new Formes; nvCalq.second=true;
@@ -169,7 +179,7 @@ void Calques::fusionner()
 
 void Calques::dessiner(EZWindow &w) const
 {
-    for ( uint i=0; i<nbcalques; ++i)
+    for ( int i=0; i<nbcalques; ++i)
         if ( listeCalque[i].second == true )
             listeCalque[i].first->dessiner(w);
 }
@@ -181,15 +191,21 @@ Forme *Calques::isOver(uint _x, uint _y)
 
 void Calques::supprimerForme(Forme *f)
 {
-    for ( uint i=0; i<nbcalques; ++i)
+    for ( int i=0; i<nbcalques; ++i)
         listeCalque[i].first->supprimer(f);
 }
 
 ostream& operator<<(ostream& os, const Calques &calques)
 {
-    for(uint i=0; i<calques.nbcalques; ++i)
+    for(int i=0; i<calques.nbcalques; ++i)
     {
+<<<<<<< HEAD
         calques.listeCalque[i].first->sauver(os);
+=======
+        os << "Calque n°" << i+1 << endl;
+        for ( int j=0 ; j<calques.nbcalques ; ++j )
+            os << "test";
+>>>>>>> 8ad0624f27901133c66c6c0c043b283b9ceb0efb
     }
     return os;
 }
@@ -215,9 +231,17 @@ void Calques::charger(istream &is)
 { 
     uint nbc;
     is >> nbc;
+<<<<<<< HEAD
     listeCalque.clear();
     for(uint i=0 ; i<nbc ; ++i){
         listeCalque[i].first->charger(is);
         listeCalque[i].second=true;
     }
+=======
+    for(int i=0 ; i<nbc ; ++i)
+        ajouter( Formes::charger(is) );
+        for ( int j=0 ; j<calques.getCalque(i).getFormes() ; j ) */
+
+    listeCalque[calqueSelec].first->charger(is);
+>>>>>>> 8ad0624f27901133c66c6c0c043b283b9ceb0efb
 } 

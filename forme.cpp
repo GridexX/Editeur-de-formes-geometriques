@@ -6,7 +6,7 @@ using namespace std;
 #include "forme.hpp"
 
 Forme::Forme(ulong _couleur, uint _x, uint _y)
-: couleur(_couleur), ancre(_x, _y)
+: couleur(_couleur), ancre(_x, _y), animation_couleur(_couleur)
 {}
 
 Forme::Forme(const Forme& orig)
@@ -51,6 +51,7 @@ ostream& Forme::ecrire(ostream& os) const
 #include "ellipse.hpp"
 #include "cercle.hpp"
 #include "image.hpp"
+#include "polygone.hpp"
 
 Forme* Forme::charger(istream& is)
 {
@@ -67,12 +68,13 @@ if(mot=="Rectangle")
         return new Cercle(is);
     else if(mot=="Image")
         return new Image(is);
-    //rajouter Polygone ici
+    else if(mot=="Polygone")
+        return new Polygone(is);
     else
         throw runtime_error("Type de forme inconnue rencontré lors du chargement !");
 }
 
-/* ATTENTION : impossible de faire cela car cela comparerait les adresse des chaines et non les valeurs des chaines :
+/* ATTENTION : impossible de faire cela car cela comparerait les adresses des chaines et non les valeurs des chaines :
 char str[]="Bonjour";
 
 switch (str) // Ici str est un « char * »

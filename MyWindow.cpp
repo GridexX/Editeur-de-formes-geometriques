@@ -16,11 +16,26 @@ using namespace std;
 #include "triangle.hpp"
 #include "image.hpp"
 #include "calques.hpp"
+#include "polygone.hpp"
 
+static unsigned int delay = 200;
 
 MyWindow::MyWindow(int w, int h,const char *name)
  : EZWindow(w,h,name),calques(20),pforme(nullptr)
-{}
+{
+  #ifdef ADVANCED_FACTORY
+ if(needInitialization) // Ne faire l'initialisation que la première fois qu'une MyWindow est construite.
+  {
+   needInitialization=false;
+   Forme::register_factory_function<Rectangle>("Rectangle");
+   Forme::register_factory_function<Ellipse>("Ellipse");
+   Forme::register_factory_function<Carre>("Carre");
+   Forme::register_factory_function<Cercle>("Cercle");
+   Forme::register_factory_function<Polygone>("Polygone");
+   Forme::print_registered_factory_functions(cout);
+  }
+#endif
+}
 
 MyWindow::~MyWindow()
 {}
@@ -45,6 +60,11 @@ void MyWindow::motionNotify(int mouse_x,int mouse_y,int button)
 {
   if(button == 1 && pforme != nullptr) // Si on clique sur l'ancre d'une forme
     pforme->setAncre(mouse_x,mouse_y); // on la bouge.
+  Forme * poly = pforme;
+  poly = dynamic_cast<Polygone*>(poly);
+  if(poly!=nullptr) {
+    //for()
+  }
   sendExpose();
 }
 
@@ -53,6 +73,62 @@ void MyWindow::buttonRelease(int mouse_x,int mouse_y,int button)
   if(button == 1 && pforme != nullptr) // Si on clique sur l'ancre d'une forme
     pforme->setAncre(mouse_x,mouse_y);
   sendExpose();
+}
+
+void MyWindow::animationReset()
+{
+  pforme->setCouleur(pforme->getAnimationCouleur());
+  pforme->setEpaisseur(pforme->getAnimationEpaisseur());
+}
+
+void MyWindow::animationRainbow()
+{
+  pforme->setEpaisseur(pforme->getAnimationEpaisseur());
+  if((pforme->getCouleur()!=ez_cyan) && (pforme->getCouleur()!=ez_blue) && (pforme->getCouleur()!=ez_magenta) && (pforme->getCouleur()!=ez_red) && (pforme->getCouleur()!=ez_yellow) && (pforme->getCouleur()!=ez_green)){
+    pforme->setCouleur(ez_cyan);
+  }
+  else if(pforme->getCouleur()==ez_cyan) pforme->setCouleur(ez_blue);
+  else if(pforme->getCouleur()==ez_blue) pforme->setCouleur(ez_magenta);
+  else if(pforme->getCouleur()==ez_magenta) pforme->setCouleur(ez_red);    
+  else if(pforme->getCouleur()==ez_red) pforme->setCouleur(ez_yellow);    
+  else if(pforme->getCouleur()==ez_yellow) pforme->setCouleur(ez_green);    
+  else if(pforme->getCouleur()==ez_green) pforme->setCouleur(ez_cyan);    
+}
+
+void MyWindow::animationBlink()
+{
+  if(pforme->getCouleur()==ez_white) pforme->setCouleur(pforme->getAnimationCouleur());
+  else pforme->setCouleur(ez_white);
+}
+
+void MyWindow::animationBounce()
+{
+  pforme->setCouleur(pforme->getAnimationCouleur());
+  if(pforme) pforme->setEpaisseur(EZDraw::random(pforme->getEpaisseur()*2)+1);
+}
+
+void MyWindow::timerNotify() // declenchee a chaque fois que le timer est ecoule.
+{
+  if(pforme->getAnimation()==0) animationReset();
+  else{
+    if(pforme->getAnimation()==1) animationRainbow();
+    if(pforme->getAnimation()==2) animationBlink();
+    if(pforme->getAnimation()==3) animationBounce();
+    sendExpose();
+    startTimer(delay);  
+  }   
+}
+
+void MyWindow::switchAnimation()
+{
+  if(pforme){
+    pforme->setCouleur(pforme->getAnimationCouleur());
+    pforme->setEpaisseur(pforme->getAnimationEpaisseur());
+    startTimer(delay);
+    uint anim = pforme->getAnimation();
+    anim = (anim + 1) % 4;
+    pforme->setAnimation(anim);
+  }  
 }
 
 void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee ou relachee
@@ -132,9 +208,10 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::a:  calques.setCalqueVisible( !calques.getCalqueVisible(calques.getCalqueSelec())); break;
       case EZKeySym::d: calques.supprimerCalque(calques.getCalqueSelec()); break;
       case EZKeySym::f: calques.fusionner(); break;
-      case EZKeySym::w: if(pforme) calques.swapFormeCalque(pforme,calques.getCalqueSelec()+1); break;
-      case EZKeySym::x: if(pforme) calques.swapFormeCalque(pforme,calques.getCalqueSelec()-1); break;
-      case EZKeySym::h: 
+      case EZKeySym::w: calques.swapFormeCalque(pforme,calques.getCalqueSelec()+1); break;
+      case EZKeySym::x: calques.swapFormeCalque(pforme,calques.getCalqueSelec()-1); break;
+      case EZKeySym::n: switchAnimation(); break;
+      case EZKeySym::h:
       cout 
             << endl << "---------------------------AIDE-------------------------" << endl
             << "q : quitter" << endl
@@ -160,8 +237,9 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             << "t : crée un triangle" << endl
             << "i : crée une image" << endl
             << "t : ajouter/supprimer la tranparence de l'image" << endl
-            << "ù : agrandit la forme" << endl
+            << "ù : agrandit la forme" << endl                      
             << "* : rapetisse la forme" << endl
+            << "n : changer d'animation" << endl
             << "Suppr : supprime la forme" << endl
             
             << "--------------------------------------------------------" << endl << endl
@@ -181,6 +259,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::r: calques.ajouterForme(new Rectangle(ez_black,getWidth()/2-25,getHeight()/2-25,getWidth()/2+25,getHeight()/2+25)); break;
       case EZKeySym::e: calques.ajouterForme(new Ellipse(ez_black,getWidth()/2-25,getHeight()/2-15,50,30)); break;
       case EZKeySym::s: calques.ajouterForme(new Carre(ez_black,getWidth()/2-25,getHeight()/2-25,50)); break;
+      case EZKeySym::p: calques.ajouterForme(new Polygone(ez_black,getWidth()/2-25,getHeight()/2-25,50,6)); break;
       case EZKeySym::c: calques.ajouterForme(new Cercle(ez_black,getWidth()/2-25,getHeight()/2-25,25)); break;
       case EZKeySym::i: calques.ajouterForme(new Image(ez_black,getWidth()/2-25,getHeight()/2-25,"Fallout_logo.png",1,true)); break;
       //Faudra rajouter ce constructeur pour le triangle 
