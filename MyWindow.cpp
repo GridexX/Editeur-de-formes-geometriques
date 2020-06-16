@@ -46,7 +46,9 @@ void MyWindow::expose()
   calques.dessiner(*this);
   if(pforme!=nullptr) pforme->dessiner(*this,true);
   setColor(ez_black);
-  drawText(EZAlign::TL,3,3,"h : affiche l'aide sur la console");
+  setFont(0);
+  drawText(EZAlign::TL,1,3,"h : affiche l'aide sur la console");
+  drawText(EZAlign::TL,1,18,"Maj+'Touche Forme' : choisir les dimensions de la forme");
   setDoubleBuffer(true); // pour éviter le scintillement de l'image
 }
 
@@ -176,40 +178,47 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
     {
       case EZKeySym::Escape:
       case EZKeySym::q :       EZDraw::quit (); break;
-      case EZKeySym::comma:
+      case EZKeySym::s:
         cout << calques;
         break;  //si aucune forme n'est sélectionnée, celàsauvegarde tout le calque
 
-      case EZKeySym::F1:
+      case EZKeySym::S:  //Sauvegarde un calque si la forme est sélectionnée / sinon la liste entière
       {
         if(pforme){
           ofstream f("formes.txt");
           calques.sauverCalque(f);
+          listeCalques();
+
         }else{
           ofstream c("calques.txt");
           calques.sauver(c);
+          listeCalques();
         }
       } break;
 
-      case EZKeySym::F2:
+      case EZKeySym::v: //charger un calque
       {
         ifstream f("formes.txt");
         calques.chargerCalque(f);
         startTimer(delay);
+        listeCalques();
+
       } break;
 
-      case EZKeySym::F3:
+      case EZKeySym::V:  //charger la liste des calques
       {
         ifstream c("calques.txt");
         calques.charger(c);
+        listeCalques();
+
       } break;
 
-
       //modification du délai pour l'animation
-      case EZKeySym::F4: if (delay <= 975) delay += 25; break;
-      case EZKeySym::F5: if (delay >= 50) delay -= 25; break;
+      case EZKeySym::colon: if (delay <= 975) delay += 25; break;
+      case EZKeySym::exclam: if (delay >= 50) delay -= 25; break;
 
-      case EZKeySym::F6:
+
+      case EZKeySym::k:  //modification nb point Polygone
       {
         if(pforme)
         {
@@ -222,7 +231,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
           }
         } break;
       }
-      case EZKeySym::F7:
+      case EZKeySym::l:
       {
         if(pforme)
         {
@@ -232,6 +241,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             poly->removePoint();
           }
         } break;
+
       }
       case EZKeySym::_0: if(pforme) {
         if(pforme->getAnimation() > 0) pforme->setAnimationCouleur(ez_black); 
@@ -317,21 +327,24 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::Down: calques.setCalqueSelec(calques.getCalqueSelec()-1);   listeCalques(); break;
       case EZKeySym::a:  calques.setCalqueVisible( !calques.getCalqueVisible(calques.getCalqueSelec()));   listeCalques(); break;
       case EZKeySym::d: calques.supprimerCalque(calques.getCalqueSelec());   listeCalques(); break;
-      case EZKeySym::v: calques.fusionner(); listeCalques(); break;
+      case EZKeySym::F1: calques.fusionner(); listeCalques(); break;
       case EZKeySym::w: calques.swapFormeCalque(pforme,calques.getCalqueSelec()+1);   listeCalques(); break;
       case EZKeySym::x: calques.swapFormeCalque(pforme,calques.getCalqueSelec()-1);   listeCalques(); break;
       case EZKeySym::n: switchAnimation(); break;
       case EZKeySym::h:
       cout 
-            << endl << "---------------------------AIDE-------------------------" << endl
-            << "q : quitter" << endl
-            << "h : cette aide" << endl
-            << "t : ecrire la liste des formes sur la console" << endl
-            << "F1 : sauve la liste des formes sur disque" << endl
-            << "F2 : charge la liste des formes depuis le disque" << endl
-            << "+ : augmente l'épaisseur"    << endl
-            << "- : diminue l'épaisseur"     << endl
-            << "F : switch entre le contour et le remplissage" <<endl
+            << "--------------------------------------------------------" << endl
+            << "----------------------SAUVEGARDE----------------------------" << endl
+            
+            << "s : ecrire la liste des formes sur la console" << endl
+            << "S : sauve un calque / la liste des calques sur le disque " << endl
+            << "v : charger un calque depuis le disque" << endl
+            << "V : charger la liste des calques depuis le disque" << endl
+
+            << "--------------------------------------------------------" << endl
+            << "----------------------FORMES----------------------------" << endl
+
+            
             << "0 : met en noir la forme"    << endl
             << "1 : met en gris la forme"    << endl
             << "2 : met en rouge la forme"   << endl
@@ -340,28 +353,48 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             << "5 : met en jaune la forme"   << endl
             << "6 : met en cyan la forme"    << endl
             << "7 : met en magenta la forme" << endl
+            << "+ : augmente l'épaisseur"    << endl
+            << "- : diminue l'épaisseur"     << endl
+            << "F : switch entre le contour et le remplissage" <<endl
             << "r : crée un rectangle" << endl
             << "e : crée une ellipse" << endl
             << "s : crée un carré" << endl
             << "c : crée un cercle" << endl
+            << "p : crée un polygone régulier" << endl
+            << "i : crée une image" << endl
+            << "Suppr : supprime la forme" << endl
+            << "Clic droit sur l'affichage pour déplacer le coin inférieur droit" << endl
+
+            << "--------------------------------------------------------" << endl
+            << "----------------------POLYGONE----------------------------" << endl
+            << "p : crée un polygone régulier" << endl
+            << "k : rajouter 1 point au polynome sélectionné" <<endl
+            << "l : enlever 1 point du polynome sélectionné" <<endl
+            << "Clic  droit : pour déplacer un sommet" << endl
+            << "Clic mollette pour agrandir le polygome régulier" << endl
+            
+            << "--------------------------------------------------------" << endl
+            << "----------------------IMAGE----------------------------" << endl
             << "i : crée une image" << endl
             << "t : ajouter/supprimer la tranparence de l'image" << endl
-            << "ù : agrandit la forme" << endl                      
-            << "* : rapetisse la forme" << endl
+            << "ù : agrandit l'image'" << endl                      
+            << "* : rapetisse l'image'" << endl  // changer avec un scale
+            << "--------------------------------------------------------" << endl
+            << "----------------------ANIMATION-------------------------" << endl
             << "n : changer d'animation" << endl
-            << "Suppr : supprime la forme" << endl
+            << "':' : Diminue le délai de transition entre les animations" << endl
+            << "! : Augmente le délai de transition entre les animations" << endl 
             
             << "--------------------------------------------------------" << endl << endl
             << "------------------------CALQUES-------------------------" << endl
             << "y : crée un nouveau calque" << endl
             << "d : supprime le calque selectionné" << endl
             << "a : affiche / masquer le calque sélectionné" << endl
-            << "F1: sauve les calques" << endl
             << "← : monte le calque selectionné" << endl
             << "→ : descends le calque selectionné" << endl
             << "↑ : sélectionne le calque au dessus" << endl 
             << "↓ : sélectionne le calque en dessous" << endl
-            << "v : fusionner le calque sélectionné avec celui du dessus"<<endl
+            << "F1 : fusionner le calque sélectionné avec celui du dessus"<<endl
             << "w : envoie la forme sélectionnée sur le calque du dessus" <<endl
             << "x : envoie la forme sélectionnée sur le calque du dessous"<<endl
             ;
