@@ -1,7 +1,7 @@
 //Ellipse.cpp
 
 #include <iostream>
-#define _USE_MATH_DEFINES
+#define PI 3.14159265358979323846
 #include <cmath>
 
 using namespace std;
@@ -45,7 +45,7 @@ void Ellipse::dessiner(EZWindow &w, bool isActive) const
 }
 
 double Ellipse::perimetre() const
-{return 2*M_PI*sqrt( (demiLargeur*demiLargeur+demiLongueur*demiLongueur) / 2 );}
+{return 2*PI*sqrt( (demiLargeur*demiLargeur+demiLongueur*demiLongueur) / 2 );}
 
 ostream& Ellipse::ecrire(ostream &os) const
 {

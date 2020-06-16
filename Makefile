@@ -7,16 +7,17 @@
 ifeq ($(CXX),)
 CXX=g++
 endif
-CFLAGS   = -g -Wall -pedantic -O2
+CFLAGS   = -g -Wall -O0 -D_WIN32
 #Pour windows test -g -Wall -O0 -D_WIN32
-CXXFLAGS = $(CFLAGS) -std=c++17
-LIBS     = -lX11 -lXext
+#Pour windows LIBS -lgdi32 -lmsimg32
+CXXFLAGS = $(CFLAGS) -std=c++11
+LIBS     = -lgdi32 -lmsimg32
 RM       = rm -f
 EXE      = .exe
 
 OBJECTS= point.o forme.o rectangle.o formes.o
-OBJECTS+= ellipse.o carre.o cercle.o polygone.o
-OBJECTS+= image.o calques.o
+OBJECTS+= ellipse.o carre.o cercle.o
+OBJECTS+= image.o polygone.o calques.o
 OBJECTS+= MyWindow.o main.o ez-draw++.o
 
 

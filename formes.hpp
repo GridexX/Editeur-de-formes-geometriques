@@ -17,6 +17,7 @@ public:
   ~Formes();
 
   inline uint getFormes() const { return nbformes; }
+  inline Forme *getFormes(uint numForme) const {return formes[numForme];}
   void ajouter(Forme *forme);
   void supprimer(Forme *forme);
   Forme *isOver(uint _x,uint _y);
