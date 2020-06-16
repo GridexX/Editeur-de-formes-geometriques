@@ -32,20 +32,39 @@ void Ellipse::dessiner(EZWindow &w, bool isActive) const
         w.fillCircle(
             getAncre().getX(),
             getAncre().getY(),
-            getAncre().getX()+demiLargeur,
-            getAncre().getY()+demiLongueur
+            getAncre().getX()+demiLongueur,
+            getAncre().getY()+demiLargeur
         );
     else
         w.drawCircle(
             getAncre().getX(),
             getAncre().getY(),
-            getAncre().getX()+demiLargeur,
-            getAncre().getY()+demiLongueur
+            getAncre().getX()+demiLongueur,
+            getAncre().getY()+demiLargeur
         );
 }
 
 double Ellipse::perimetre() const
 {return 2*M_PI*sqrt( (demiLargeur*demiLargeur+demiLongueur*demiLongueur) / 2 );}
+
+void Ellipse::scale(uint x, uint y)
+{
+    Point tempP(getAncre());
+
+    if(y<getAncre().getY() && x<getAncre().getX())
+        setAncre(x,y);
+    else{
+        if(y<getAncre().getY())
+    
+        setAncre(tempP.getX(),y);
+
+        if(x<getAncre().getX())
+            setAncre(x,tempP.getY());
+    }
+    
+    demiLongueur = abs(int(x-tempP.getX()));
+    demiLargeur = abs(int(y-tempP.getY()));
+}
 
 ostream& Ellipse::ecrire(ostream &os) const
 {

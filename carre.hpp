@@ -3,7 +3,7 @@
 #define CARRE_HPP
 
 #include "forme.hpp"
-
+#include <cmath>
 
 
 
@@ -22,6 +22,7 @@ class Carre : public Forme {
         inline void setCote(uint _cote) { cote=_cote;}
         void dessiner(EZWindow &w, bool isActive) const override;
         double perimetre() const override;
+        void scale(uint x, uint y) override;
 
         protected:
         ostream& ecrire(ostream& os) const override;

@@ -45,7 +45,7 @@ void Calques::supprimerCalque(uint numCalque) //modif
 {
     
     if(nbcalques==0){
-        cout<<"O"<<endl;
+        cerr<<"O"<<endl;
         delete listeCalque[numCalque].first;
         listeCalque[numCalque].first=nullptr;
         calqueSelec=1;

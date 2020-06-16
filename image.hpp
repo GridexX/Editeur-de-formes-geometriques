@@ -28,6 +28,7 @@ class Image : public Forme {
 
         void dessiner(EZWindow &w, bool isActive) const override;
         double perimetre() const override; 
+        void scale(uint x, uint y) override;
         protected:
         virtual ostream& ecrire(ostream& os) const; 
 };

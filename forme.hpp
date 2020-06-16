@@ -38,13 +38,14 @@ public :
     inline void setAnimationCouleur(ulong _animation_couleur) { animation_couleur=_animation_couleur; }
     inline void setAncre(uint x,uint y) { ancre.setXY(x,y) ; }
     inline void setAncre(uint _taille) {ancre.setTaille(_taille); }
-    inline void setEpaisseur(uint _epaisseur) { epaisseur=_epaisseur; }
+    inline void setEpaisseur(uint _epaisseur) { if(_epaisseur>0) epaisseur=_epaisseur; }
     inline void setAnimationEpaisseur(uint _animation_epaisseur) { animation_epaisseur=_animation_epaisseur; }
     inline void setFilled(bool _isFilled) { isFilled=_isFilled; }
     inline void setAnimation(uint _animation) { animation=_animation; }
 
     inline bool isOver(uint x, uint y) const { return ancre.isOver(x,y); }
     virtual void dessiner(EZWindow& w, bool active=false) const;
+    virtual void scale(uint x, uint y) = 0;
     virtual double perimetre() const = 0;
     friend ostream& operator<<(ostream& os, const Forme& f);
     static Forme* charger(istream& is);

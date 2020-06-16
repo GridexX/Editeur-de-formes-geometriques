@@ -25,6 +25,7 @@ inline void setLongueur(uint _longueur) { longueur = _longueur; }
 inline void setLargeur(uint _largeur) { largeur=_largeur; }
 void dessiner(EZWindow &w, bool isActive) const override;
 double perimetre() const override;
+void scale(uint x, uint y) override;
 
 protected:
 ostream& ecrire(ostream& os) const override;

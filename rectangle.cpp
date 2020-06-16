@@ -24,20 +24,40 @@ void Rectangle::dessiner(EZWindow &w, bool isActive) const
         w.fillRectangle(
             getAncre().getX(),
             getAncre().getY(),
-            getAncre().getX()+largeur,
-            getAncre().getY()+longueur
+            getAncre().getX()+longueur,
+            getAncre().getY()+largeur
         );
     else
         w.drawRectangle(
             getAncre().getX(),
             getAncre().getY(),
-            getAncre().getX()+largeur,
-            getAncre().getY()+longueur
+            getAncre().getX()+longueur,
+            getAncre().getY()+largeur
         );
 }
 
 double Rectangle::perimetre() const
 { return 2*largeur+2*longueur; }
+
+void Rectangle::scale(uint x, uint y)
+{
+    Point tempP(getAncre());
+
+    if(y<getAncre().getY() && x<getAncre().getX())
+        setAncre(x,y);
+    else{
+        if(y<getAncre().getY())
+    
+        setAncre(tempP.getX(),y);
+
+        if(x<getAncre().getX())
+            setAncre(x,tempP.getY());
+    }
+    
+    longueur = abs(int(x-tempP.getX()));
+    largeur = abs(int(y-tempP.getY()));
+    
+}
 
 Rectangle::Rectangle(istream& is)
  : Forme(is),largeur(0),longueur(0)
