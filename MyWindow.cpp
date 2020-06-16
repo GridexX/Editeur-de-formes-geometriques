@@ -153,6 +153,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       {
         ifstream f("formes.txt");
         calques.chargerCalque(f);
+        startTimer(delay);
       } break;
 
       case EZKeySym::F3:
@@ -161,10 +162,35 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
         calques.charger(c);
       } break;
 
+
       //modification du délai pour l'animation
       case EZKeySym::F4: if (delay <= 975) delay += 25; break;
       case EZKeySym::F5: if (delay >= 50) delay -= 25; break;
 
+      case EZKeySym::F6:
+      {
+        if(pforme)
+        {
+          Polygone * poly;
+          poly = dynamic_cast<Polygone*>(pforme);
+          if(poly!=nullptr) {
+            poly->addPoint();
+            Point * tempP = new Point(poly->getAncre().getX(), poly->getAncre().getY());
+            poly->setPoint(tempP, poly->getNbpoints()-1);
+          }
+        } break;
+      }
+      case EZKeySym::F7:
+      {
+        if(pforme)
+        {
+          Polygone * poly;
+          poly = dynamic_cast<Polygone*>(pforme);
+          if(poly!=nullptr) {
+            poly->removePoint();
+          }
+        } break;
+      }
       case EZKeySym::_0: if(pforme) pforme->setCouleur(ez_black);   break;
       case EZKeySym::_1: if(pforme) pforme->setCouleur(ez_grey);    break;
       case EZKeySym::_2: if(pforme) pforme->setCouleur(ez_red);     break;
@@ -177,7 +203,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::plus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur());  break;
       case EZKeySym::minus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()-1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur()); break;
       case EZKeySym::F: if(pforme) pforme->setFilled(! pforme->getFilled()); break;
-      case EZKeySym::Delete: if(pforme) calques.supprimerForme(pforme);        listeCalques(); break;
+      case EZKeySym::Delete: if(pforme) calques.supprimerForme(pforme);  break;
       case EZKeySym::ugrave: {
         if(pforme)
         { 
@@ -283,7 +309,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
 //affichage dans la console des calques
 void MyWindow::listeCalques(){
     cout << "------------LISTE CALQUES-----------------------" << endl;
-    for(int i=calques.getNbCalques()-1; i>-1; --i){
+    for(uint i=calques.getNbCalques()-1; i>=0; --i){
         cout << "Calque " << i+1 << "[";
         if(i==calques.getCalqueSelec())
             cout << "✓";
@@ -426,55 +452,73 @@ void MyWindow::creerForme(string forme, bool coordAuto)
 
 }
 
-void MyWindow::animationReset()
+void MyWindow::animationReset(Forme * f)
 {
-  pforme->setCouleur(pforme->getAnimationCouleur());
-  pforme->setEpaisseur(pforme->getAnimationEpaisseur());
-}
-
-void MyWindow::animationRainbow()
-{
-  pforme->setEpaisseur(pforme->getAnimationEpaisseur());
-  if((pforme->getCouleur()!=ez_cyan) && (pforme->getCouleur()!=ez_blue) && (pforme->getCouleur()!=ez_magenta) && (pforme->getCouleur()!=ez_red) && (pforme->getCouleur()!=ez_yellow) && (pforme->getCouleur()!=ez_green)){
-    pforme->setCouleur(ez_cyan);
+  if(f && f->getAnimation()==0){
+    f->setCouleur(f->getAnimationCouleur());
+    f->setEpaisseur(f->getAnimationEpaisseur());
   }
-  else if(pforme->getCouleur()==ez_cyan) pforme->setCouleur(ez_blue);
-  else if(pforme->getCouleur()==ez_blue) pforme->setCouleur(ez_magenta);
-  else if(pforme->getCouleur()==ez_magenta) pforme->setCouleur(ez_red);    
-  else if(pforme->getCouleur()==ez_red) pforme->setCouleur(ez_yellow);    
-  else if(pforme->getCouleur()==ez_yellow) pforme->setCouleur(ez_green);    
-  else if(pforme->getCouleur()==ez_green) pforme->setCouleur(ez_cyan);    
 }
 
-void MyWindow::animationBlink()
+void MyWindow::animationRainbow(Forme * f)
 {
-  if(pforme->getCouleur()==ez_white) pforme->setCouleur(pforme->getAnimationCouleur());
-  else pforme->setCouleur(ez_white);
+  if(f && f->getAnimation()==1){
+    f->setEpaisseur(f->getAnimationEpaisseur());
+    if((f->getCouleur()!=ez_cyan) && (f->getCouleur()!=ez_blue) && (f->getCouleur()!=ez_magenta) && (f->getCouleur()!=ez_red) && (f->getCouleur()!=ez_yellow) && (f->getCouleur()!=ez_green)){
+      f->setCouleur(ez_cyan);
+    }
+    else if(f->getCouleur()==ez_cyan) f->setCouleur(ez_blue);
+    else if(f->getCouleur()==ez_blue) f->setCouleur(ez_magenta);
+    else if(f->getCouleur()==ez_magenta) f->setCouleur(ez_red);    
+    else if(f->getCouleur()==ez_red) f->setCouleur(ez_yellow);    
+    else if(f->getCouleur()==ez_yellow) f->setCouleur(ez_green);    
+    else if(f->getCouleur()==ez_green) f->setCouleur(ez_cyan);  
+  }
 }
 
-void MyWindow::animationBounce()
+void MyWindow::animationBlink(Forme * f)
 {
-  pforme->setCouleur(pforme->getAnimationCouleur());
-  if(pforme) pforme->setEpaisseur(EZDraw::random(pforme->getEpaisseur()*2)+1);
+  if(f && f->getAnimation()==2){
+    if(f->getCouleur()==ez_white) f->setCouleur(f->getAnimationCouleur());
+    else f->setCouleur(ez_white);
+  }
 }
+
+void MyWindow::animationBounce(Forme * f)
+{
+  if(f->getAnimation()==3){
+    f->setCouleur(f->getAnimationCouleur());
+    if(f) f->setEpaisseur(EZDraw::random(f->getEpaisseur()*2)+1);
+  }
+}
+
+//REMPLACER LES PFORMES PAR TOUTES LES FORMES
 
 void MyWindow::timerNotify() // declenchee a chaque fois que le timer est ecoule.
 {
-  if(pforme->getAnimation()==0) animationReset();
-  else{
-    if(pforme->getAnimation()==1) animationRainbow();
-    if(pforme->getAnimation()==2) animationBlink();
-    if(pforme->getAnimation()==3) animationBounce();
-    sendExpose();
-    startTimer(delay);  
-  }   
+  for(uint i = 0; i < calques.getNbCalques(); i++){
+    for(uint j = 0; j < calques.getNbForme(i); j++)
+    {
+      if(calques.getCalque(i)->getFormes(j)->getAnimation() == 0) animationReset(calques.getCalque(i)->getFormes(j));
+      else
+      {
+        if(calques.getCalque(i)->getFormes(j)->getAnimation() == 1) animationRainbow(calques.getCalque(i)->getFormes(j));
+        if(calques.getCalque(i)->getFormes(j)->getAnimation() == 2) animationBlink(calques.getCalque(i)->getFormes(j));
+        if(calques.getCalque(i)->getFormes(j)->getAnimation() == 3) animationBounce(calques.getCalque(i)->getFormes(j));
+      sendExpose();
+      startTimer(delay);  
+      }   
+    }    
+  }
 }
 
 void MyWindow::switchAnimation()
 {
   if(pforme){
-    pforme->setCouleur(pforme->getAnimationCouleur());
-    pforme->setEpaisseur(pforme->getAnimationEpaisseur());
+    if(pforme->getAnimation()==0){
+      pforme->setAnimationCouleur(pforme->getCouleur());
+      pforme->setAnimationEpaisseur(pforme->getEpaisseur());
+    }
     startTimer(delay);
     uint anim = pforme->getAnimation();
     anim = (anim + 1) % 4;

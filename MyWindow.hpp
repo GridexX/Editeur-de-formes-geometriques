@@ -32,10 +32,10 @@ class MyWindow : public EZWindow {
 
   //méthodes relatives aux animations
   void switchAnimation();
-  void animationRainbow();
-  void animationBlink();
-  void animationBounce();
-  void animationReset();
+  void animationRainbow(Forme * f);
+  void animationBlink(Forme * f);
+  void animationBounce(Forme * f);
+  void animationReset(Forme * f);
   void timerNotify();
 
 };

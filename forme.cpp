@@ -16,7 +16,7 @@ Forme::Forme(const Forme& orig)
 Forme::Forme(istream& is)
  :couleur(ez_black),ancre(0,0),selected(false)
 {
- is >> couleur >> ancre >> epaisseur >> isFilled;
+ is >> couleur >> ancre >> epaisseur >> isFilled >> animation >> animation_couleur >> animation_epaisseur;
 }
 
 Forme::~Forme()
@@ -39,7 +39,7 @@ ostream& operator<<(ostream& os, const Forme& f)
 
 ostream& Forme::ecrire(ostream& os) const
 {
-    os<<couleur<<" "<<ancre<<" "<<epaisseur<<" "<<isFilled;
+    os<<couleur<<" "<<ancre<<" "<<epaisseur<<" "<<isFilled<<" "<<animation<<" "<<animation_couleur<<" "<<animation_epaisseur;
     return os;
 }
 
