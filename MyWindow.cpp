@@ -416,14 +416,14 @@ void MyWindow::creerForme(string forme, bool coordAuto)
           calques.ajouterForme(new Rectangle(ez_black,getWidth()/2-25,getHeight()/2-25,getWidth()/2+25,getHeight()/2+25));
     }
     else{
-      cout << endl << "Vous êtes sur le point de créer un Rectangle. "<< endl << ".Entrez la longueur et la largeur : " ;
+      cout << endl << "Vous êtes sur le point de créer un Rectangle. "<< endl << "Entrez la longueur et la largeur : " ;
       uint longueur, largeur;
         cin >> longueur >> largeur;
-        while(longueur<0 && longueur > getWidth()) {
-          cerr << "La longueur doit être comprise entre 0 et "<<getWidth()<<endl; cout << ".Entrez la longueur "; cin >> longueur;
+        while(longueur<0 || longueur > getHeight()) {
+          cerr << "La longueur doit être comprise entre 0 et "<<getHeight(); cout << ". Entrez la longueur "; cin >> longueur;
         }
-        while(largeur<0 && largeur > getHeight()) {
-          cerr << "La largeur doit être comprise entre 0 et "<<getHeight()<<endl; cout << ".Entrez la longueur et la largeur : "; cin >> largeur;
+        while(largeur<0 || largeur > getWidth()) {
+          cerr << "La largeur doit être comprise entre 0 et "<<getWidth(); cout << ". Entrez la largeur : "; cin >> largeur;
         } 
         if(isMouseWindow(mouseX ,mouseY))
           calques.ajouterForme(new Rectangle(ez_black,mouseX,mouseY,longueur,largeur));
@@ -443,11 +443,11 @@ void MyWindow::creerForme(string forme, bool coordAuto)
       cout << endl << "Vous êtes sur le point de créer une Ellipse. "<< endl << "Entrez la demi-longueur et la demi-largeur : " ;
       uint demilongueur, demilargeur;
         cin >> demilongueur >> demilargeur;
-        while(demilongueur<0 && demilongueur > getWidth()) {
-          cerr << "La demi-longueur doit être comprise entre 0 et "<<getWidth()/2<<endl; cout << ".Entrez la demi-longueur"; cin >> demilongueur;
+        while(demilongueur<0 || demilongueur > getHeight()) {
+          cerr << "La demi-longueur doit être comprise entre 0 et "<<getHeight()<<endl; cout << ". Entrez la demi-longueur :"; cin >> demilongueur;
         }
-        while(demilargeur<0 && demilargeur > getHeight()){ 
-          cerr << "La demi-largeur doit être comprise entre 0 et "<<getHeight()/2<<endl; cout << ".Entrez la demi-largeur :"; cin>>demilargeur;
+        while(demilargeur<0 || demilargeur > getWidth()){ 
+          cerr << "La demi-largeur doit être comprise entre 0 et "<<getWidth()<<endl; cout << ". Entrez la demi-largeur :"; cin>>demilargeur;
         }
         if(isMouseWindow(mouseX ,mouseY))
           calques.ajouterForme(new Ellipse(ez_black,mouseX,mouseY,demilongueur,demilargeur));
@@ -467,10 +467,10 @@ void MyWindow::creerForme(string forme, bool coordAuto)
       cout << endl << "Vous êtes sur le point de créer un Carré. "<< endl << "Entrez le côte : " ;
       uint cote;
         cin >> cote;
-        while(cote<0 && cote>getWidth() && cote>getHeight()){
+        while(cote<0 || cote>getWidth() || cote>getHeight()){
           uint plusBas = ( getWidth()<getHeight() ? getWidth() : getHeight() ); 
           cerr << "Le coté doit être compris entre 0 et "<<plusBas;
-          cout << "Entrez le côte : ";
+          cout << ". Entrez le côte : ";
           cin >> cote;
         } 
         if(isMouseWindow(mouseX ,mouseY))
@@ -491,10 +491,10 @@ void MyWindow::creerForme(string forme, bool coordAuto)
       cout << endl << "Vous êtes sur le point de créer un Cercle. "<< endl << "Entrez le rayon : " ;
       uint rayon;
         cin >> rayon;
-        while(rayon<0 && rayon>getWidth() && rayon>getHeight()){
-          uint plusBas = ( getWidth()<getHeight() ? getWidth() : getHeight() ); 
+        while(rayon<0 || rayon*2>getWidth() || rayon*2>getHeight()){
+          uint plusBas = ( getWidth()<getHeight() ? getWidth()/2 : getHeight()/2 ); 
           cerr << "Le rayon doit être compris entre 0 et "<<plusBas;
-          cout << "Entrez le rayon : ";
+          cout << ". Entrez le rayon : ";
           cin >> rayon;
         } 
         if(isMouseWindow(mouseX ,mouseY))
@@ -513,35 +513,40 @@ void MyWindow::creerForme(string forme, bool coordAuto)
     }
     else{
       cout << endl << "Vous êtes sur le point de créer un Polygone. "<< endl << "Entrez le rayon et le nombre de sommets : " ;
-      uint rayon, sommet;
-        try{cin >> rayon >> sommet;}
-        catch(exception &e){ cerr << "Vous n'avez pas entré un chiffre valide"<<endl;}
+      uint rayon, nbsommet;
+      cin >> rayon >> nbsommet;
+        while(rayon<0 || rayon*2>getWidth() || rayon*2>getHeight()){
+          uint plusBas = ( getWidth()<getHeight() ? getWidth()/2 : getHeight()/2 ); 
+          cerr << "Le rayon doit être compris entre 0 et "<<plusBas;
+          cout << ". Entrez le rayon : ";
+          cin >> rayon;
+        } 
         if(isMouseWindow(mouseX ,mouseY))
-          calques.ajouterForme(new Polygone(ez_black,mouseX,mouseY,rayon,sommet));
+          calques.ajouterForme(new Polygone(ez_black,mouseX,mouseY,rayon,nbsommet));
         else
-          calques.ajouterForme(new Polygone(ez_black,getWidth()/2-25,getHeight()/2-25,rayon,sommet));   
+          calques.ajouterForme(new Polygone(ez_black,getWidth()/2-25,getHeight()/2-25,rayon,nbsommet));   
     }
   }
 
   if(forme=="Image"){
     if(coordAuto){
-        if(isMouseWindow(mouseX ,mouseY))   //On crée un rectangle au coordonnées du pointeur si il est dans la fenêtre
+        if(isMouseWindow(mouseX ,mouseY))   
           calques.ajouterForme(new Image(ez_black,mouseX,mouseY,"Fallout_logo.png",1,true));
-        else                                //Sinon on le place au centre
+        else
           calques.ajouterForme(new Image(ez_black,getWidth()/2-25,getHeight()/2-25,"Fallout_logo.png",1,true));
     }
     else{
       cout << endl << "Vous êtes sur le point de créer une Image. "<< endl << "Entrez le fichier source et le ratio : " ;
       uint ratio;
       string path;
+      try{cin >> path;}
+        catch(std::runtime_error &re){ cerr << "Vous n'avez pas entré un nom d'image valide"<<endl;}
         cin >> ratio;
         while(ratio<0){
           cerr << "Ratio inférieur à 0";
-          cout << ".Entrez le ratio :";
+          cout << ". Entrez le ratio :";
           cin >> ratio;
         }
-        try{cin >> path;}
-        catch(std::runtime_error &re){ cerr << "Vous n'avez pas entré un nom d'image valide"<<endl;}
         if(isMouseWindow(mouseX ,mouseY))
           calques.ajouterForme(new Image(ez_black,mouseX,mouseY,path,ratio,true));
         else
