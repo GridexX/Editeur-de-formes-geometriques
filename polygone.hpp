@@ -76,11 +76,8 @@ class Polygone : public Forme {
         */
         double perimetre() const override;
 
-<<<<<<< polygone.hpp
         void scale(uint x, uint y) override;
 
-=======
->>>>>>> polygone.hpp
         /** Fonction setter de la classe Polygone.
         * @param p Pointeur sur point pointant le point que l'on veut set.
         * @param numero L'indice du point à modifier.

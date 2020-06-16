@@ -309,7 +309,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
 //affichage dans la console des calques
 void MyWindow::listeCalques(){
     cout << "------------LISTE CALQUES-----------------------" << endl;
-    for(uint i=calques.getNbCalques()-1; i>=0; --i){
+    for(int i=calques.getNbCalques()-1; i>-1; --i){
         cout << "Calque " << i+1 << "[";
         if(i==calques.getCalqueSelec())
             cout << "✓";
