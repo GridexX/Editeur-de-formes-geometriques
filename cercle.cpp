@@ -52,6 +52,6 @@ ostream& Cercle::ecrire(ostream &os) const
 {
     os<<"Cercle ";
     Forme::ecrire(os);
-    os<<" "<<rayon;
+    os<<" "<<rayon<<" ";
     return os;
 }

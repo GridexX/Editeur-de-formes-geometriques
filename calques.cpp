@@ -32,6 +32,8 @@ void Calques::creerCalque()
 {
     if(nbcalques<maxcalques){
         creerCalque(nbcalques++);
+        if (nbcalques==1)
+            calqueSelec=0;
         //++nbcalques;
     }
     else
@@ -99,7 +101,7 @@ void Calques::monterCalque()
     if(calqueSelec < nbcalques-1 && nbcalques > 1){
         calqAndBool tPaire = listeCalque[calqueSelec+1];
         listeCalque[calqueSelec+1] = listeCalque[calqueSelec];
-        listeCalque[calqueSelec] = tPaire;
+        listeCalque[calqueSelec++] = tPaire;
     }
     else
         cerr << "Vous ne pouvez pas monter ce calque" << endl;
@@ -110,7 +112,7 @@ void Calques::descendreCalque()
     if(calqueSelec > 0 && nbcalques > 1){
         calqAndBool tPaire = listeCalque[calqueSelec-1];
         listeCalque[calqueSelec-1] = listeCalque[calqueSelec];
-        listeCalque[calqueSelec] = tPaire;
+        listeCalque[calqueSelec--] = tPaire;
     }
     else
         cerr << "Vous ne pouvez pas descendre ce calque" << endl;
@@ -174,7 +176,7 @@ void Calques::dessiner(EZWindow &w) const
             listeCalque[i].first->dessiner(w);
 }
 
-Forme *Calques::isOver(uint _x, uint _y)
+Forme *Calques::isOver(uint _x, uint _y) const
 {
     return listeCalque[calqueSelec].first->isOver(_x,_y);
 }
@@ -189,6 +191,7 @@ ostream& operator<<(ostream& os, const Calques &calques)
 {
     for(uint i=0; i<calques.nbcalques; ++i)
     {
+        cerr << "Ind calque: "<<i<<endl;
         calques.listeCalque[i].first->sauver(os);
     }
     return os;
@@ -206,10 +209,10 @@ void Calques::chargerCalque(istream& is) const
 
 void Calques::sauver(ostream &os) const
 {
+    cerr << "nbcalques: "<<nbcalques<<endl;
     os << nbcalques << endl;
     os << *this;
 }
-
 
 void Calques::charger(istream &is)
 { 
@@ -217,6 +220,8 @@ void Calques::charger(istream &is)
     is >> nbc;
 
     for(uint i=0 ; i<nbc ; ++i){
+        if(i == nbcalques-1)
+            creerCalque();
         listeCalque[i].first->charger(is);
         listeCalque[i].second=true;
     }

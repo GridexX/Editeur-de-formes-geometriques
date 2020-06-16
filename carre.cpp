@@ -49,6 +49,6 @@ ostream& Carre::ecrire(ostream& os) const
 {
     os<<"Carre ";
     Forme::ecrire(os);
-    os<<" "<<cote;
+    os<<" "<<cote <<" ";
     return os;
 }

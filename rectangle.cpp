@@ -49,6 +49,6 @@ ostream& Rectangle::ecrire(ostream& os) const
 {
     os<<"Rectangle ";
     Forme::ecrire(os);
-    os <<" "<<largeur<<" "<<longueur;
+    os <<" "<<largeur<<" "<<longueur<<" ";
     return os;
 }

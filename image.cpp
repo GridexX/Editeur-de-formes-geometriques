@@ -53,6 +53,6 @@ Image::Image(istream &is)
 ostream &Image::ecrire(ostream &os) const{
     os << "Image ";
     Forme::ecrire(os);
-    os <<" "<<nomFichier<<" "<< ratio<<" "<<estTransparente;
+    os <<" "<<nomFichier<<" "<< ratio<<" "<<estTransparente<<" ";
     return os;
 }

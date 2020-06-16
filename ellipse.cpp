@@ -51,6 +51,6 @@ ostream& Ellipse::ecrire(ostream &os) const
 {
     os<<"Ellipse ";
     Forme::ecrire(os);
-    os<<" "<<demiLargeur<<" "<<demiLongueur;
+    os<<" "<<demiLargeur<<" "<<demiLongueur<<" ";
     return os;
 }

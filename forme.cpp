@@ -60,18 +60,18 @@ is>>mot;
 
 if(mot=="Rectangle")
        return new Rectangle(is);
-    else if(mot=="Ellipse")
-        return new Ellipse(is);
-    else if(mot=="Carre")
-        return new Carre(is);
-    else if(mot=="Cercle")
-        return new Cercle(is);
-    else if(mot=="Image")
-        return new Image(is);
-    else if(mot=="Polygone")
-        return new Polygone(is);
-    else
-        throw runtime_error("Type de forme inconnue rencontré lors du chargement !");
+else if(mot=="Ellipse")
+    return new Ellipse(is);
+else if(mot=="Carre")
+    return new Carre(is);
+else if(mot=="Cercle")
+    return new Cercle(is);
+else if(mot=="Image")
+    return new Image(is);
+else if(mot=="Polygone")
+    return new Polygone(is);
+else
+    throw runtime_error("Type de forme inconnue rencontré lors du chargement !");
 }
 
 /* ATTENTION : impossible de faire cela car cela comparerait les adresses des chaines et non les valeurs des chaines :

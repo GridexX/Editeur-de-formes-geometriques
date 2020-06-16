@@ -1574,7 +1574,7 @@ void ez_draw_text (Ez_window win, Ez_Align align, int x1, int y1,
     const char *format, ...)
 {
     int valign, halign, fillbg;
-    va_list (ap);
+    va_list ap;
     char buf[16384];
     int i, j, k, n, x, y, a, b, c;
 

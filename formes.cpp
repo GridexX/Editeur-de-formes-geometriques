@@ -18,9 +18,7 @@ Formes::Formes(unsigned int taille)
 
 Formes::~Formes()
 {
-    cout << "Nb :" << nbformes<< endl;
     for(uint i=0;i<nbformes;i++){
-        cout << "Boucle ind:"<<i<<endl;
         delete formes[i];
     }
     delete [] formes;
@@ -52,13 +50,16 @@ Forme* Formes::isOver(uint _x,uint _y)
 
 ostream& operator<<(ostream& os, const Formes& formes)
 {
-    for(uint i=0; i<formes.nbformes;++i)
-        os << *formes.formes[i];
+    for(uint i=0; i<formes.nbformes;++i){
+        cerr <<"ind forme: "<<i<<endl;
+        os << *formes.formes[i] << endl;
+    }
 return os;
 }
 
 void Formes::sauver(ostream& os) const
 {
+    cerr << "Nbforme :" << nbformes<<endl;
     os << nbformes << endl;
 //    operator<<(os,*this); Compliqué !!!
     os << *this; // Simple !
@@ -85,7 +86,6 @@ void Formes::supprimer(Forme *forme)
         }
         i++; 
     }
-    
     
     if(trouve){
         uint j=0;
