@@ -203,7 +203,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::plus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur());  break;
       case EZKeySym::minus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()-1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur()); break;
       case EZKeySym::F: if(pforme) pforme->setFilled(! pforme->getFilled()); break;
-      case EZKeySym::Delete: if(pforme) calques.supprimerForme(pforme);  break;
+      case EZKeySym::Delete: if(pforme) calques.supprimerForme(pforme);  listeCalques(); break;
       case EZKeySym::ugrave: {
         if(pforme)
         { 
@@ -236,7 +236,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::Down: calques.setCalqueSelec(calques.getCalqueSelec()-1);   listeCalques(); break;
       case EZKeySym::a:  calques.setCalqueVisible( !calques.getCalqueVisible(calques.getCalqueSelec()));   listeCalques(); break;
       case EZKeySym::d: calques.supprimerCalque(calques.getCalqueSelec());   listeCalques(); break;
-      case EZKeySym::v: calques.fusionner();   listeCalques(); break;
+      case EZKeySym::v: calques.fusionner();   listeCalques(); listeCalques(); break;
       case EZKeySym::w: calques.swapFormeCalque(pforme,calques.getCalqueSelec()+1);   listeCalques(); break;
       case EZKeySym::x: calques.swapFormeCalque(pforme,calques.getCalqueSelec()-1);   listeCalques(); break;
       case EZKeySym::n: switchAnimation(); break;
@@ -287,18 +287,18 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             listeCalques();
       break;
       //majuscule + touche forme pour entrer les coordonnées;
-      case EZKeySym::r: creerForme("Rectangle", true); break;
-      case EZKeySym::R: creerForme("Rectangle", false); break;
-      case EZKeySym::e: creerForme("Ellipse", true); break;
-      case EZKeySym::E: creerForme("Ellipse", false); break;
-      case EZKeySym::c: creerForme("Carre", true); break;
-      case EZKeySym::C: creerForme("Carre", false); break;
-      case EZKeySym::o: creerForme("Cercle", true); break;
-      case EZKeySym::O: creerForme("Cercle", false); break;
-      case EZKeySym::p: creerForme("Polygone", true); break;
-      case EZKeySym::P: creerForme("Polygone", false); break;
-      case EZKeySym::i: creerForme("Image", true); break;
-      case EZKeySym::I: creerForme("Image", false); break;
+      case EZKeySym::r: creerForme("Rectangle", true); listeCalques(); break;
+      case EZKeySym::R: creerForme("Rectangle", false); listeCalques(); break;
+      case EZKeySym::e: creerForme("Ellipse", true); listeCalques(); break;
+      case EZKeySym::E: creerForme("Ellipse", false); listeCalques(); break;
+      case EZKeySym::c: creerForme("Carre", true); listeCalques(); break;
+      case EZKeySym::C: creerForme("Carre", false); listeCalques(); break;
+      case EZKeySym::o: creerForme("Cercle", true); listeCalques();break;
+      case EZKeySym::O: creerForme("Cercle", false); listeCalques(); break;
+      case EZKeySym::p: creerForme("Polygone", true); listeCalques(); break;
+      case EZKeySym::P: creerForme("Polygone", false); listeCalques(); break;
+      case EZKeySym::i: creerForme("Image", true); listeCalques();break;
+      case EZKeySym::I: creerForme("Image", false); listeCalques(); break;
 
       default: break;
     }
