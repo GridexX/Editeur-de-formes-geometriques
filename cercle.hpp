@@ -58,8 +58,12 @@ public :
     */
     double perimetre() const override; 
 
+    void scale(uint x, uint y) override;
+
 protected :
-    /** Fonction ecrire de la classe Cercle.
+    /**
+    * @fn ostream& ecrire(ostream& os) const override
+    * @brief Fonction ecrire de la classe Cercle.
     * @param os Le flux de sortie sur lequel afficher les informations.
     * @return Le flux de sortie modifié contenant les informations sur les données membres de la classe.
     */

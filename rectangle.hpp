@@ -66,6 +66,7 @@ void dessiner(EZWindow &w, bool isActive) const override;
 * @return Le périmètre du Rectangle.
 */
 double perimetre() const override;
+void scale(uint x, uint y) override;
 
 protected:
 

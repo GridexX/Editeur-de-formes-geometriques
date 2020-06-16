@@ -107,6 +107,9 @@ double Polygone::perimetre() const
     return perimetre;
 }
 
+void Polygone::scale(uint x, uint y)
+{}
+
 void Polygone::setPoint(Point * p, uint numero)
 {
     points[numero]=p;

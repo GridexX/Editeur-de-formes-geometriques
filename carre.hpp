@@ -3,7 +3,7 @@
 #define CARRE_HPP
 
 #include "forme.hpp"
-
+#include <cmath>
 
 
 
@@ -51,6 +51,7 @@ class Carre : public Forme {
         * @return Le périmètre du Carré.
         */
         double perimetre() const override;
+        void scale(uint x, uint y) override;
 
         protected:
 

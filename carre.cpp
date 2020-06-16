@@ -45,6 +45,30 @@ void Carre::dessiner(EZWindow &w, bool isActive) const
 double Carre::perimetre() const
 {return 4*cote;}
 
+void Carre::scale(uint x, uint y)
+{
+    Point tempP(getAncre());
+    bool estDiag = false;
+    if(y<getAncre().getY() && x<getAncre().getX()){
+        setAncre(x,y);
+        estDiag=true;
+    }
+    else{
+        if(y<getAncre().getY())
+    
+        setAncre(tempP.getX(),y);
+
+        if(x<getAncre().getX())
+            setAncre(x,tempP.getY());
+    }
+
+    if(estDiag) 
+        cote = (tempP.getX()-x > tempP.getY()) ? tempP.getX()-x : tempP.getY()-y;
+
+    else
+        cote = ( abs( int(x-getAncre().getX() )) > abs( int(y-getAncre().getY() ))) ?  abs( int(x-getAncre().getX() )) : abs( int(y-getAncre().getY() ));
+}
+
 ostream& Carre::ecrire(ostream& os) const
 {
     os<<"Carre ";

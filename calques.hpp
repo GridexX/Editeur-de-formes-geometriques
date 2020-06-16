@@ -28,6 +28,7 @@ class Calques { //herite de formes
         inline uint getCalqueSelec() const { return calqueSelec; }
         inline uint getNbCalques() const { return nbcalques; }
         inline bool getCalqueVisible(uint numCalque) const { return listeCalque[numCalque].second; }
+        inline Formes *getCalque(uint numCalque) const { return listeCalque[numCalque].first; }
         inline uint getNbForme(uint numCalque) const { return listeCalque[numCalque].first->getFormes();}
         inline Formes *getCalque(uint numCalque) const { return listeCalque[numCalque].first; }
         

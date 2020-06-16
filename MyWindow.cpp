@@ -63,23 +63,25 @@ void MyWindow::buttonPress(int mouse_x,int mouse_y,int button)
       }
     }
   }    
-  else if (button==3){
-    if(pforme)
+  else if (button==3 && pforme)
     {
       Polygone * poly;
       poly = dynamic_cast<Polygone*>(pforme);
+
       if(poly!=nullptr) 
       {
         ancre_x = poly->getAncre().getX();
         ancre_y = poly->getAncre().getY();
         point=-1;
         for(uint i = 0; i < poly->getNbpoints(); i++)
-        {
           if(poly->getPoint(i)->isOver(mouse_x, mouse_y)) point = i;
-        }
+          else
+            pforme->scale(mouse_x, mouse_y);
       }
+      else
+        pforme->scale(mouse_x, mouse_y);
     }
-  }
+
 }
 
 // Deplacement de la souris :
@@ -109,8 +111,13 @@ void MyWindow::motionNotify(int mouse_x,int mouse_y,int button)
     if(poly!=nullptr){
       Point * p = new Point(mouse_x, mouse_y);
       poly->setPoint(p, point);
-    } 
+    }
+    
   }
+
+  //pour scale les formes
+  if(button == 3 && pforme)
+    pforme->scale(mouse_x, mouse_y);
   sendExpose();
 }
 

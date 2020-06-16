@@ -42,13 +42,17 @@ void Image::dessiner(EZWindow &w, bool isActive) const
 double Image::perimetre() const
 { return image->getWidth()*(image->getHeight())*ratio; }
 
+void Image::scale(uint x, uint y)
+{
+    
+}
+
 Image::Image(istream &is)
     : Forme(is), nomFichier(""), image(nullptr)
 {
     is >> nomFichier >> ratio >> estTransparente;
     setupImage(nomFichier,ratio,estTransparente);
 }
-
 
 ostream &Image::ecrire(ostream &os) const{
     os << "Image ";

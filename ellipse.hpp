@@ -62,6 +62,7 @@ public :
     * @return Le périmètre de l'Ellipse.
     */
     double perimetre() const override; 
+    void scale(uint x, uint y) override;
 
 protected :
 
