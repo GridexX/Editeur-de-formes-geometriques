@@ -17,6 +17,8 @@ using namespace std;
 #include "calques.hpp"
 #include "polygone.hpp"
 
+#include <cmath>
+
 static unsigned int delay = 200;
 
 MyWindow::MyWindow(int w, int h,const char *name)
@@ -111,20 +113,60 @@ void MyWindow::motionNotify(int mouse_x,int mouse_y,int button)
     if(poly!=nullptr){
       Point * p = new Point(mouse_x, mouse_y);
       poly->setPoint(p, point);
+      poly->setRegular(false);
     }
     
   }
-
-  //pour scale les formes
-  if(button == 3 && pforme)
+  //pour scale le polygone
+  if(button == 2 && pforme){
+    Polygone * poly;
+    poly = dynamic_cast<Polygone*>(pforme);
+    if(poly != nullptr){
+      uint dX = (mouseX < poly->getAncre().getX() ?  poly->getAncre().getX()-mouseX : mouseX-poly->getAncre().getX() );
+      uint dY = (mouseY < poly->getAncre().getY() ?  poly->getAncre().getY()-mouseY : mouseY-poly->getAncre().getY() );
+      poly->setRayon( sqrt( pow(dX,2) + pow(dY,2) )  );
+    }
+    
+  }
+  
+  //Pour scale les autres formes
+  if(button == 3 && pforme) 
     pforme->scale(mouse_x, mouse_y);
   sendExpose();
 }
 
 void MyWindow::buttonRelease(int mouse_x,int mouse_y,int button)
 {
-  if(button == 1 && pforme != nullptr) // Si on clique sur l'ancre d'une forme
+    setXY(mouse_x,mouse_y);
+  if(button == 1 && pforme != nullptr){ // Si on clique sur l'ancre d'une forme
     pforme->setAncre(mouse_x,mouse_y);
+    Polygone * poly;
+    poly = dynamic_cast<Polygone*>(pforme);
+    if(poly!=nullptr) {
+      diff_x = poly->getAncre().getX() - ancre_x;
+      diff_y = poly->getAncre().getY() - ancre_y;
+      for(uint i = 0; i < poly->getNbpoints(); i++)
+      {
+        Point * p = new Point(poly->getPoint(i)->getX()+diff_x,poly->getPoint(i)->getY()+diff_y);
+        poly->setPoint(p, i);      
+      }
+      ancre_x = poly->getAncre().getX();
+      ancre_y = poly->getAncre().getY();
+    }// on la bouge.
+  }
+  if(button!=3) point = -1;
+  if(button == 3 && pforme != nullptr && point > -1){
+    Polygone * poly;
+    poly = dynamic_cast<Polygone*>(pforme);
+    if(poly!=nullptr){
+      Point * p = new Point(mouse_x, mouse_y);
+      poly->setPoint(p, point);
+    }
+    
+  }
+  //pour scale les formes
+  if(button == 3 && pforme)
+    pforme->scale(mouse_x, mouse_y);
   sendExpose();
 }
 
@@ -191,19 +233,58 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
           }
         } break;
       }
-      case EZKeySym::_0: if(pforme) pforme->setCouleur(ez_black);   break;
-      case EZKeySym::_1: if(pforme) pforme->setCouleur(ez_grey);    break;
-      case EZKeySym::_2: if(pforme) pforme->setCouleur(ez_red);     break;
-      case EZKeySym::_3: if(pforme) pforme->setCouleur(ez_green);   break;
-      case EZKeySym::_4: if(pforme) pforme->setCouleur(ez_blue);    break;
-      case EZKeySym::_5: if(pforme) pforme->setCouleur(ez_yellow);  break;
-      case EZKeySym::_6: if(pforme) pforme->setCouleur(ez_cyan);    break;
-      case EZKeySym::_7: if(pforme) pforme->setCouleur(ez_magenta); break;
-
-      case EZKeySym::plus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur());  break;
-      case EZKeySym::minus: if(pforme) pforme->setEpaisseur(pforme->getEpaisseur()-1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur()); break;
+      case EZKeySym::_0: if(pforme) {
+        if(pforme->getAnimation() > 0) pforme->setAnimationCouleur(ez_black); 
+        else pforme->setCouleur(ez_black);   
+        break;
+      }
+      case EZKeySym::_1: if(pforme) {
+        if(pforme->getAnimation() > 0) pforme->setAnimationCouleur(ez_grey); 
+        else pforme->setCouleur(ez_grey);   
+        break;
+      }
+      case EZKeySym::_2: if(pforme) {
+        if(pforme->getAnimation() > 0) pforme->setAnimationCouleur(ez_red); 
+        else pforme->setCouleur(ez_red);   
+        break;
+      }
+      case EZKeySym::_3: if(pforme) {
+        if(pforme->getAnimation() > 0) pforme->setAnimationCouleur(ez_green); 
+        else pforme->setCouleur(ez_green);   
+        break;
+      }
+      case EZKeySym::_4: if(pforme) {
+        if(pforme->getAnimation() > 0) pforme->setAnimationCouleur(ez_blue); 
+        else pforme->setCouleur(ez_blue);   
+        break;
+      }
+      case EZKeySym::_5: if(pforme) {
+        if(pforme->getAnimation() > 0) pforme->setAnimationCouleur(ez_yellow); 
+        else pforme->setCouleur(ez_yellow);   
+        break;
+      }
+      case EZKeySym::_6: if(pforme) {
+        if(pforme->getAnimation() > 0) pforme->setAnimationCouleur(ez_cyan); 
+        else pforme->setCouleur(ez_cyan);   
+        break;
+      }
+      case EZKeySym::_7: if(pforme) {
+        if(pforme->getAnimation() > 0) pforme->setAnimationCouleur(ez_magenta); 
+        else pforme->setCouleur(ez_magenta);   
+        break;
+      }
+      case EZKeySym::plus: if(pforme) {
+        pforme->setAnimationEpaisseur(pforme->getAnimationEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getAnimationEpaisseur());
+        pforme->setEpaisseur(pforme->getEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur());
+        break;
+      }
+      case EZKeySym::minus: {
+        pforme->setAnimationEpaisseur(pforme->getAnimationEpaisseur()-1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getAnimationEpaisseur()); 
+        pforme->setEpaisseur(pforme->getEpaisseur()-1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur()); 
+        break;
+      }
       case EZKeySym::F: if(pforme) pforme->setFilled(! pforme->getFilled()); break;
-      case EZKeySym::Delete: if(pforme) calques.supprimerForme(pforme);  listeCalques(); break;
+      case EZKeySym::Delete: if(pforme) calques.supprimerForme(pforme);  listeCalques(); pforme=nullptr; break;
       case EZKeySym::ugrave: {
         if(pforme)
         { 
@@ -236,7 +317,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::Down: calques.setCalqueSelec(calques.getCalqueSelec()-1);   listeCalques(); break;
       case EZKeySym::a:  calques.setCalqueVisible( !calques.getCalqueVisible(calques.getCalqueSelec()));   listeCalques(); break;
       case EZKeySym::d: calques.supprimerCalque(calques.getCalqueSelec());   listeCalques(); break;
-      case EZKeySym::v: calques.fusionner();   listeCalques(); listeCalques(); break;
+      case EZKeySym::v: calques.fusionner(); listeCalques(); break;
       case EZKeySym::w: calques.swapFormeCalque(pforme,calques.getCalqueSelec()+1);   listeCalques(); break;
       case EZKeySym::x: calques.swapFormeCalque(pforme,calques.getCalqueSelec()-1);   listeCalques(); break;
       case EZKeySym::n: switchAnimation(); break;
@@ -335,10 +416,15 @@ void MyWindow::creerForme(string forme, bool coordAuto)
           calques.ajouterForme(new Rectangle(ez_black,getWidth()/2-25,getHeight()/2-25,getWidth()/2+25,getHeight()/2+25));
     }
     else{
-      cout << endl << "Vous êtes sur le point de créer un Rectangle. "<< endl << "Entrez la longueur et la largeur : " ;
+      cout << endl << "Vous êtes sur le point de créer un Rectangle. "<< endl << ".Entrez la longueur et la largeur : " ;
       uint longueur, largeur;
-        try{cin >> longueur >> largeur;}
-        catch(exception &e){ cerr << "Vous n'avez pas entré un chiffre valide"<<endl;}
+        cin >> longueur >> largeur;
+        while(longueur<0 && longueur > getWidth()) {
+          cerr << "La longueur doit être comprise entre 0 et "<<getWidth()<<endl; cout << ".Entrez la longueur "; cin >> longueur;
+        }
+        while(largeur<0 && largeur > getHeight()) {
+          cerr << "La largeur doit être comprise entre 0 et "<<getHeight()<<endl; cout << ".Entrez la longueur et la largeur : "; cin >> largeur;
+        } 
         if(isMouseWindow(mouseX ,mouseY))
           calques.ajouterForme(new Rectangle(ez_black,mouseX,mouseY,longueur,largeur));
         else
@@ -355,13 +441,18 @@ void MyWindow::creerForme(string forme, bool coordAuto)
     }
     else{
       cout << endl << "Vous êtes sur le point de créer une Ellipse. "<< endl << "Entrez la demi-longueur et la demi-largeur : " ;
-      uint demilongueur, demilargueur;
-        try{cin >> demilongueur >> demilargueur;}
-        catch(exception &e){ cerr << "Vous n'avez pas entré un chiffre valide"<<endl;}
+      uint demilongueur, demilargeur;
+        cin >> demilongueur >> demilargeur;
+        while(demilongueur<0 && demilongueur > getWidth()) {
+          cerr << "La demi-longueur doit être comprise entre 0 et "<<getWidth()/2<<endl; cout << ".Entrez la demi-longueur"; cin >> demilongueur;
+        }
+        while(demilargeur<0 && demilargeur > getHeight()){ 
+          cerr << "La demi-largeur doit être comprise entre 0 et "<<getHeight()/2<<endl; cout << ".Entrez la demi-largeur :"; cin>>demilargeur;
+        }
         if(isMouseWindow(mouseX ,mouseY))
-          calques.ajouterForme(new Ellipse(ez_black,mouseX,mouseY,demilongueur,demilargueur));
+          calques.ajouterForme(new Ellipse(ez_black,mouseX,mouseY,demilongueur,demilargeur));
         else
-          calques.ajouterForme(new Ellipse(ez_black,getWidth()/2-25,getHeight()/2-25,demilongueur,demilargueur));   
+          calques.ajouterForme(new Ellipse(ez_black,getWidth()/2-25,getHeight()/2-25,demilongueur,demilargeur));   
     }
   }
 
@@ -375,8 +466,13 @@ void MyWindow::creerForme(string forme, bool coordAuto)
     else{
       cout << endl << "Vous êtes sur le point de créer un Carré. "<< endl << "Entrez le côte : " ;
       uint cote;
-        try{cin >> cote;}
-        catch(exception &e){ cerr << "Vous n'avez pas entré un chiffre valide"<<endl;}
+        cin >> cote;
+        while(cote<0 && cote>getWidth() && cote>getHeight()){
+          uint plusBas = ( getWidth()<getHeight() ? getWidth() : getHeight() ); 
+          cerr << "Le coté doit être compris entre 0 et "<<plusBas;
+          cout << "Entrez le côte : ";
+          cin >> cote;
+        } 
         if(isMouseWindow(mouseX ,mouseY))
           calques.ajouterForme(new Carre(ez_black,mouseX,mouseY,cote));
         else
@@ -394,8 +490,13 @@ void MyWindow::creerForme(string forme, bool coordAuto)
     else{
       cout << endl << "Vous êtes sur le point de créer un Cercle. "<< endl << "Entrez le rayon : " ;
       uint rayon;
-        try{cin >> rayon;}
-        catch(exception &e){ cerr << "Vous n'avez pas entré un chiffre valide"<<endl;}
+        cin >> rayon;
+        while(rayon<0 && rayon>getWidth() && rayon>getHeight()){
+          uint plusBas = ( getWidth()<getHeight() ? getWidth() : getHeight() ); 
+          cerr << "Le rayon doit être compris entre 0 et "<<plusBas;
+          cout << "Entrez le rayon : ";
+          cin >> rayon;
+        } 
         if(isMouseWindow(mouseX ,mouseY))
           calques.ajouterForme(new Cercle(ez_black,mouseX,mouseY,rayon));
         else
@@ -433,8 +534,14 @@ void MyWindow::creerForme(string forme, bool coordAuto)
       cout << endl << "Vous êtes sur le point de créer une Image. "<< endl << "Entrez le fichier source et le ratio : " ;
       uint ratio;
       string path;
-        try{cin >> path >> ratio;}
-        catch(exception &e){ cerr << "Vous n'avez pas entré un chiffre valide"<<endl;}
+        cin >> ratio;
+        while(ratio<0){
+          cerr << "Ratio inférieur à 0";
+          cout << ".Entrez le ratio :";
+          cin >> ratio;
+        }
+        try{cin >> path;}
+        catch(std::runtime_error &re){ cerr << "Vous n'avez pas entré un nom d'image valide"<<endl;}
         if(isMouseWindow(mouseX ,mouseY))
           calques.ajouterForme(new Image(ez_black,mouseX,mouseY,path,ratio,true));
         else
@@ -442,19 +549,11 @@ void MyWindow::creerForme(string forme, bool coordAuto)
     }
   }
 
-
-
-
-
-
-
-
-
 }
 
 void MyWindow::animationReset(Forme * f)
 {
-  if(f && f->getAnimation()==0){
+  if(f){
     f->setCouleur(f->getAnimationCouleur());
     f->setEpaisseur(f->getAnimationEpaisseur());
   }
@@ -479,6 +578,7 @@ void MyWindow::animationRainbow(Forme * f)
 void MyWindow::animationBlink(Forme * f)
 {
   if(f && f->getAnimation()==2){
+    f->setEpaisseur(f->getAnimationEpaisseur());
     if(f->getCouleur()==ez_white) f->setCouleur(f->getAnimationCouleur());
     else f->setCouleur(ez_white);
   }
@@ -488,7 +588,7 @@ void MyWindow::animationBounce(Forme * f)
 {
   if(f->getAnimation()==3){
     f->setCouleur(f->getAnimationCouleur());
-    if(f) f->setEpaisseur(EZDraw::random(f->getEpaisseur()*2)+1);
+    if(f) f->setEpaisseur(EZDraw::random(f->getAnimationEpaisseur()*2)+1);
   }
 }
 
@@ -515,10 +615,7 @@ void MyWindow::timerNotify() // declenchee a chaque fois que le timer est ecoule
 void MyWindow::switchAnimation()
 {
   if(pforme){
-    if(pforme->getAnimation()==0){
-      pforme->setAnimationCouleur(pforme->getCouleur());
-      pforme->setAnimationEpaisseur(pforme->getEpaisseur());
-    }
+    animationReset(pforme);
     startTimer(delay);
     uint anim = pforme->getAnimation();
     anim = (anim + 1) % 4;

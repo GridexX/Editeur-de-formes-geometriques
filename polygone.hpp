@@ -10,6 +10,7 @@ class Polygone : public Forme {
         uint rayon; ///< Le rayon (Représente la distance entre le centre du Polygone et chaque point lors de la construction du Polygone en pixel)
         uint nbpoints;  ///< Le nombre de point du Polygone
         Point ** points;  ///< Tableau dynamique contenant des pointeurs sur tout les points du Polygone
+        bool isRegular = true; ///< Booléen pour définir le type du polygone
         
 
     public :
@@ -21,6 +22,8 @@ class Polygone : public Forme {
         * @param _nbpoints Le nombre de point du polygone. 
 		*/	
         Polygone(ulong _couleur, uint _x, uint _y, uint _rayon, uint _nbpoints);
+
+        Polygone(ulong _couleur, uint _x, uint _y, uint _rayon, uint _nbpoints, Point ** _points);
 		
 		/** Constructeur de copie de la classe Polygone.
 		* @param orig Le polygone d'origine qui va être copié.
@@ -55,7 +58,9 @@ class Polygone : public Forme {
         /** Fonction setter de la classe Polygone.
         * @param _rayon Le nouveau rayon du polygone.
         */       
-        inline void setRayon(uint _rayon) { rayon=_rayon;}
+        void setRayon(uint _rayon);
+
+        inline void setRegular(bool _isRegular) { isRegular = _isRegular; }
 
 		/** Fonction membre qui permet d'ajouter un point au polygone.
 		*/	

@@ -45,8 +45,8 @@ public :
 
     inline bool isOver(uint x, uint y) const { return ancre.isOver(x,y); }
     virtual void dessiner(EZWindow& w, bool active=false) const;
-    virtual void scale(uint x, uint y) = 0;
     virtual double perimetre() const = 0;
+    virtual void scale(uint x, uint y) = 0;
     friend ostream& operator<<(ostream& os, const Forme& f);
     static Forme* charger(istream& is);
     

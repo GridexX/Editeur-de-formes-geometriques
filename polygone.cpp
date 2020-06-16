@@ -15,13 +15,22 @@ Polygone::Polygone(ulong _couleur, uint _x, uint _y, uint _rayon, uint _nbpoints
     }
 }
 
-Polygone::Polygone(const Polygone& orig)
-: Forme(orig), rayon(orig.rayon),nbpoints(orig.nbpoints), points(orig.points)
+Polygone::Polygone(ulong _couleur, uint _x, uint _y, uint _rayon, uint _nbpoints, Point ** _points)
+: Forme(_couleur,_x,_y),rayon(_rayon), nbpoints(_nbpoints), points(nullptr)
 {
-    for(uint i = 0; i < nbpoints; i++)
+    points = new Point*[nbpoints];
+    for(uint i=0; i<nbpoints; ++i)
     {
-        points[i] = orig.points[i];
+        points[i] = new Point(*_points[i]);
     }
+}
+
+Polygone::Polygone(const Polygone& orig)
+: Forme(orig), rayon(orig.rayon),nbpoints(orig.nbpoints), points(nullptr)
+{
+    points = new Point*[nbpoints];
+    for(uint i = 0; i < nbpoints; i++)
+        points[i] = new Point(*orig.points[i]);
 }
 
 Polygone::Polygone(istream &is)
@@ -40,6 +49,14 @@ Polygone::Polygone(istream &is)
 Polygone::~Polygone()
 {
     delete[] points;
+}
+
+void Polygone::setRayon(uint _rayon)
+{
+    if(isRegular)
+        for(uint i=0; i<nbpoints; ++i)
+            points[i]->setXY(getAncre().getX()+_rayon*cos(i*(360/nbpoints)*PI/180.0),getAncre().getY()+_rayon*sin(i*(360/nbpoints)*PI/180.0));
+
 }
 
 void Polygone::dessiner(EZWindow &w, bool isActive) const
