@@ -85,7 +85,11 @@ void Formes::supprimer(Forme *forme)
             indForme=i;
         }
         i++; 
+<<<<<<< HEAD
     }
+=======
+    }    
+>>>>>>> ccf2668387241ac51fdef4215a618cd379f2b341
     
     if(trouve){
         uint j=0;
@@ -99,7 +103,5 @@ void Formes::supprimer(Forme *forme)
         delete [] formes;
         formes=tabFormes;
         --nbformes;
-
     }
-
 } 

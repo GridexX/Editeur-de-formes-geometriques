@@ -10,6 +10,9 @@ class MyWindow : public EZWindow {
   Forme  *pforme;
   uint mouseX, mouseY; //coordonnées du pointeur de la souris
   const uint marge=10;
+  int point;
+  uint ancre_x, ancre_y;
+  int diff_x, diff_y;
  public:
   MyWindow(int w, int h,const char *name);
   ~MyWindow();
