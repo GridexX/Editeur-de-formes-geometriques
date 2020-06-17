@@ -1,4 +1,9 @@
-// Forme.cpp
+/** @file forme.cpp
+ *  @author DUHAMEL Andréa et FOUGEROUSE Arsène
+ *  @date Juin 2020
+ *  @brief Classe Forme
+ */
+
 #include <iostream>
 
 using namespace std;

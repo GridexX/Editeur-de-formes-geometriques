@@ -1,4 +1,8 @@
-//Cercle.cpp
+/** @file cercle.cpp
+ *  @author DUHAMEL Andréa et FOUGEROUSE Arsène
+ *  @date Juin 2020
+ *  @brief Classe Cercle
+ */
 
 #include <iostream>
 #ifndef M_PI

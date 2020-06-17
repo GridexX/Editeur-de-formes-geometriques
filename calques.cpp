@@ -1,3 +1,9 @@
+/** @file calques.cpp
+ *  @author DUHAMEL Andréa et FOUGEROUSE Arsène
+ *  @date Juin 2020
+ *  @brief Classe Calques
+ */
+
 #include <iostream>
 
 using namespace std;
@@ -45,47 +51,33 @@ void Calques::supprimerCalque(uint numCalque) //modif
 {
     
     if(nbcalques==0){
-        cerr<<"O"<<endl;
         delete listeCalque[numCalque].first;
         listeCalque[numCalque].first=nullptr;
         calqueSelec=1;
     } else
     {
-        cout << "1" << endl;
         uint i=0;
         uint indFormes;
         bool trouve=false;
-        cout << "2" << endl;
         while(!trouve && i<nbcalques){   //On parcourt le tableau de formes jusqu'à ce qu'on obtienne la bonne et on sauvegarde l'indice
             if(listeCalque[i].first == listeCalque[numCalque].first){
                 trouve=true;
                 indFormes=i;
-                cout << "3" << endl;
             }
             i++; 
         }
           
         if(trouve){
-            cout << "4" << endl;
             uint j=0;
             vecFormes tempCalques;    //On crée un nouveau tableau de forme et on le remplit avec toutes celles d'avant sauf celle à supprimer
             tempCalques.reserve(maxcalques);
-            cout << "4.2" << endl;
-            for (uint i=0; i<nbcalques; ++i){
-                cout << "4.5" << endl;
-                if( listeCalque[i].first != listeCalque[numCalque].first  ){
-                    cout << "4.6" << endl;
+            for (uint i=0; i<nbcalques; ++i)
+                if( listeCalque[i].first != listeCalque[numCalque].first  )
                     tempCalques[j++] = listeCalque[i];
-
-                    cout << "5" << endl;
-                }
-            }
-            cout << "6" << endl;
 
             listeCalque[indFormes].first->~Formes(); //On détruit la forme et on reset le tableau
             listeCalque.swap(tempCalques);
             tempCalques.clear();
-            cout << "7" << endl;
             --nbcalques;
 
             if(calqueSelec==nbcalques)

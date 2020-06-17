@@ -7,14 +7,14 @@
 ifeq ($(CXX),)
 CXX=g++
 endif
-CFLAGS   = -g -Wall -O0 -D_WIN32
+CFLAGS   = -g -Wall -pedantic -O2
 #Pour windows test -g -Wall -O0 -D_WIN32
 #Pour windows LIBS -lgdi32 -lmsimg32
 
 #Pour linux : -g -Wall -pedantic -O2
 #libs : -lX11 -lXext
 CXXFLAGS = $(CFLAGS) -std=c++17
-LIBS     = -lgdi32 -lmsimg32
+LIBS     = -lX11 -lXext
 RM       = rm -f
 EXE      = .exe
 

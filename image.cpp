@@ -1,4 +1,8 @@
-//Image.cpp
+/** @file image.cpp
+ *  @author DUHAMEL Andréa et FOUGEROUSE Arsène
+ *  @date Juin 2020
+ *  @brief Classe Image (classe fille de forme)
+ */
 
 #include <iostream>
 
