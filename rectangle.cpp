@@ -1,4 +1,9 @@
-// Rectangle.cpp
+/**
+ * @file rectangle.cpp
+ * @author DUHAMEL Andréa et FOUGEROUSE Arsène
+ * @date Juin 2020
+ * @brief Classe Rectangle (classe fille de la classe Forme)
+ */ 
 
 #include <iostream>
 

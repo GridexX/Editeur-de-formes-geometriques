@@ -1,4 +1,9 @@
-//Polygone.cpp
+/**
+ * @file polygone.cpp
+ * @author DUHAMEL Andréa et FOUGEROUSE Arsène
+ * @date Juin 2020
+ * @brief Classe Polygone (classe fille de la classe Forme)
+ */ 
 
 #include <iostream>
 using namespace std;
@@ -12,16 +17,6 @@ Polygone::Polygone(ulong _couleur, uint _x, uint _y, uint _rayon, uint _nbpoints
     for(uint i=0; i<nbpoints; i++)
     {
         points[i] = new Point(getAncre().getX()+rayon*cos(i*(360/nbpoints)*PI/180.0),getAncre().getY()+rayon*sin(i*(360/nbpoints)*PI/180.0));        
-    }
-}
-
-Polygone::Polygone(ulong _couleur, uint _x, uint _y, uint _rayon, uint _nbpoints, Point ** _points)
-: Forme(_couleur,_x,_y),rayon(_rayon), nbpoints(_nbpoints), points(nullptr)
-{
-    points = new Point*[nbpoints];
-    for(uint i=0; i<nbpoints; ++i)
-    {
-        points[i] = new Point(*_points[i]);
     }
 }
 

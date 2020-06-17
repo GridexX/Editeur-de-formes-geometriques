@@ -1,4 +1,9 @@
-// Point.cpp
+/**
+ * @file point.cpp
+ * @author DUHAMEL Andréa et FOUGEROUSE Arsène
+ * @date Juin 2020
+ * @brief Classe Point
+ */ 
 
 #include "point.hpp"
 
