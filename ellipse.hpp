@@ -2,7 +2,7 @@
  * @file ellipse.hpp
  * @author DUHAMEL Andréa et FOUGEROUSE Arsène
  * @date Juin 2020
- * @brief Classe Ellipse
+ * @brief Classe Ellipse (classe fille de la classe Forme)
  */ 
 
 #ifndef ELLIPSE_HPP

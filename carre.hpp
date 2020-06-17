@@ -2,7 +2,7 @@
  * @file carre.hpp
  * @author DUHAMEL Andréa et FOUGEROUSE Arsène
  * @date Juin 2020
- * @brief Classe Carré
+ * @brief Classe Carre (classe fille de la classe Forme)
  */ 
 
 #ifndef CARRE_HPP

@@ -1,4 +1,9 @@
-// MyWindow.cpp
+/** @file MyWindow.cpp
+ *  @author DUHAMEL Andréa et FOUGEROUSE Arsène
+ *  @date Juin 2020
+ *  @brief Classe MyWindow
+ */
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -8,8 +13,8 @@ using namespace std;
 #include "MyWindow.hpp"
 
 #include "formes.hpp"
-#include "point.hpp"   // Uniquement pour le constructeur qui peuple la fenêtre
-#include "ellipse.hpp" // avec quelques formes.
+#include "point.hpp"
+#include "ellipse.hpp"
 #include "cercle.hpp"
 #include "rectangle.hpp"
 #include "carre.hpp"
@@ -19,7 +24,7 @@ using namespace std;
 
 #include <cmath>
 
-static unsigned int delay = 200;
+static unsigned int delay = 200; //délai pour les animations
 
 MyWindow::MyWindow(int w, int h,const char *name)
  : EZWindow(w,h,name),calques(20),pforme(nullptr),point(-1), ancre_x(0), ancre_y(0), diff_x(0), diff_y(0)
@@ -334,7 +339,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       case EZKeySym::h:
       cout 
             << "--------------------------------------------------------" << endl
-            << "----------------------SAUVEGARDE----------------------------" << endl
+            << "----------------------SAUVEGARDE------------------------" << endl
             
             << "s : ecrire la liste des formes sur la console" << endl
             << "S : sauve un calque / la liste des calques sur le disque " << endl
@@ -366,7 +371,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             << "Clic droit sur l'affichage pour déplacer le coin inférieur droit" << endl
 
             << "--------------------------------------------------------" << endl
-            << "----------------------POLYGONE----------------------------" << endl
+            << "----------------------POLYGONE--------------------------" << endl
             << "p : crée un polygone régulier" << endl
             << "k : rajouter 1 point au polynome sélectionné" <<endl
             << "l : enlever 1 point du polynome sélectionné" <<endl
@@ -374,7 +379,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             << "Clic mollette pour agrandir le polygome régulier" << endl
             
             << "--------------------------------------------------------" << endl
-            << "----------------------IMAGE----------------------------" << endl
+            << "----------------------IMAGE-----------------------------" << endl
             << "i : crée une image" << endl
             << "t : ajouter/supprimer la tranparence de l'image" << endl
             << "ù : agrandit l'image'" << endl                      
@@ -385,7 +390,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             << "':' : Diminue le délai de transition entre les animations" << endl
             << "! : Augmente le délai de transition entre les animations" << endl 
             
-            << "--------------------------------------------------------" << endl << endl
+            << "--------------------------------------------------------" << endl 
             << "------------------------CALQUES-------------------------" << endl
             << "y : crée un nouveau calque" << endl
             << "d : supprime le calque selectionné" << endl
@@ -397,6 +402,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             << "F1 : fusionner le calque sélectionné avec celui du dessus"<<endl
             << "w : envoie la forme sélectionnée sur le calque du dessus" <<endl
             << "x : envoie la forme sélectionnée sur le calque du dessous"<<endl
+            << "--------------------------------------------------------" << endl 
             ;
             listeCalques();
       break;
@@ -422,7 +428,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
 
 //affichage dans la console des calques
 void MyWindow::listeCalques(){
-    cout << "------------LISTE CALQUES-----------------------" << endl;
+    cout << "-------------------LISTE CALQUES------------------------" << endl;
     for(int i=calques.getNbCalques()-1; i>-1; --i){
         cout << "Calque " << i+1 << "[";
         if(i==calques.getCalqueSelec())
@@ -435,8 +441,7 @@ void MyWindow::listeCalques(){
 
         cout << "("<<calques.getNbForme(i)<<" Formes)"<< endl;
     }
-    cout << "--------------------------------------------------"<<endl;
-    //cout << calques.getNbCalques() << " , select :" << calques.getCalqueSelec() << endl;
+    cout << "--------------------------------------------------------"<<endl;
 }
 
 
@@ -453,12 +458,14 @@ void MyWindow::creerForme(string forme, bool coordAuto)
       cout << endl << "Vous êtes sur le point de créer un Rectangle. "<< endl << "Entrez la longueur et la largeur : " ;
       uint longueur, largeur;
         cin >> longueur >> largeur;
+        //On vérifie que les dimensions soient correctes
         while(longueur<0 || longueur > getHeight()) {
           cerr << "La longueur doit être comprise entre 0 et "<<getHeight(); cout << ". Entrez la longueur "; cin >> longueur;
         }
         while(largeur<0 || largeur > getWidth()) {
           cerr << "La largeur doit être comprise entre 0 et "<<getWidth(); cout << ". Entrez la largeur : "; cin >> largeur;
         } 
+        //on ajoute le rectangle dans le calque aux coordonnées en fonction du curseur
         if(isMouseWindow(mouseX ,mouseY))
           calques.ajouterForme(new Rectangle(ez_black,mouseX,mouseY,longueur,largeur));
         else
@@ -492,9 +499,9 @@ void MyWindow::creerForme(string forme, bool coordAuto)
 
   if(forme=="Carre"){
     if(coordAuto){
-        if(isMouseWindow(mouseX ,mouseY))   //On crée un rectangle au coordonnées du pointeur si il est dans la fenêtre
+        if(isMouseWindow(mouseX ,mouseY))   
           calques.ajouterForme(new Carre(ez_black,mouseX,mouseY,150));
-        else                                //Sinon on le place au centre
+        else
           calques.ajouterForme(new Carre(ez_black,getWidth()/2-25,getHeight()/2-25,150));
     }
     else{
@@ -516,9 +523,9 @@ void MyWindow::creerForme(string forme, bool coordAuto)
 
   if(forme=="Cercle"){
     if(coordAuto){
-        if(isMouseWindow(mouseX ,mouseY))   //On crée un rectangle au coordonnées du pointeur si il est dans la fenêtre
+        if(isMouseWindow(mouseX ,mouseY))
           calques.ajouterForme(new Cercle(ez_black,mouseX,mouseY,75));
-        else                                //Sinon on le place au centre
+        else
           calques.ajouterForme(new Cercle(ez_black,getWidth()/2-25,getHeight()/2-25,75));
     }
     else{
@@ -540,9 +547,9 @@ void MyWindow::creerForme(string forme, bool coordAuto)
 
   if(forme=="Polygone"){
     if(coordAuto){
-        if(isMouseWindow(mouseX ,mouseY))   //On crée un rectangle au coordonnées du pointeur si il est dans la fenêtre
+        if(isMouseWindow(mouseX ,mouseY))
           calques.ajouterForme(new Polygone(ez_black,mouseX,mouseY,150,6));
-        else                                //Sinon on le place au centre
+        else
           calques.ajouterForme(new Polygone(ez_black,getWidth()/2-25,getHeight()/2-25,150,6));
     }
     else{
@@ -631,7 +638,6 @@ void MyWindow::animationBounce(Forme * f)
   }
 }
 
-//REMPLACER LES PFORMES PAR TOUTES LES FORMES
 
 void MyWindow::timerNotify() // declenchee a chaque fois que le timer est ecoule.
 {
