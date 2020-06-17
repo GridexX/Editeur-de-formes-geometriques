@@ -59,31 +59,30 @@ void MyWindow::expose()
 
 void MyWindow::buttonPress(int mouse_x,int mouse_y,int button)
 {
-  if(button==1 && calques.getNbCalques()>0){
+  if(button==1 && calques.getNbCalques()>0){ //Si le clic gauche est appuyé et le nombre de calque est > 0
      pforme = calques.isOver(mouse_x,mouse_y);
     if(pforme)
     {
     Polygone * poly;
-    poly = dynamic_cast<Polygone*>(pforme);
-    if(poly!=nullptr) 
+    poly = dynamic_cast<Polygone*>(pforme); //Down casting de la classe Forme à Polygone
+    if(poly!=nullptr) //Vérifie si il s'agit bien d'un Polygone
       {
         ancre_x = poly->getAncre().getX();
         ancre_y = poly->getAncre().getY();
       }
     }
   }    
-  else if (button==3 && pforme)
+  else if (button==3 && pforme)  //Si le clic droit est appuyé et que pforme pointe une Forme
     {
       Polygone * poly;
       poly = dynamic_cast<Polygone*>(pforme);
-
       if(poly!=nullptr) 
       {
-        ancre_x = poly->getAncre().getX();
-        ancre_y = poly->getAncre().getY();
-        point=-1;
-        for(uint i = 0; i < poly->getNbpoints(); i++)
-          if(poly->getPoint(i)->isOver(mouse_x, mouse_y)) point = i;
+        ancre_x = poly->getAncre().getX(); //On récupère l'ordonnée de l'ancre du polygone
+        ancre_y = poly->getAncre().getY(); //On récupère l'abcisse de l'ancre du polygone
+        point=-1; //On reset le l'indice du point à -1
+        for(uint i = 0; i < poly->getNbpoints(); i++) //On parcours tout les points du Polygone sélectionné
+          if(poly->getPoint(i)->isOver(mouse_x, mouse_y)) point = i; //On récupère le point par selectionné
           else
             pforme->scale(mouse_x, mouse_y);
       }
@@ -118,9 +117,9 @@ void MyWindow::motionNotify(int mouse_x,int mouse_y,int button)
     Polygone * poly;
     poly = dynamic_cast<Polygone*>(pforme);
     if(poly!=nullptr){
-      Point * p = new Point(mouse_x, mouse_y);
-      poly->setPoint(p, point);
-      poly->setRegular(false);
+      Point * p = new Point(mouse_x, mouse_y); //On crée un nouveau point
+      poly->setPoint(p, point); //On associe remplace le point donc l'indice est stocké dans point par le nouveau point p
+      poly->setRegular(false); //Si on déplace un poitn du Polygone on change l'attribut en indiquant qu'il est irrégulier
     }
     
   }
@@ -249,8 +248,8 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
       }
 
       case EZKeySym::_0: if(pforme) {
-        if(pforme->getAnimation() > 0) pforme->setAnimationCouleur(ez_black); 
-        else pforme->setCouleur(ez_black);   
+        if(pforme->getAnimation() > 0) pforme->setAnimationCouleur(ez_black); //Si la Forme est animé on change la variable ou est stocké la couleur avant animation
+        else pforme->setCouleur(ez_black);                                    //Sinon on change directement la couleur de la forme
         break;
       }
       case EZKeySym::_1: if(pforme) {
@@ -289,11 +288,13 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
         break;
       }
       case EZKeySym::plus: if(pforme) {
-        pforme->setAnimationEpaisseur(pforme->getAnimationEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getAnimationEpaisseur());
+        //On augmente l'épaisseur de la forme avant et après animation
+        pforme->setAnimationEpaisseur(pforme->getAnimationEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getAnimationEpaisseur()); 
         pforme->setEpaisseur(pforme->getEpaisseur()+1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur());
         break;
       }
       case EZKeySym::minus: {
+        //On diminue l'épaisseur de la forme avant et après animation
         pforme->setAnimationEpaisseur(pforme->getAnimationEpaisseur()-1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getAnimationEpaisseur()); 
         pforme->setEpaisseur(pforme->getEpaisseur()-1); pforme->setAncre(pforme->getAncre().getTaille()+pforme->getEpaisseur()); 
         break;
@@ -600,18 +601,20 @@ void MyWindow::creerForme(string forme, bool coordAuto)
 void MyWindow::animationReset(Forme * f)
 {
   if(f){
-    f->setCouleur(f->getAnimationCouleur());
-    f->setEpaisseur(f->getAnimationEpaisseur());
+    f->setCouleur(f->getAnimationCouleur()); //Reset la couleur
+    f->setEpaisseur(f->getAnimationEpaisseur()); //Reset l'épaisseur
   }
 }
 
 void MyWindow::animationRainbow(Forme * f)
 {
   if(f && f->getAnimation()==1){
-    f->setEpaisseur(f->getAnimationEpaisseur());
+    f->setEpaisseur(f->getAnimationEpaisseur()); //On récupère l'épaisseur avant animation
+    //Si la couleur de la forme n'est pas un couleur de l'arc en ciel on le change la couleur en cyan
     if((f->getCouleur()!=ez_cyan) && (f->getCouleur()!=ez_blue) && (f->getCouleur()!=ez_magenta) && (f->getCouleur()!=ez_red) && (f->getCouleur()!=ez_yellow) && (f->getCouleur()!=ez_green)){
       f->setCouleur(ez_cyan);
     }
+    //Sinon on change de couleur à chaque entré dans la fonction
     else if(f->getCouleur()==ez_cyan) f->setCouleur(ez_blue);
     else if(f->getCouleur()==ez_blue) f->setCouleur(ez_magenta);
     else if(f->getCouleur()==ez_magenta) f->setCouleur(ez_red);    
@@ -624,34 +627,34 @@ void MyWindow::animationRainbow(Forme * f)
 void MyWindow::animationBlink(Forme * f)
 {
   if(f && f->getAnimation()==2){
-    f->setEpaisseur(f->getAnimationEpaisseur());
-    if(f->getCouleur()==ez_white) f->setCouleur(f->getAnimationCouleur());
-    else f->setCouleur(ez_white);
+    f->setEpaisseur(f->getAnimationEpaisseur()); //On récupère l'épaisseur avant animation
+    if(f->getCouleur()==ez_white) f->setCouleur(f->getAnimationCouleur()); //Si la forme est blanche on la met dans la couleur stocké avant animation
+    else f->setCouleur(ez_white); //Sinon on  la met en blanc
   }
 }
 
 void MyWindow::animationBounce(Forme * f)
 {
   if(f->getAnimation()==3){
-    f->setCouleur(f->getAnimationCouleur());
-    if(f) f->setEpaisseur(EZDraw::random(f->getAnimationEpaisseur()*2)+1);
+    f->setCouleur(f->getAnimationCouleur()); //On récupère la couleur avant animation
+    if(f) f->setEpaisseur(EZDraw::random(f->getAnimationEpaisseur()*2)+1); //On modifie l'épaisseur aléatoirement entre 1 et 2 fois l'épaisseur de la forme
   }
 }
 
 
 void MyWindow::timerNotify() // declenchee a chaque fois que le timer est ecoule.
 {
-  for(uint i = 0; i < calques.getNbCalques(); i++){
-    for(uint j = 0; j < calques.getNbForme(i); j++)
+  for(uint i = 0; i < calques.getNbCalques(); i++){ //On parcours tout chaque calque
+    for(uint j = 0; j < calques.getNbForme(i); j++) //On parcours chaque Forme
     {
-      if(calques.getCalque(i)->getFormes(j)->getAnimation() == 0) animationReset(calques.getCalque(i)->getFormes(j));
-      else
+      if(calques.getCalque(i)->getFormes(j)->getAnimation() == 0) animationReset(calques.getCalque(i)->getFormes(j)); //On applique une animation selon la valeur de 
+      else                                                                                                            // l'attribut animation de la classe forme
       {
         if(calques.getCalque(i)->getFormes(j)->getAnimation() == 1) animationRainbow(calques.getCalque(i)->getFormes(j));
         if(calques.getCalque(i)->getFormes(j)->getAnimation() == 2) animationBlink(calques.getCalque(i)->getFormes(j));
         if(calques.getCalque(i)->getFormes(j)->getAnimation() == 3) animationBounce(calques.getCalque(i)->getFormes(j));
       sendExpose();
-      startTimer(delay);  
+      startTimer(delay);  //On relance la boucle
       }   
     }    
   }
@@ -660,10 +663,10 @@ void MyWindow::timerNotify() // declenchee a chaque fois que le timer est ecoule
 void MyWindow::switchAnimation()
 {
   if(pforme){
-    animationReset(pforme);
-    startTimer(delay);
-    uint anim = pforme->getAnimation();
-    anim = (anim + 1) % 4;
-    pforme->setAnimation(anim);
+    animationReset(pforme); // On reset l'animation
+    startTimer(delay); //On relance la boucle d'animation
+    uint anim = pforme->getAnimation(); 
+    anim = (anim + 1) % 4; //On fait boucler la valeur de l'animation 
+    pforme->setAnimation(anim); //On applique la nouvelle valeur de l'animation
   }  
 }

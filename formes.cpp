@@ -1,4 +1,9 @@
-// Formes.cpp
+/** @file formes.cpp
+ *  @author DUHAMEL Andréa et FOUGEROUSE Arsène
+ *  @date Juin 2020
+ *  @brief Classe Formes
+ */
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -32,12 +37,11 @@ else
    formes[nbformes++]=f;
 }
 
-// Rappel : « a->f() » est la même chose que « (*a).f() ».
 
 void Formes::dessiner(EZWindow& w) const
 {
     for(uint i=0; i<nbformes;++i)
-        formes[i]->dessiner(w); // ou de manière équivalente : (*formes[i]).dessiner(w);
+        formes[i]->dessiner(w);
 }
 
 Forme* Formes::isOver(uint _x,uint _y)
@@ -61,8 +65,7 @@ void Formes::sauver(ostream& os) const
 {
     cerr << "Nbforme :" << nbformes<<endl;
     os << nbformes << endl;
-//    operator<<(os,*this); Compliqué !!!
-    os << *this; // Simple !
+    os << *this;
 }
 
 void Formes::charger(istream& is)

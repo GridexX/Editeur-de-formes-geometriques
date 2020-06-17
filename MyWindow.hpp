@@ -1,3 +1,38 @@
+//commentaire pour générer la page d'accueil du doxyfile
+/*! \mainpage Documentation du Projet Editeur de formes géométriques
+ * Cette application s'inscrit dans le cadre du projet POO. Ce projet à été commandité par Mr. REMY dans le cadre
+ * du semestre 2 de DUT Informatique sur le site d'Arles.
+ *
+ * \section utilite A quoi sert ce programme ?
+ *
+ *
+ * Cette application est un éditeur de formes géométriques à la manière de GeoGebra. Vous pouvez créer, déplacer, scale et faire changer de taille des formes. <br>
+ * Des calques sont également présents afin d'afficher les formes en perpective.
+ * <strong>Prérequis :</strong>
+ * Le programme nécessite d'être lancé sur un ordinateur <i>Windows</i> ou <i>Linux</i> et
+ * d'avoir un compilateur C++. Voir la doc <a href=http://www.mingw.org>MinGW</a> pour plus d'informations.
+ * <br> Pour générer la documentation Doxygen il faut avoir installé Doxyfile et exécuter la commande doxygen Doxyfile.
+ *
+ *
+ * \section mentions Mentions légales
+ *
+ * Copyright(C) 2020-2021 <a href = " mailto: andrea.duhamel@etu.univ-amu.fr">Andréa Duhamel</a> et <a href = " mailto: arsene.fougerouse@etu.univ-amu.fr">Arsène Fougerouse</a>
+ *
+ *
+ *
+ * \subsection references Référence des classes
+ * Les classes sont référencées dans l'onglet classe.
+ * 
+ * \subsection fonc Fonctionnalités :
+ * Les bonus suivant ont été réalisés : <br>
+ *  - Classe Image <br>
+ *  - Classe Polygone (+Triangle) <br>
+ *  - Classe Calques <br>
+ *  - Forme animée dans les attributs de la classe Forme <br>
+ */
+
+
+
 /**
  * @file MyWindow.hpp
  * @author DUHAMEL Andréa et FOUGEROUSE Arsène
@@ -15,8 +50,8 @@ class MyWindow : public EZWindow {
   Forme  *pforme; ///< Le pointeur sur forme qui pointe la forme sélectionné
   uint mouseX; ///< La variable qui contient la coordonnée d'abcisse de la souris
   uint mouseY; ///< La variable qui contient la coordonnée d'ordonnée de la souris
-  const uint marge=0;
-  int point;
+  const uint marge=30; ///< La marge pour vérifier si le curseur est dans la fenêtre
+  int point; ///< Stocke l'indice du point du Polygone sélectionné avec clic droit
   uint ancre_x; ///< La variable qui contient la coordonnée d'abcisse d'une ancre
   uint ancre_y; ///< La variable qui contient la coordonnée d'ordonnée d'une ancre
   int diff_x; ///< La variable qui contient la distance en abcisse entre l'ancre_x stocké et l'ancre de la forme selectionnée
@@ -95,8 +130,18 @@ class MyWindow : public EZWindow {
   */
   inline bool isMouseWindow(uint x,uint y) const { return x>=marge && x<=getWidth()-marge && y>marge && y<getHeight()-marge; }
 
+  /**
+   * @fn creerForme(string forme, bool coordAuto)
+   * @brief Fonction pour créer une forme en fonction de la string passée en paramètre
+   * @param forme : La forme à créer
+   * @param coordAuro : booléen pour savoir si le curseur est dans le fenêtre$
+   */
   void creerForme(string forme, bool coordAuto);
 
+  /**
+   * @fn void listeCalques()
+   * @brief Fonction pour afficher la liste des Calques.
+   */
   void listeCalques();
 
   /** 
