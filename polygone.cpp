@@ -37,7 +37,7 @@ Polygone::Polygone(istream &is)
  :Forme(is), rayon(0), nbpoints(0), points(nullptr)
 {
     uint x,y;
-    is >> rayon >> nbpoints;
+    is >> rayon >> nbpoints >> isRegular;
     points = new Point*[nbpoints];
     for(uint i = 0; i < nbpoints; i++)
     {
@@ -79,7 +79,7 @@ ostream& Polygone::ecrire(ostream& os) const
 {
     os<<"Polygone ";
     Forme::ecrire(os);
-    os<<" "<<rayon<<" "<<nbpoints<<" ";
+    os<<" "<<rayon<<" "<<nbpoints<<" "<<isRegular<<" ";
     os << *this;
     return os;
 }
