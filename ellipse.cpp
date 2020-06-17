@@ -1,4 +1,9 @@
-//Ellipse.cpp
+/**
+ * @file ellipse.cpp
+ * @author DUHAMEL Andréa et FOUGEROUSE Arsène
+ * @date Juin 2020
+ * @brief Classe Ellipse
+ */ 
 
 #include <iostream>
 #define PI 3.14159265358979323846

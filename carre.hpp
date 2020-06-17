@@ -89,7 +89,7 @@ class Carre : public Forme {
         /** 
         * @fn ostream& ecrire(ostream& os) const override
         * @brief Fonction ecrire de la classe Carre.
-        * @param os Le flux de sortie sur lequel afficher les informations.
+        * @param os : Le flux de sortie sur lequel afficher les informations.
         * @return Le flux de sortie modifié contenant les informations sur les données membres de la classe.
         */
         ostream& ecrire(ostream& os) const override;
