@@ -120,7 +120,6 @@ class Polygone : public Forme {
         * @brief Ajuste le rayon du Polygone au coordonnés entrées en paramètres
         * @param x : coordonnée en abcisse. 
         * @param y : coordonnée en ordonnée. 
-        * @return Le périmètre du Polygone.
         */
         void scale(uint x, uint y) override;
 
@@ -134,9 +133,9 @@ class Polygone : public Forme {
         
         /** 
         * @fn friend ostream&  operator<<(ostream&  os, const Polygone& poly)
-        * @brief Operateur << qui ecrit les données du Polygone sur un flux de sortie.
-        * @param os : Le flux de sortie.
-        * @param poly : Le polygone dont on récupère les attributs.
+        * @brief Opérateur << qui écrit les attributs du Polygone passé en paramètre sur un flux de sortie.
+        * @param os Le flux de sortie.
+        * @param poly Une référence sur le Polygone dont on récupère les attributs.
         */
         friend ostream&  operator<<(ostream&  os, const Polygone& poly);
 

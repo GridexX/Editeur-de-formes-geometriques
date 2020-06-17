@@ -107,17 +107,17 @@ public :
 
        /** 
         * @fn friend ostream& operator<<(ostream& os, const Point& p)
-        * @brief Operateur << qui ecrit les données du Point sur un flux de sortie.
-        * @param os : Le flux de sortie.
-        * @param p : Le point dont on récupère les attributs.
+        * @brief Opérateur << qui écrit les attributs du Point passé en paramètre sur un flux de sortie.
+        * @param os Le flux de sortie.
+        * @param p Une référence sur le Point dont on récupère les attributs.
         */
        friend ostream& operator<<(ostream& os, const Point& p);
 
        /** 
         * @fn friend istream& operator>>(istream& is, Point& p)
-        * @brief Operateur >> qui lit les données du Point sur un flux d'entrée.
-        * @param is : Le flux d'entrée.
-        * @param p : Le point sur lequel on applique les attributs.
+        * @brief Opérateur >> qui écrit les attributs du Point passé en paramètre sur un flux de d'entrée.
+        * @param os Le flux de d'entrée.
+        * @param p Une référence sur le Point sur lequel on applique les attributs.
         */
        friend istream& operator>>(istream& is, Point& p);
        
