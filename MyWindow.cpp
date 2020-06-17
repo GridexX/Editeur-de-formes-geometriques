@@ -54,7 +54,7 @@ void MyWindow::expose()
 
 void MyWindow::buttonPress(int mouse_x,int mouse_y,int button)
 {
-  if(button==1){
+  if(button==1 && calques.getNbCalques()>0){
      pforme = calques.isOver(mouse_x,mouse_y);
     if(pforme)
     {
@@ -124,9 +124,7 @@ void MyWindow::motionNotify(int mouse_x,int mouse_y,int button)
     Polygone * poly;
     poly = dynamic_cast<Polygone*>(pforme);
     if(poly != nullptr){
-      uint dX = (mouseX < poly->getAncre().getX() ?  poly->getAncre().getX()-mouseX : mouseX-poly->getAncre().getX() );
-      uint dY = (mouseY < poly->getAncre().getY() ?  poly->getAncre().getY()-mouseY : mouseY-poly->getAncre().getY() );
-      poly->setRayon( sqrt( pow(dX,2) + pow(dY,2) )  );
+      poly->scale(mouse_x,mouse_y);
     }
     
   }
@@ -228,6 +226,7 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             poly->addPoint();
             Point * tempP = new Point(poly->getAncre().getX(), poly->getAncre().getY());
             poly->setPoint(tempP, poly->getNbpoints()-1);
+            poly->setRayon(poly->getRayon());
           }
         } break;
       }
@@ -239,10 +238,11 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
           poly = dynamic_cast<Polygone*>(pforme);
           if(poly!=nullptr) {
             poly->removePoint();
+            poly->setRayon(poly->getRayon());
           }
         } break;
-
       }
+
       case EZKeySym::_0: if(pforme) {
         if(pforme->getAnimation() > 0) pforme->setAnimationCouleur(ez_black); 
         else pforme->setCouleur(ez_black);   
@@ -401,18 +401,18 @@ void MyWindow::keyPress(EZKeySym keysym) // Une touche du clavier a ete enfoncee
             listeCalques();
       break;
       //majuscule + touche forme pour entrer les coordonnées;
-      case EZKeySym::r: creerForme("Rectangle", true); listeCalques(); break;
-      case EZKeySym::R: creerForme("Rectangle", false); listeCalques(); break;
-      case EZKeySym::e: creerForme("Ellipse", true); listeCalques(); break;
-      case EZKeySym::E: creerForme("Ellipse", false); listeCalques(); break;
-      case EZKeySym::c: creerForme("Carre", true); listeCalques(); break;
-      case EZKeySym::C: creerForme("Carre", false); listeCalques(); break;
-      case EZKeySym::o: creerForme("Cercle", true); listeCalques();break;
-      case EZKeySym::O: creerForme("Cercle", false); listeCalques(); break;
-      case EZKeySym::p: creerForme("Polygone", true); listeCalques(); break;
-      case EZKeySym::P: creerForme("Polygone", false); listeCalques(); break;
-      case EZKeySym::i: creerForme("Image", true); listeCalques();break;
-      case EZKeySym::I: creerForme("Image", false); listeCalques(); break;
+      case EZKeySym::r: if(calques.getNbCalques()>0) creerForme("Rectangle", true); listeCalques(); break;
+      case EZKeySym::R: if(calques.getNbCalques()>0) creerForme("Rectangle", false); listeCalques(); break;
+      case EZKeySym::e: if(calques.getNbCalques()>0) creerForme("Ellipse", true); listeCalques(); break;
+      case EZKeySym::E: if(calques.getNbCalques()>0) creerForme("Ellipse", false); listeCalques(); break;
+      case EZKeySym::c: if(calques.getNbCalques()>0) creerForme("Carre", true); listeCalques(); break;
+      case EZKeySym::C: if(calques.getNbCalques()>0) creerForme("Carre", false); listeCalques(); break;
+      case EZKeySym::o: if(calques.getNbCalques()>0) creerForme("Cercle", true); listeCalques();break;
+      case EZKeySym::O: if(calques.getNbCalques()>0) creerForme("Cercle", false); listeCalques(); break;
+      case EZKeySym::p: if(calques.getNbCalques()>0) creerForme("Polygone", true); listeCalques(); break;
+      case EZKeySym::P: if(calques.getNbCalques()>0) creerForme("Polygone", false); listeCalques(); break;
+      case EZKeySym::i: if(calques.getNbCalques()>0) creerForme("Image", true); listeCalques();break;
+      case EZKeySym::I: if(calques.getNbCalques()>0) creerForme("Image", false); listeCalques(); break;
 
       default: break;
     }
@@ -439,14 +439,15 @@ void MyWindow::listeCalques(){
     //cout << calques.getNbCalques() << " , select :" << calques.getCalqueSelec() << endl;
 }
 
+
 void MyWindow::creerForme(string forme, bool coordAuto)
 {
   if(forme=="Rectangle"){
     if(coordAuto){
         if(isMouseWindow(mouseX ,mouseY))   //On crée un rectangle au coordonnées du pointeur si il est dans la fenêtre
-          calques.ajouterForme(new Rectangle(ez_black,mouseX,mouseY,25,30));
+          calques.ajouterForme(new Rectangle(ez_black,mouseX,mouseY,150,200));
         else                                //Sinon on le place au centre
-          calques.ajouterForme(new Rectangle(ez_black,getWidth()/2-25,getHeight()/2-25,getWidth()/2+25,getHeight()/2+25));
+          calques.ajouterForme(new Rectangle(ez_black,getWidth()/2-25,getHeight()/2-25,150,200));
     }
     else{
       cout << endl << "Vous êtes sur le point de créer un Rectangle. "<< endl << "Entrez la longueur et la largeur : " ;
@@ -468,9 +469,9 @@ void MyWindow::creerForme(string forme, bool coordAuto)
   else if(forme=="Ellipse"){
     if(coordAuto){
         if(isMouseWindow(mouseX ,mouseY))
-          calques.ajouterForme(new Ellipse(ez_black,mouseX,mouseY,50,30));
+          calques.ajouterForme(new Ellipse(ez_black,mouseX,mouseY,150,200));
         else
-          calques.ajouterForme(new Ellipse(ez_black,getWidth()/2-25,getHeight()/2-15,50,30));
+          calques.ajouterForme(new Ellipse(ez_black,getWidth()/2-25,getHeight()/2-15,150,200));
     }
     else{
       cout << endl << "Vous êtes sur le point de créer une Ellipse. "<< endl << "Entrez la demi-longueur et la demi-largeur : " ;
@@ -492,9 +493,9 @@ void MyWindow::creerForme(string forme, bool coordAuto)
   if(forme=="Carre"){
     if(coordAuto){
         if(isMouseWindow(mouseX ,mouseY))   //On crée un rectangle au coordonnées du pointeur si il est dans la fenêtre
-          calques.ajouterForme(new Carre(ez_black,mouseX,mouseY,25));
+          calques.ajouterForme(new Carre(ez_black,mouseX,mouseY,150));
         else                                //Sinon on le place au centre
-          calques.ajouterForme(new Carre(ez_black,getWidth()/2-25,getHeight()/2-25,50));
+          calques.ajouterForme(new Carre(ez_black,getWidth()/2-25,getHeight()/2-25,150));
     }
     else{
       cout << endl << "Vous êtes sur le point de créer un Carré. "<< endl << "Entrez le côte : " ;
@@ -516,9 +517,9 @@ void MyWindow::creerForme(string forme, bool coordAuto)
   if(forme=="Cercle"){
     if(coordAuto){
         if(isMouseWindow(mouseX ,mouseY))   //On crée un rectangle au coordonnées du pointeur si il est dans la fenêtre
-          calques.ajouterForme(new Cercle(ez_black,mouseX,mouseY,25));
+          calques.ajouterForme(new Cercle(ez_black,mouseX,mouseY,75));
         else                                //Sinon on le place au centre
-          calques.ajouterForme(new Cercle(ez_black,getWidth()/2-25,getHeight()/2-25,25));
+          calques.ajouterForme(new Cercle(ez_black,getWidth()/2-25,getHeight()/2-25,75));
     }
     else{
       cout << endl << "Vous êtes sur le point de créer un Cercle. "<< endl << "Entrez le rayon : " ;
@@ -540,9 +541,9 @@ void MyWindow::creerForme(string forme, bool coordAuto)
   if(forme=="Polygone"){
     if(coordAuto){
         if(isMouseWindow(mouseX ,mouseY))   //On crée un rectangle au coordonnées du pointeur si il est dans la fenêtre
-          calques.ajouterForme(new Polygone(ez_black,mouseX,mouseY,50,6));
+          calques.ajouterForme(new Polygone(ez_black,mouseX,mouseY,150,6));
         else                                //Sinon on le place au centre
-          calques.ajouterForme(new Polygone(ez_black,getWidth()/2-25,getHeight()/2-25,50,6));
+          calques.ajouterForme(new Polygone(ez_black,getWidth()/2-25,getHeight()/2-25,150,6));
     }
     else{
       cout << endl << "Vous êtes sur le point de créer un Polygone. "<< endl << "Entrez le rayon et le nombre de sommets : " ;

@@ -44,7 +44,14 @@ double Image::perimetre() const
 
 void Image::scale(uint x, uint y)
 {
-    
+    //resize l'image que si le curseur est dans la partie inférieur de l'image
+    double _ratio=0;
+    if(x > getAncre().getX() && y > getAncre().getY())
+    {
+        _ratio = ( x>y ? double(x-getAncre().getX())/image->getWidth() :  double(y-getAncre().getY())/image->getHeight() );
+        //cerr << y<<" "<<x<<" "<<getAncre().getX()<<" "<<getAncre().getY()<<" "<<image->getWidth()<< " "<<image->getHeight()<<"<< _ratio <<endl;
+    }
+    setRatio(_ratio);
 }
 
 Image::Image(istream &is)

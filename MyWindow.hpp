@@ -9,7 +9,7 @@ class MyWindow : public EZWindow {
   Calques calques;
   Forme  *pforme;
   uint mouseX, mouseY; //coordonnées du pointeur de la souris
-  const uint marge=10;
+  const uint marge=0;
   int point;
   uint ancre_x, ancre_y;
   int diff_x, diff_y;

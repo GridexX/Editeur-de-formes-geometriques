@@ -125,7 +125,11 @@ double Polygone::perimetre() const
 }
 
 void Polygone::scale(uint x, uint y)
-{}
+{
+    uint dX = (x < getAncre().getX() ?  getAncre().getX()-x : x-getAncre().getX() );
+    uint dY = (y < getAncre().getY() ?  getAncre().getY()-y : y-getAncre().getY() );
+    setRayon( sqrt( pow(dX,2) + pow(dY,2) )  );
+}
 
 void Polygone::setPoint(Point * p, uint numero)
 {
